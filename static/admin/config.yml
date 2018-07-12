@@ -12,7 +12,8 @@ collections:
     create: true
     fields:
       - { name: title, label: Title }
-      - { name: route, label: Ruta }
+      - { name: path, label: Ruta }
+      - {label: "Producto", name: "type", widget: "hidden", default: "product"}
       - label: "Tamaños"
         name: "sizes"
         widget: "list"
@@ -25,6 +26,15 @@ collections:
         widget: "list"
         fields: 
           - { label: "Nombre", name: name, widget: string }
+  - name: policy
+    label: "Política"
+    folder: content/policy
+    create: false
+    fields:
+      - { name: title, label: Title }
+      - { name: path, label: Ruta }
+      - { label: "Producto", name: "type", widget: "hidden", default: "policy" }
+      - { label: "Contenido", name: "body", widget: "markdown" }
   - name: fragance
     label: Fragancia
     folder: content/fragances
