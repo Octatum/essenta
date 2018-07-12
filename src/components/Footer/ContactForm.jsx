@@ -70,7 +70,7 @@ class ContactForm extends React.Component {
   render() {
     return (
       <Layout>
-        <Form action="">
+        <Form action="" name="contacto" netlify>
           <TextInput
             style={{
               width: '65%',
@@ -87,8 +87,7 @@ class ContactForm extends React.Component {
             onClick={this.submitForm}
             style={{
               width: '31%',
-              fontSize: '1rem',
-              padding: '1rem',
+              fontSize: '1.5rem',
               textAlign: 'center'
             }}
           >

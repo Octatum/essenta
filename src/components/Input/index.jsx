@@ -18,7 +18,7 @@ export const TextInput = styled.input.attrs({
 export const Select = styled.select.attrs({
   style: ({style}) => ({...style})  
 })`
-  background: rgba(255, 255, 255, 0);
+  background: ${props => props.orange ? props.theme.color.orange : 'transparent'};
   border: 1px solid ${props => props.theme.color.black};
   color: ${props => props.theme.color.black};
   font-weight: 700;
@@ -26,6 +26,6 @@ export const Select = styled.select.attrs({
   transition: 0.3s ease background-color;
 
   :focus {
-    background: rgba(255, 255, 255, 0.5);
+    background: ${props => props.orange ? props.theme.color.darkOrange : 'white'};
   }
 `;

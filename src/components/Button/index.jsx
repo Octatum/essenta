@@ -8,18 +8,18 @@ const Button = styled.button.attrs({
   border: none;
   font-family: ${props => props.theme.fonts.secondary};
   text-transform: uppercase;
-  font-size: 1.5em !important;
+  font-size: 1.5rem;
   border-radius: 6px;
   transition: 0.3s ease all;
-  -webkit-box-shdow: 0px 10px 60px -15px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 10px 60px -15px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 10px 60px -15px rgba(0, 0, 0, 0.3);
-  padding: 1rem;
+  -webkit-box-shdow: 0px 0.8em 5em -1em rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0.8em 5em -1em rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0.8em 5em -1em rgba(0, 0, 0, 0.3);
+  padding: 0.6em;
 
   &:active {
-    -webkit-box-shadow: 0px 10px 60px -15px rgba(0,0,0,0.50);
-    -moz-box-shadow: 0px 10px 60px -15px rgba(0,0,0,0.50);
-    box-shadow: 0px 10px 60px -15px rgba(0,0,0,0.50);
+    -webkit-box-shadow: 0px 0.8em 5em -1em rgba(0,0,0,0.50);
+    -moz-box-shadow: 0px 0.8em 5em -1em rgba(0,0,0,0.50);
+    box-shadow: 0px 0.8em 5em -1em rgba(0,0,0,0.50);
   }
 
   &:focus {

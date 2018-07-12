@@ -41,7 +41,7 @@ const RelevantInformation = styled.div`
   padding: 4rem 7rem;
   grid-template: auto auto / repeat(3, 1fr);
   grid-template-areas: 
-    "about how-to-buy policy"
+    "about policy ."
     "copyright terms privacy";
 `;
 
@@ -83,7 +83,7 @@ const HowToBuy = InformationSection.extend`
 
 const Policy = InformationSection.extend`
   grid-area: policy;
-  justify-self: flex-end;
+  justify-self: center;
 `;
 
 const AditionalInformationSection = styled.div`
@@ -114,18 +114,11 @@ function Footer() {
       <RelevantInformation>
         <About>
           <SectionHeader>Acerca de Essenta</SectionHeader>
-          <Link to="/">Empleos</Link>
+          <Link to="/unete">Empleos</Link>
           <Link to="/">Nosotros</Link>
           <Link to="/">Nuestras causas</Link>
           <Link to="/">Nuestros fundadores</Link>
         </About>
-        <HowToBuy>
-          <SectionHeader>Cómo Comprar</SectionHeader>
-          <Link to="/">Contáctanos</Link>
-          <Link to="/">Folletos virtuales</Link>
-          <Link to="/">Catálogo en linea</Link>
-          <Link to="/">Necesito un vendedor</Link>
-        </HowToBuy>
         <Policy>
           <SectionHeader>Políticas</SectionHeader>
           <Link to="/">Pedidos</Link>

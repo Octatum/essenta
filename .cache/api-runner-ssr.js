@@ -1,6 +1,9 @@
 var plugins = [{
       plugin: require('C:/Users/robil/Sofware/Octatum/essenta/essenta-gatsby/node_modules/gatsby-plugin-react-helmet/gatsby-ssr.js'),
       options: {"plugins":[]},
+    },{
+      plugin: require('C:/Users/robil/Sofware/Octatum/essenta/essenta-gatsby/node_modules/gatsby-plugin-styled-components/gatsby-ssr.js'),
+      options: {"plugins":[]},
     }]
 // During bootstrap, we write requires at top of this file which looks like:
 // var plugins = [

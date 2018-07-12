@@ -123,7 +123,6 @@ class JoinForm extends React.Component {
   }
 
   handleBirthdateChange = (date) => {
-    console.log(date);
     this.setState({nacimiento: date});
   }
 
@@ -134,7 +133,7 @@ class JoinForm extends React.Component {
   render() {
     return (
       <Layout>
-        <FormBlock>
+        <FormBlock netlify name="unete">
           <fieldset>
             <Legend>Información General</Legend>
             <Label required>
@@ -169,8 +168,8 @@ class JoinForm extends React.Component {
             <Label required>
               <span>Sexo</span>
               <Select value={this.state.value} onChange={this.handleChange}>
-                <option value="hombre">Hombre</option>
                 <option value="mujer">Mujer</option>
+                <option value="hombre">Hombre</option>
               </Select>
             </Label>
             <Label required>

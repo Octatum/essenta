@@ -1,4 +1,7 @@
-var plugins = []
+var plugins = [{
+      plugin: require('C:/Users/robil/Sofware/Octatum/essenta/essenta-gatsby/node_modules/gatsby-plugin-netlify-cms/gatsby-browser.js'),
+      options: {"plugins":[]},
+    }]
 // During bootstrap, we write requires at top of this file which looks
 // basically like:
 // var plugins = [

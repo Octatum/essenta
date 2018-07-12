@@ -3,13 +3,6 @@
         "componentChunkName": "component---src-templates-policy-jsx",
         "layout": "layout---index",
         "layoutComponentChunkName": "component---src-layouts-index-jsx",
-        "jsonName": "envios.json",
-        "path": "/envios"
-    },
-    {
-        "componentChunkName": "component---src-templates-policy-jsx",
-        "layout": "layout---index",
-        "layoutComponentChunkName": "component---src-layouts-index-jsx",
         "jsonName": "devolucion.json",
         "path": "/devolucion"
     },
@@ -17,15 +10,22 @@
         "componentChunkName": "component---src-templates-policy-jsx",
         "layout": "layout---index",
         "layoutComponentChunkName": "component---src-layouts-index-jsx",
-        "jsonName": "privacidad.json",
-        "path": "/privacidad"
+        "jsonName": "aceptacion.json",
+        "path": "/aceptacion"
     },
     {
         "componentChunkName": "component---src-templates-policy-jsx",
         "layout": "layout---index",
         "layoutComponentChunkName": "component---src-layouts-index-jsx",
-        "jsonName": "aceptacion.json",
-        "path": "/aceptacion"
+        "jsonName": "envios.json",
+        "path": "/envios"
+    },
+    {
+        "componentChunkName": "component---src-templates-policy-jsx",
+        "layout": "layout---index",
+        "layoutComponentChunkName": "component---src-layouts-index-jsx",
+        "jsonName": "privacidad.json",
+        "path": "/privacidad"
     },
     {
         "componentChunkName": "component---src-templates-policy-jsx",
@@ -82,12 +82,5 @@
         "layoutComponentChunkName": "component---src-layouts-index-jsx",
         "jsonName": "404-html.json",
         "path": "/404.html"
-    },
-    {
-        "componentChunkName": "component---src-pages-product-jsx",
-        "layout": "layout---index",
-        "layoutComponentChunkName": "component---src-layouts-index-jsx",
-        "jsonName": "product.json",
-        "path": "/product/"
     }
 ]

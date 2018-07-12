@@ -61,6 +61,7 @@ const HoverableItem = styled.div`
   & ~ .navbar:hover,
   & ~ .navbar:focus-within {
     pointer-events: auto;
+    z-index: 1;
     opacity: 1;
   }
 `;
@@ -88,13 +89,14 @@ const DropdownMenu = styled.div`
   position: absolute;
   pointer-events: none;
   bottom: -4em;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease, z-index 0.1s linear;
   opacity: 0;
   height: 3em;
   width: 100vw;
   left: -3.5em;
   padding-left: 3.5rem;
   overflow-y: hidden;
+  z-index: 0;
 
   > * {
     padding: 1em 1.5em;
@@ -112,6 +114,10 @@ const DropdownMenu = styled.div`
   }
 `;
 
+function loseFocus({target}) {
+  target.blur();
+}
+
 const Navbar = () => (
   <NavLayout>
     <Header />
@@ -122,10 +128,9 @@ const Navbar = () => (
         <HoverableItem>Catálogo</HoverableItem>
         <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
         <DropdownMenu className="navbar">
-          <NavbarLink to="/product">Velas</NavbarLink>
-          <NavbarLink to="/product">Perfumes</NavbarLink>
-          <NavbarLink to="/product">Cremas</NavbarLink>
-          <NavbarLink to="/product">Paquetes</NavbarLink>
+          <NavbarLink onClick={loseFocus} to="/product">Velas</NavbarLink>
+          <NavbarLink onClick={loseFocus} to="/product">Perfumes</NavbarLink>
+          <NavbarLink onClick={loseFocus} to="/product">Cremas</NavbarLink>
         </DropdownMenu>
       </LinksSection>
       <ShopLinksSection>

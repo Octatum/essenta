@@ -8,10 +8,19 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `markdown-pages`,
-        path: `${__dirname}/src/pages/markdown`,
+        name: `products`,
+        path: `${__dirname}/content/products`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `policies`,
+        path: `${__dirname}/content/policies`,
       },
     },
     `gatsby-transformer-remark`,
+    'gatsby-plugin-styled-components',
+    'gatsby-plugin-netlify-cms'
   ],
 }
