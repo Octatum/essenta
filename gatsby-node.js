@@ -1,20 +1,21 @@
 const path = require("path");
 
-const policyTemplate = path.resolve(`src/templates/policy.jsx`);
-const productTemplate = path.resolve('src/template/product.jsx');
+const productComponent = path.resolve('src/templates/product.jsx');
+const policyComponent = path.resolve(`src/templates/policy.jsx`);
 
 const getAllFilesQuery = `
-query GetAllContentFiles {
-  allMarkdownRemark {
-    edges {
-      node {
-        frontmatter {
-          path
+  query GetAllContentFiles {
+    allMarkdownRemark(filter: {frontmatter: {type: {regex: "/policy|product/"}}}) {
+      edges {
+        node {
+          frontmatter {
+            type
+            path
+          }
         }
       }
     }
   }
-}
 `;
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
@@ -32,13 +33,22 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 function createMarkdownPage(node, createPage) {
   if(!node.frontmatter.path) return;
 
+  const templateComponent = getTemplateByType(node.frontmatter);
+
   createPage({
     path: node.frontmatter.path,
-    component: getTemplateByPath(node.frontmatter.path),
+    component: templateComponent,
     context: {}, // additional data can be passed via context
   });
 }
 
-function getTemplateByPath(path) {
-  return policyTemplate;
+function getTemplateByType({type, path}) {
+  switch(type) {
+    case "product": 
+      return productComponent;
+    case "policy": 
+      return policyComponent;
+  }
+
+  return null;
 }

@@ -78,7 +78,10 @@ const ProductPickerLabel = styled.label`
   }
 `;
 
-function Product() {
+function Product({data}) {
+  const { markdownRemark } = data;
+  const { frontmatter, html, rawMarkdownBody } = markdownRemark;
+
   return (
     <Layout>
       <Breadcrumbs />
@@ -122,3 +125,16 @@ function Product() {
 }
 
 export default Product;
+
+export const pageQuery = graphql`
+  query ProductByPath($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
+      rawMarkdownBody
+      frontmatter {
+        title
+        path
+      }
+    }
+  }
+`;

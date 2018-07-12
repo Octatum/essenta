@@ -1,6 +1,7 @@
 ---
 title: "Términos y Condiciones"
 path: "/terminos"
+type: "policy"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt metus ac leo accumsan vehicula vel sed ipsum. Curabitur dignissim felis ut felis interdum gravida. Curabitur nec erat accumsan, pharetra erat id, commodo tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce quis pretium massa. Cras euismod ac sapien et cursus. Nunc ultrices, mi **mollis laoreet consequat, massa elit convallis urna**, at mattis lectus eros sit amet diam. 
