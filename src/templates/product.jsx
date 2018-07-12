@@ -79,8 +79,7 @@ const ProductPickerLabel = styled.label`
 `;
 
 function Product({data}) {
-  const { markdownRemark } = data;
-  const { frontmatter, html, rawMarkdownBody } = markdownRemark;
+
 
   return (
     <Layout>
