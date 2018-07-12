@@ -29,11 +29,10 @@ collections:
   - name: policy
     label: "Política"
     folder: content/policy
-    create: false
+    create: true
     fields:
       - { name: title, label: Title }
       - { name: path, label: Ruta }
-      - { label: "Producto", name: "type", widget: "hidden", default: "policy" }
       - { label: "Contenido", name: "body", widget: "markdown" }
   - name: fragance
     label: Fragancia
