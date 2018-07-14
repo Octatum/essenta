@@ -118,26 +118,29 @@ function loseFocus({target}) {
   target.blur();
 }
 
-const Navbar = () => (
-  <NavLayout>
-    <Header />
-    <LogoSection><NavbarLink to="/"><Img src={logo} alt="logo"/></NavbarLink></LogoSection>
-    <NavlinksSection>
-      <LinksSection>
-        <NavbarLink to="/">Elabora tu perfume</NavbarLink>
-        <HoverableItem>Catálogo</HoverableItem>
-        <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
-        <DropdownMenu className="navbar">
-          <NavbarLink onClick={loseFocus} to="/product">Velas</NavbarLink>
-          <NavbarLink onClick={loseFocus} to="/product">Perfumes</NavbarLink>
-          <NavbarLink onClick={loseFocus} to="/product">Cremas</NavbarLink>
-        </DropdownMenu>
-      </LinksSection>
-      <ShopLinksSection>
-        <ShopLinks />
-      </ShopLinksSection>
-    </NavlinksSection>
-  </NavLayout>
-);
+function Navbar({urls}) {
+
+  return (
+    <NavLayout>
+      <Header />
+      <LogoSection><NavbarLink to="/"><Img src={logo} alt="logo"/></NavbarLink></LogoSection>
+      <NavlinksSection>
+        <LinksSection>
+          <NavbarLink to="/perfume">Elabora tu perfume</NavbarLink>
+          <HoverableItem>Catálogo</HoverableItem>
+          <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
+          <DropdownMenu className="navbar">
+            {urls.map(({name, path}) => (
+              <NavbarLink onClick={loseFocus} to={path}>{name}</NavbarLink>
+            ))}
+          </DropdownMenu>
+        </LinksSection>
+        <ShopLinksSection>
+          <ShopLinks />
+        </ShopLinksSection>
+      </NavlinksSection>
+    </NavLayout>
+  );
+}
 
 export default Navbar;

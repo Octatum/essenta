@@ -1,6 +1,6 @@
 ---
 title: Perfume
-path: perfume
+path: /perfume
 type: product
 sizes:
   - image: /assets/descarga.jpg

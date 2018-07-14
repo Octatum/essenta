@@ -19,8 +19,30 @@ module.exports = {
         path: `${__dirname}/content/policies`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `fragances`,
+        path: `${__dirname}/content/fragances`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/static/assets`,
+      },
+    },
+    {
+      resolve: 'gatsby-remark-images',
+      options: {
+        maxWidth: 400,
+      }
+    },
     `gatsby-transformer-remark`,
     'gatsby-plugin-styled-components',
-    'gatsby-plugin-netlify-cms'
+    'gatsby-plugin-netlify-cms',
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`
   ],
 }

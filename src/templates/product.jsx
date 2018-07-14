@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Img from "gatsby-image";
+
 import Breadcrumbs from './../components/Breadcrumbs';
 import { Select } from '../components/Input';
 import Button from './../components/Button/index';
@@ -78,32 +80,42 @@ const ProductPickerLabel = styled.label`
   }
 `;
 
-function Product({data}) {
+function getFragancesDataFromEdges(edges) {
+  return edges.map(({node}) => ({
+    title: node.childMarkdownRemark.frontmatter.title,
+    label: node.childMarkdownRemark.frontmatter.label
+  }));
+}
 
+function Product({data}) {
+  const { markdownRemark, fragances } = data;
+  const { frontmatter } = markdownRemark;
+  const fragancesData = getFragancesDataFromEdges(fragances.edges);
 
   return (
     <Layout>
       <Breadcrumbs />
       <ProductLayout>
-        <ProductView>AAA</ProductView>
+        <ProductView><img src={markdownRemark.frontmatter.sizes[1].image} /></ProductView>
         <ProductInfo>
           <ProductTitle>Sexy Lady</ProductTitle>
           <ProductPrice>$60.00</ProductPrice>
           <ProductDescription>Lorem ipsum dolor sit amet.</ProductDescription>
           <ProductPickerLabel>
             <Select orange required>
-              <option>Madera</option>
-              <option>Rosas</option>
-              <option>Vainilla</option>
+              {fragancesData.map(({title, label}) => (
+                <option>{label}</option>
+              ))}
             </Select>
             <span>Fragancia</span>
           </ProductPickerLabel>
           <ProductPickerLabel>
             <Select orange required>
-              <option>100 ml</option>
-              <option>300 ml</option>
-              <option>500 ml</option>
-              <option>700 ml</option>
+              {frontmatter.sizes.map(({size}) => (
+                <option>
+                  {size}
+                </option>
+              ))}
             </Select>
             <span>Tamaño</span>
           </ProductPickerLabel>
@@ -125,15 +137,35 @@ function Product({data}) {
 
 export default Product;
 
-export const pageQuery = graphql`
+export const dataQuery = graphql`
   query ProductByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      rawMarkdownBody
       frontmatter {
         title
         path
+        sizes {
+          image
+          price
+          size
+        }
+        colors {
+          name
+        }
+      }
+    }
+
+    fragances: allFile(filter: {sourceInstanceName: {eq: "fragances"}}) {
+      edges {
+        node {
+          childMarkdownRemark {
+            frontmatter {
+              title
+              label
+            } 
+          }
+        }
       }
     }
   }
 `;
+

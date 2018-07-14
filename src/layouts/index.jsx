@@ -15,48 +15,61 @@ const AppLayout = styled.div`
   background: ${props => props.theme.color.gray};
 `;
 
-const Layout = ({ children, data }) => (
-  <ThemeProvider theme={globalTheme}>
-    <AppLayout>
-      <Helmet
-        title={data.site.siteMetadata.title}
-        meta={[
-          { name: 'description', content: 'Sample' },
-          { name: 'keywords', content: 'sample, something' },
-        ]}
-        link={[
-          {
-            rel:"stylesheet",
-            href:"https://use.fontawesome.com/releases/v5.1.0/css/all.css", 
-            integrity:"sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt", 
-            crossorigin:"anonymous"
-          }
-        ]}
-        script={[
-          {
-            src:"https://identity.netlify.com/v1/netlify-identity-widget.js"
-          }
-        ]}
-      />
-      <Navbar />
-      <div>
-        {children()}
-      </div>
-      {() => {
-        if (window.netlifyIdentity) {
-          window.netlifyIdentity.on("init", user => {
-            if (!user) {
-              window.netlifyIdentity.on("login", () => {
-                document.location.href = "/admin/";
-              });
+function getProductsUrlsFromEdges(edges) {
+  const data = edges.map(({node}) => ({
+    name: node.childMarkdownRemark.frontmatter.title,
+    path: node.childMarkdownRemark.frontmatter.path,
+  }));
+
+  return data;
+}
+
+const Layout = ({ children, data }) => {
+  const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
+
+  return (
+    <ThemeProvider theme={globalTheme}>
+      <AppLayout>
+        <Helmet
+          title={data.siteTitle.siteMetadata.title}
+          meta={[
+            { name: 'description', content: 'Sample' },
+            { name: 'keywords', content: 'sample, something' },
+          ]}
+          link={[
+            {
+              rel:"stylesheet",
+              href:"https://use.fontawesome.com/releases/v5.1.0/css/all.css", 
+              integrity:"sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt", 
+              crossorigin:"anonymous"
             }
-          })
-        }
-      }}
-      <Footer />
-    </AppLayout>
-  </ThemeProvider>
-);
+          ]}
+          script={[
+            {
+              src:"https://identity.netlify.com/v1/netlify-identity-widget.js"
+            }
+          ]}
+        />
+        <Navbar urls={productsUrls}/>
+        <div>
+          {children()}
+        </div>
+        {() => {
+          if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+              if (!user) {
+                window.netlifyIdentity.on("login", () => {
+                  document.location.href = "/admin/";
+                });
+              }
+            })
+          }
+        }}
+        <Footer />
+      </AppLayout>
+    </ThemeProvider>
+  );
+}
 
 Layout.propTypes = {
   children: PropTypes.func,
@@ -65,10 +78,23 @@ Layout.propTypes = {
 export default Layout;
 
 export const query = graphql`
-  query SiteTitleQuery {
-    site {
+  query PageData {
+    siteTitle: site {
       siteMetadata {
         title
+      }
+    }
+    
+    productEdges: allFile(filter: {sourceInstanceName: {eq: "products"}}){
+      edges {
+        node {
+          childMarkdownRemark {
+            frontmatter {
+              title
+              path
+            }
+          }
+        }
       }
     }
   }
