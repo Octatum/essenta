@@ -33,6 +33,10 @@ const JoinUsButton = styled.div`
   font-size: 2rem;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
+
+  ${AppLink} {
+    color: ${props => props.theme.color.white};
+  }
 `;
 
 const RelevantInformation = styled.div`
@@ -121,7 +125,7 @@ function Footer() {
         </About>
         <Policy>
           <SectionHeader>Políticas</SectionHeader>
-          <Link to="/">Pedidos</Link>
+          <Link to="/pedidos">Pedidos</Link>
           <Link to="/envios">Políticas de envío</Link>
           <Link to="/aceptacion">Aviso y aceptación</Link>
           <Link to="/devolucion">Políticas de devolución</Link>
@@ -130,7 +134,7 @@ function Footer() {
         <TermsNConditions><Link to="/terminos">Términos y Condiciones</Link></TermsNConditions>
         <Privacy><Link to="/privacidad">Privacidad y Seguridad</Link></Privacy>
       </RelevantInformation>
-      <JoinUsButton>Únete a nosotros</JoinUsButton>
+      <JoinUsButton><AppLink to="/unete">Únete a nosotros</AppLink></JoinUsButton>
     </Layout>
   );
 }

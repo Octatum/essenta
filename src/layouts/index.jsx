@@ -24,6 +24,20 @@ function getProductsUrlsFromEdges(edges) {
   return data;
 }
 
+function netlifyIdentiy () {
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    })
+  }
+
+  return "";
+}
+
 const Layout = ({ children, data }) => {
   const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
 
@@ -54,17 +68,7 @@ const Layout = ({ children, data }) => {
         <div>
           {children()}
         </div>
-        {() => {
-          if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-              if (!user) {
-                window.netlifyIdentity.on("login", () => {
-                  document.location.href = "/admin/";
-                });
-              }
-            })
-          }
-        }}
+        {netlifyIdentiy()}
         <Footer />
       </AppLayout>
     </ThemeProvider>

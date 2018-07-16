@@ -1,9 +1,5 @@
 const path = require("path");
-const fs = require('fs');
-const { 
-  GraphQLInt,
-  GraphQLString
-} = require('graphql/type');
+const { fmImagesToRelative } = require('gatsby-remark-relative-images');
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
 const productComponent = path.resolve('src/templates/product.jsx');
@@ -62,4 +58,21 @@ function getTemplateByType(type) {
   }
 
   return null;
+}
+
+
+exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators
+  
+  // Ensures we are processing only markdown files
+  if (node.internal.type !== "MarkdownRemark" || !node.frontmatter.sizes) return;
+
+  node.frontmatter.sizes.forEach((value, index) => {
+    console.log(`image_${value.size}`);
+    createNodeField({
+      node,
+      name: `image_${value.size}`,
+      value: `.${value.image}`,
+    });
+  })
 }

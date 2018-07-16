@@ -50,11 +50,11 @@ const HoverableItem = styled.div`
 
   &::before {
     content: "";
-    height: 150%;
-    width: 120%;
+    height: 120%;
+    width: 300%;
     position: absolute;
-    left: -10%;
-    bottom: -150%;
+    left: -100%;
+    bottom: -120%;
   }
 
   &:hover ~ .navbar,
@@ -96,7 +96,11 @@ const DropdownMenu = styled.div`
   left: -3.5em;
   padding-left: 3.5rem;
   overflow-y: hidden;
+  box-sizing: border-box;
   z-index: 0;
+  -webkit-box-shadow: 0px 0.5em 1em 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 0.5em 1em 0px rgba(0,0,0,0.25);
+  box-shadow: 0px 0.5em 1em 0px rgba(0,0,0,0.25);
 
   > * {
     padding: 1em 1.5em;
@@ -122,7 +126,6 @@ function Navbar({urls}) {
 
   return (
     <NavLayout>
-      <Header />
       <LogoSection><NavbarLink to="/"><Img src={logo} alt="logo"/></NavbarLink></LogoSection>
       <NavlinksSection>
         <LinksSection>
@@ -131,7 +134,7 @@ function Navbar({urls}) {
           <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
           <DropdownMenu className="navbar">
             {urls.map(({name, path}) => (
-              <NavbarLink onClick={loseFocus} to={path}>{name}</NavbarLink>
+              <NavbarLink key={path} onClick={loseFocus} to={path}>{name}</NavbarLink>
             ))}
           </DropdownMenu>
         </LinksSection>

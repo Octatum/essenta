@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import Img from "gatsby-image";
 
 import Breadcrumbs from './../components/Breadcrumbs';
 import { Select } from '../components/Input';
@@ -21,10 +20,10 @@ const ProductLayout = styled.div`
 `;
 
 const ProductView = styled.div`
+  display: flex;
+  align-items: center;
   width: 35%;
   height: 100%;
-  background: black;
-  opacity: 0.2;
 `;
 
 const ProductInfo = styled.div`
@@ -34,6 +33,7 @@ const ProductInfo = styled.div`
 `;
 
 const ProductTitle = styled.div`
+  color: ${props => props.theme.color.black};
   text-transform: uppercase;
   font-size: 2rem;
   font-weight: 700;
@@ -80,6 +80,11 @@ const ProductPickerLabel = styled.label`
   }
 `;
 
+const Img = styled.img`
+  max-width: 100%;
+  width: 100%;
+`;
+
 function getFragancesDataFromEdges(edges) {
   return edges.map(({node}) => ({
     title: node.childMarkdownRemark.frontmatter.title,
@@ -87,52 +92,91 @@ function getFragancesDataFromEdges(edges) {
   }));
 }
 
-function Product({data}) {
-  const { markdownRemark, fragances } = data;
-  const { frontmatter } = markdownRemark;
-  const fragancesData = getFragancesDataFromEdges(fragances.edges);
+class Product extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <Layout>
-      <Breadcrumbs />
-      <ProductLayout>
-        <ProductView><img src={markdownRemark.frontmatter.sizes[1].image} /></ProductView>
-        <ProductInfo>
-          <ProductTitle>Sexy Lady</ProductTitle>
-          <ProductPrice>$60.00</ProductPrice>
-          <ProductDescription>Lorem ipsum dolor sit amet.</ProductDescription>
-          <ProductPickerLabel>
-            <Select orange required>
-              {fragancesData.map(({title, label}) => (
-                <option>{label}</option>
-              ))}
-            </Select>
-            <span>Fragancia</span>
-          </ProductPickerLabel>
-          <ProductPickerLabel>
-            <Select orange required>
-              {frontmatter.sizes.map(({size}) => (
-                <option>
-                  {size}
-                </option>
-              ))}
-            </Select>
-            <span>Tamaño</span>
-          </ProductPickerLabel>
-          <ProductPickerLabel>
-            <Select orange required>
-              <option>Rojo</option>
-              <option>Verde</option>
-              <option>Azul</option>
-            </Select>
-            <span>Color</span>
-          </ProductPickerLabel>
-          <Button style={{fontSize: '0.9rem', borderRadius: '0'}}>Añadir al carrito</Button>
-        </ProductInfo>
-      </ProductLayout>
-      
-    </Layout>
-  );
+    this.state = {
+      fraganceIndex: 0,
+      sizeIndex: 0,
+      colorIndex: 0
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    const {target} = event;
+    console.log(target.value)
+
+    this.setState({
+      [target.name]: target.value
+    });
+  }
+
+  render() {
+    const { markdownRemark, fragances } = this.props.data;
+    const { frontmatter } = markdownRemark;
+    const { colors } = frontmatter;
+    const fragancesData = getFragancesDataFromEdges(fragances.edges);
+
+    return (
+      <Layout>
+        <Breadcrumbs />
+        <ProductLayout>
+          <ProductView><Img src={markdownRemark.frontmatter.sizes[this.state.sizeIndex].image} /></ProductView>
+          <ProductInfo>
+            <ProductTitle>Arma tu {frontmatter.title}</ProductTitle>
+            <ProductPrice>${frontmatter.sizes[this.state.sizeIndex].price}</ProductPrice>
+            <ProductDescription>{frontmatter.description}</ProductDescription>
+            <ProductPickerLabel>
+              <Select 
+                onChange={this.handleChange} 
+                orange 
+                required 
+                name="fraganceIndex" 
+                value={this.state.fraganceIndex}
+              >
+                {fragancesData.map(({title, label}, index) => (
+                  <option key={title} value={index}>{label}</option>
+                ))}
+              </Select>
+              <span>Fragancia</span>
+            </ProductPickerLabel>
+            <ProductPickerLabel>
+              <Select 
+                onChange={this.handleChange} 
+                orange 
+                required 
+                name="sizeIndex" 
+                value={this.state.sizeIndex}
+              >
+                {frontmatter.sizes.map(({size}, index) => (
+                  <option key={size} value={index}>{size}</option>
+                ))}
+              </Select>
+              <span>Tamaño</span>
+            </ProductPickerLabel>
+            <ProductPickerLabel>
+              <Select 
+                onChange={this.handleChange} 
+                orange 
+                required 
+                name="colorIndex" 
+                value={this.state.colorIndex}
+              >
+                {colors.map(({name}, index) => (
+                  <option key={name} value={index}>{name}</option>
+                ))}
+              </Select>
+              <span>Color</span>
+            </ProductPickerLabel>
+            <Button style={{fontSize: '0.9rem', borderRadius: '0'}}>Añadir al carrito</Button>
+          </ProductInfo>
+        </ProductLayout>
+      </Layout>
+    );
+  }
 }
 
 export default Product;
@@ -164,6 +208,12 @@ export const dataQuery = graphql`
             } 
           }
         }
+      }
+    }
+
+    siteTitle: site {
+      siteMetadata {
+        title
       }
     }
   }

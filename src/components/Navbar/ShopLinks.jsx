@@ -51,9 +51,8 @@ const ShoppingCart = I.extend.attrs({
 
 const ShopLinks = () => (
   <Layout>
-    <SearchButton />
     <NavbarLink to="/cart"><ShoppingCart />(0)</NavbarLink>
-    <NavbarLink to="/cart">Ayuda</NavbarLink>
+    <NavbarLink to="/pedidos">Ayuda</NavbarLink>
   </Layout>
 );
 

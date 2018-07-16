@@ -2,13 +2,13 @@ backend:
   name: git-gateway
   branch: master
 
-media_folder: "static/assets"
-public_folder: "/assets"
+media_folder: "static/content/images"
+public_folder: "content/images"
 
 collections:
   - name: product
     label: Producto
-    folder: content/products
+    folder: static/content/products
     create: true
     fields:
       - { name: title, label: Title }
@@ -28,7 +28,7 @@ collections:
           - { label: "Nombre", name: name, widget: string }
   - name: policy
     label: "Política"
-    folder: content/policy
+    folder: static/content/policy
     create: true
     fields:
       - { name: title, label: Title }
@@ -37,7 +37,7 @@ collections:
       - { label: "Contenido", name: "body", widget: "markdown" }
   - name: fragance
     label: Fragancia
-    folder: content/fragances
+    folder: static/content/fragances
     create: true
     fields: 
       - { name: title, label: Nombre }

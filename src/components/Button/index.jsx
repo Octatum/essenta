@@ -11,15 +11,15 @@ const Button = styled.button.attrs({
   font-size: 1.5rem;
   border-radius: 6px;
   transition: 0.3s ease all;
-  -webkit-box-shdow: 0px 0.8em 5em -1em rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0px 0.8em 5em -1em rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 0.8em 5em -1em rgba(0, 0, 0, 0.3);
+  -webkit-box-shdow: 0px 0.2em 1em -0.2em rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 0.2em 1em -0.2em rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0.2em 1em -0.2em rgba(0, 0, 0, 0.3);
   padding: 0.6em;
 
   &:active {
-    -webkit-box-shadow: 0px 0.8em 5em -1em rgba(0,0,0,0.50);
-    -moz-box-shadow: 0px 0.8em 5em -1em rgba(0,0,0,0.50);
-    box-shadow: 0px 0.8em 5em -1em rgba(0,0,0,0.50);
+    -webkit-box-shadow: 0px 0.3em 1em -0.2em rgba(0,0,0,0.65);
+    -moz-box-shadow: 0px 0.3em 1em -0.2em rgba(0,0,0,0.65);
+    box-shadow: 0px 0.3em 1em -0.2em rgba(0,0,0,0.65);
   }
 
   &:focus {
