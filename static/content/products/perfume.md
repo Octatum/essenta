@@ -3,10 +3,10 @@ title: Perfume
 path: /perfume
 type: product
 sizes:
-  - image: /assets/descarga.jpg
+  - image: content/images/pink.png
     price: '82'
     size: chico
-  - image: /assets/img-838.jpg
+  - image: content/images/big.png
     price: '100'
     size: mediano
 colors:
