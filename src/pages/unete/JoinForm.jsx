@@ -31,13 +31,14 @@ const Legend = styled.legend`
   color: ${props => props.theme.color.black};
   font-weight: 700;
   position: relative;
-
+  /**
   &::before {
     counter-increment: fieldset;
     position: absolute;
     left: -1.3em;
     content: counter(fieldset) ". ";
   }
+  */
 `;
 
 const Label = styled.label`
