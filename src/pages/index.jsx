@@ -8,22 +8,6 @@ import MostSold from './home/MostSold';
 import HomeHeader from './home/HomeHeader';
 import SlideshowLayout from './home/SlideshowLayout';
 
-// todo 
-const itemsToRender = [
-  {
-    key: 1,
-    background: "darkred",
-  },
-  {
-    key: 2,
-    background: "teal",
-  },
-  {
-    key: 3,
-    background: "gray"
-  }
-];
-
 const Layout = styled.div`
   color: ${props => props.theme.mainLightText};
   font-family: ${props => props.theme.fonts.main};
@@ -110,7 +94,7 @@ function Home({data}) {
   return (
     <Layout>
       <MostSold products={highlightedProducts}/>
-      <SlideshowLayout items={itemsToRender}/>
+      <SlideshowLayout items={null}/>
       <SuggestedProducts>
         <HomeHeader>
           Recomendaciones

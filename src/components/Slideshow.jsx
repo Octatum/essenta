@@ -34,8 +34,27 @@ const SlideButton = styled.div.attrs({
 `;
 
 class Slideshow extends Component {
-  state = {
-    currentSlide: 0
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentSlide: 0
+    };
+
+    this.items = [
+      {
+        key: 1,
+        background: "darkred",
+      },
+      {
+        key: 2,
+        background: "teal",
+      },
+      {
+        key: 3,
+        background: "gray"
+      }
+    ]
   }
 
   componentDidMount() {
@@ -80,15 +99,15 @@ class Slideshow extends Component {
   }
 
   render() {
-    
-    const SlideButtons = this.props.items.map((_, index) => (
+
+    const SlideButtons = this.items.map((_, index) => (
       <SlideButton 
         selected={index === this.state.currentSlide}
         key={index}
         onClick={() => this.setCurrentSlide(index)} />
     ));
 
-    const currentItem = this.props.items[this.state.currentSlide];
+    const currentItem = this.items[this.state.currentSlide];
 
     return (
       <Fragment>
