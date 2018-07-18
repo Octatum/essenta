@@ -7,13 +7,21 @@ const policyComponent = path.resolve(`src/templates/policy.jsx`);
 
 const getAllFilesQuery = `
   query GetAllContentFiles {
-    allMarkdownRemark(filter: {frontmatter: {type: {regex: "/policy|product/"}}}) {
+    allMarkdownRemark(filter: {frontmatter: {type: {regex: "/policy/"}}}) {
       edges {
         node {
           frontmatter {
             type
             path
           }
+        }
+      }
+    }
+
+    products: allContentfulProductosEssenta {
+      edges {
+        node {
+          path
         }
       }
     }
@@ -29,8 +37,21 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     }
 
     result.data.allMarkdownRemark.edges.forEach(({node}) => createMarkdownPage(node, createPage));
+    result.data.products.edges.forEach(({node}) => createProductPage(node, createPage));
   });
 };
+
+function createProductPage({ path }, createPage) {
+  if(!path.startsWith('/')) {
+    path = `/${path}`;
+  }
+
+  createPage({
+    path, 
+    component: productComponent,
+    context: {}
+  })
+}
 
 function createMarkdownPage(node, createPage) {
   if(!node.frontmatter.path) return;
@@ -58,21 +79,4 @@ function getTemplateByType(type) {
   }
 
   return null;
-}
-
-
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
-  
-  // Ensures we are processing only markdown files
-  if (node.internal.type !== "MarkdownRemark" || !node.frontmatter.sizes) return;
-
-  node.frontmatter.sizes.forEach((value, index) => {
-    console.log(`image_${value.size}`);
-    createNodeField({
-      node,
-      name: `image_${value.size}`,
-      value: `.${value.image}`,
-    });
-  })
 }

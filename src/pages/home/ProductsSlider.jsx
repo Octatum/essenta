@@ -1,6 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
 import styled from 'styled-components';
+import Img from 'gatsby-image';
+import Link from 'gatsby-link';
 
 const ColorBox = styled.div`
   background: ${props => props.background};
@@ -36,6 +38,13 @@ const SlickNextArrow = ({ className, style, onClick }) => (
   />
 );
 
+const ImageWrapper = styled.div`
+  width: 220px;
+  max-height: 220px;
+  max-width: 220px;
+  height: auto;
+`;
+
 const ProductSlider = ({products}) => {
   
   const settings = {
@@ -54,7 +63,14 @@ const ProductSlider = ({products}) => {
   return (
     <Slider style={{position: 'relative', height: '100%'}} {...settings}>
       {products && products.map(item => (
-        <ColorBox background={item.product} key={item.key}/>
+        <Link to={item.path}>
+          <ImageWrapper>
+            <Img 
+              sizes={item.imageSizes} 
+              style={{maxWidth: '220px', maxHeight: '220px'}}
+            />
+          </ImageWrapper>
+        </Link>
       ))}
     </Slider>
   );

@@ -17,8 +17,8 @@ const AppLayout = styled.div`
 
 function getProductsUrlsFromEdges(edges) {
   const data = edges.map(({node}) => ({
-    name: node.childMarkdownRemark.frontmatter.title,
-    path: node.childMarkdownRemark.frontmatter.path,
+    name: node.title,
+    path: node.path,
   }));
 
   return data;
@@ -89,15 +89,11 @@ export const query = graphql`
       }
     }
     
-    productEdges: allFile(filter: {sourceInstanceName: {eq: "products"}}){
+    productEdges: allContentfulProductosEssenta {
       edges {
         node {
-          childMarkdownRemark {
-            frontmatter {
-              title
-              path
-            }
-          }
+          title
+          path
         }
       }
     }

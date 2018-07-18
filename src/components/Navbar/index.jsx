@@ -10,7 +10,6 @@ import logo from './assets/logo_horizontal.png';
 const NavLayout = styled.nav`
   display: flex;
   width: calc(100%);
-  padding-bottom: 1.5rem;
   flex-direction: column;
   justify-content: space-between;
   background: ${props => props.theme.background.main};
@@ -82,6 +81,13 @@ const Img = styled.img`
   max-height: 100%;
 `;
 
+const Spacer = styled.div`
+  width: 100%;
+  background: ${props => props.theme.background.secondary};
+  height: 2px;
+  margin-top: 1rem;
+`;
+
 const DropdownMenu = styled.div`
   background-color: ${props => props.theme.color.orange};
   display: flex;
@@ -142,6 +148,7 @@ function Navbar({urls}) {
           <ShopLinks />
         </ShopLinksSection>
       </NavlinksSection>
+      <Spacer />
     </NavLayout>
   );
 }

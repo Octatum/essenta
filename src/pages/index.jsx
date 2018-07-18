@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'gatsby-link';
+import Img from "gatsby-image";
 
-import ProductSlider from './../components/ProductsSlider';
-import Slideshow from './../components/Slideshow';
+import ConditionalLink from '../components/ConditionalLink';
+import MostSold from './home/MostSold';
+import HomeHeader from './home/HomeHeader';
+import SlideshowLayout from './home/SlideshowLayout';
 
 // todo 
 const itemsToRender = [
@@ -21,42 +24,6 @@ const itemsToRender = [
   }
 ];
 
-// todo 
-const mostSoldProducts = [
-  {
-    key: "darkred",
-    product: "darkred",
-  },
-  {
-    key: "chocolate",
-    product: "chocolate",
-  },
-  {
-    key: "steelblue",
-    product: "steelblue",
-  },
-  {
-    key: "mistyrose",
-    product: "mistyrose",
-  },
-  {
-    key: "teal",
-    product: "teal",
-  },
-  {
-    key: "darkgreen",
-    product: "darkgreen",
-  },
-  {
-    key: "navajoWhite",
-    product: "navajoWhite",
-  },
-  {
-    key: "white",
-    product: "white",
-  }
-]
-
 const Layout = styled.div`
   color: ${props => props.theme.mainLightText};
   font-family: ${props => props.theme.fonts.main};
@@ -64,6 +31,7 @@ const Layout = styled.div`
   flex-direction: column;
   max-width: 100vw;
   background: ${props => props.theme.background.main};
+  padding-top: 1.5rem;
 `;
 
 const AboutUsBanner = styled.div`
@@ -82,29 +50,6 @@ const AboutUsBanner = styled.div`
   padding: 1em 2em;
 `;
 
-const Spacer = styled.div`
-  width: 100%;
-  background: ${props => props.theme.background.secondary};
-  height: 2px;
-  margin: 1rem 0;
-`;
-
-const MostSold = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 22rem;
-  height: 55vh;
-`;
-
-const MostSoldHeader = styled.div`
-  font-family: ${props => props.theme.fonts.secondary};
-  font-weight: bold;
-  font-size: 2rem;
-  padding: 1rem 3rem;
-  color: ${props => props.theme.color.black};
-  text-transform: uppercase;
-  letter-spacing: -0.1em;
-`;
 
 const ViewMore = styled(Link)`
   color: ${props => props.theme.color.orange};
@@ -114,74 +59,152 @@ const ViewMore = styled(Link)`
   text-decoration: none;
 `;
 
-const ProductsLayout = styled.div`
-  padding: 1rem 7rem;
-  margin-top: 2rem;
-  height: 14rem;
-  max-height: 14rem;
-
-  & > .slick-slider {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-
-    & > div, 
-    & > div > div {
-      height: 100%;
-      width: 100%;
-    }
-  }
-`;
-
-const SlideshowLayout = styled.div`
-  margin-top: 2rem;
-  height: 33rem;
-  position: relative;
-`;
-
-const SlideshowItemRender = styled.div`
-  height: 100%;
-  width: 100%;
-  background: ${props => props.background};
-`;
-
 const SuggestedProducts = styled.div`
-  margin: 6.5rem 0;
+  margin: 5rem 0;
 `;
 
 const SuggestedProductsImage = styled.div`
   height: 36rem;
-  background: blue;
 `;
 
-const Home = () => (
-  <Layout>
-    <AboutUsBanner>Nosotros</AboutUsBanner>
-    <Spacer />
-    <MostSold>
-      <MostSoldHeader>
-        Lo más vendido
-        <ViewMore to="/">ver más</ViewMore>
-      </MostSoldHeader>
-      <ProductsLayout>
-        <ProductSlider products={mostSoldProducts} />
-      </ProductsLayout>
-    </MostSold>
-    <SlideshowLayout>
-      <Slideshow 
-        items={itemsToRender}
-        defaultElementRender={(data) => <SlideshowItemRender {...data}/>}
-        timeBetweenSlides={5000}/>
-    </SlideshowLayout>
-    <SuggestedProducts>
-      <MostSoldHeader>
-        Recomendaciones
-        <ViewMore to="/">ver más</ViewMore>
-      </MostSoldHeader>
-      <SuggestedProductsImage />
-    </SuggestedProducts>
-  </Layout>
-);
+function getRecommendedImageNode(recommendedImages) {
+  if(!recommendedImages || recommendedImages.edges.length === 0) return null;
+
+  return recommendedImages.edges[0].node;
+}
+
+function getHighlightedProductsFromCategories(categories) {
+  if (!categories) return [];
+
+  const listOfProducts = categories.edges.map(({node: {path, sizes}}) => {
+    const filteredSizes = sizes.filter(s => s.highlight);
+
+    return filteredSizes.map(size => ({
+      key: size.id,
+      path,
+      name: size.sizeName,
+      imageSizes: size.image.sizes,
+    }));
+  });
+
+  return listOfProducts.reduce((accumulator, current) => [...accumulator, ...current], []);
+}
+
+function Home({data}) {
+  const { 
+    allEssentaProducts, 
+    recommendedImages, 
+    categoriesWithHighlightedProducts 
+  } = data;
+  const recommendedImageNode = getRecommendedImageNode(recommendedImages);
+  const highlightedProducts = getHighlightedProductsFromCategories(categoriesWithHighlightedProducts);
+  const imgStyle = {
+    width: 'auto', 
+    height: '36rem',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    left: 0,
+    right: 0
+  }
+
+  return (
+    <Layout>
+      <MostSold products={highlightedProducts}/>
+      <SlideshowLayout items={itemsToRender}/>
+      <SuggestedProducts>
+        <HomeHeader>
+          Recomendaciones
+          <ViewMore to="/">ver más</ViewMore>
+        </HomeHeader>
+        <SuggestedProductsImage>
+          <ConditionalLink to={recommendedImageNode.path} condition={recommendedImageNode.path && recommendedImageNode.path.length > 0}>
+            <Img sizes={recommendedImageNode.image.sizes} imgStyle={imgStyle} position='absolute' />
+          </ConditionalLink>
+        </SuggestedProductsImage>
+      </SuggestedProducts>
+    </Layout>
+  );
+}
 
 export default Home;
+
+export const dataQuery = graphql`
+  query HomeImages {
+    allEssentaProducts: allContentfulProductosEssenta {
+      edges {
+        node {
+          path
+          sizes {
+            highlight
+            image {
+              resolutions (width: 100) {
+                src
+              }
+            }
+          }
+        }
+      }
+    }
+
+    fragances: allFile(filter: {sourceInstanceName: {eq: "fragances"}}) {
+      edges {
+        node {
+          childMarkdownRemark {
+            frontmatter {
+              title
+              label
+            } 
+          }
+        }
+      }
+    }
+
+    recommendedImages: allContentfulImagenesEssenta(filter: {usage: {eq: "Recomendados"}}) {
+      edges {
+        node {
+          id
+          usage
+          alt
+          path
+          image{
+            sizes(maxWidth: 1300) {
+              base64
+              tracedSVG
+              aspectRatio
+              src
+              srcSet
+              srcWebp
+              srcSetWebp
+              sizes
+            }
+          }
+        }
+      }
+    }
+
+    categoriesWithHighlightedProducts: allContentfulProductosEssenta(filter: { sizes: { highlight: {eq: true}}} ) {
+      edges {
+        node {
+          path
+          sizes {
+            id
+            sizeName
+            highlight
+            image {
+              sizes(maxWidth: 300) {
+                base64
+                tracedSVG
+                aspectRatio
+                src
+                srcSet
+                srcWebp
+                srcSetWebp
+                sizes
+              }
+            } 
+          }
+        }
+      }
+    }
+  }
+`;

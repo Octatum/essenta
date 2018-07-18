@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Breadcrumbs from './../components/Breadcrumbs';
 import { Select } from '../components/Input';
 import Button from './../components/Button/index';
+import Img from 'gatsby-image';
 
 const Layout = styled.div`
   display: flex;
@@ -20,10 +21,9 @@ const ProductLayout = styled.div`
 `;
 
 const ProductView = styled.div`
-  display: flex;
-  align-items: center;
   width: 35%;
-  height: 100%;
+  box-sizing: border-box;
+  margin: 20% 0;
 `;
 
 const ProductInfo = styled.div`
@@ -80,18 +80,6 @@ const ProductPickerLabel = styled.label`
   }
 `;
 
-const Img = styled.img`
-  max-width: 100%;
-  width: 100%;
-`;
-
-function getFragancesDataFromEdges(edges) {
-  return edges.map(({node}) => ({
-    title: node.childMarkdownRemark.frontmatter.title,
-    label: node.childMarkdownRemark.frontmatter.label
-  }));
-}
-
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -107,7 +95,6 @@ class Product extends Component {
 
   handleChange(event) {
     const {target} = event;
-    console.log(target.value)
 
     this.setState({
       [target.name]: target.value
@@ -115,20 +102,22 @@ class Product extends Component {
   }
 
   render() {
-    const { markdownRemark, fragances } = this.props.data;
-    const { frontmatter } = markdownRemark;
-    const { colors } = frontmatter;
-    const fragancesData = getFragancesDataFromEdges(fragances.edges);
+    const { product, fragances } = this.props.data;
+    const { colors } = product;
 
     return (
       <Layout>
         <Breadcrumbs />
         <ProductLayout>
-          <ProductView><Img src={markdownRemark.frontmatter.sizes[this.state.sizeIndex].image} /></ProductView>
+          <ProductView>
+            <Img 
+              sizes={product.sizes[this.state.sizeIndex].image.sizes} 
+              imgStyle={{top: '50%', transform: 'translateY(-50%)'}}
+            />
+          </ProductView>
           <ProductInfo>
-            <ProductTitle>Arma tu {frontmatter.title}</ProductTitle>
-            <ProductPrice>${frontmatter.sizes[this.state.sizeIndex].price}</ProductPrice>
-            <ProductDescription>{frontmatter.description}</ProductDescription>
+            <ProductTitle>Arma tu {product.title}</ProductTitle>
+            <ProductPrice>${product.sizes[this.state.sizeIndex].sizePrice}</ProductPrice>
             <ProductPickerLabel>
               <Select 
                 onChange={this.handleChange} 
@@ -137,8 +126,8 @@ class Product extends Component {
                 name="fraganceIndex" 
                 value={this.state.fraganceIndex}
               >
-                {fragancesData.map(({title, label}, index) => (
-                  <option key={title} value={index}>{label}</option>
+                {fragances.edges.map(({node: {name}}, index) => (
+                  <option key={name} value={index}>{name}</option>
                 ))}
               </Select>
               <span>Fragancia</span>
@@ -151,8 +140,8 @@ class Product extends Component {
                 name="sizeIndex" 
                 value={this.state.sizeIndex}
               >
-                {frontmatter.sizes.map(({size}, index) => (
-                  <option key={size} value={index}>{size}</option>
+                {product.sizes.map(({sizeName}, index) => (
+                  <option key={sizeName} value={index}>{sizeName}</option>
                 ))}
               </Select>
               <span>Tamaño</span>
@@ -165,7 +154,7 @@ class Product extends Component {
                 name="colorIndex" 
                 value={this.state.colorIndex}
               >
-                {colors.map(({name}, index) => (
+                {colors.map((name, index) => (
                   <option key={name} value={index}>{name}</option>
                 ))}
               </Select>
@@ -183,30 +172,32 @@ export default Product;
 
 export const dataQuery = graphql`
   query ProductByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      frontmatter {
-        title
-        path
-        sizes {
-          image
-          price
-          size
-        }
-        colors {
-          name
+    product: contentfulProductosEssenta (path: { eq: $path }) {
+      title
+      path
+      sizes {
+        sizeName
+        sizePrice
+        image {
+          sizes(maxWidth: 400) {
+            base64
+            tracedSVG
+            aspectRatio
+            src
+            srcSet
+            srcWebp
+            srcSetWebp
+            sizes
+          }
         }
       }
+      colors
     }
 
-    fragances: allFile(filter: {sourceInstanceName: {eq: "fragances"}}) {
+    fragances: allContentfulFragancias {
       edges {
         node {
-          childMarkdownRemark {
-            frontmatter {
-              title
-              label
-            } 
-          }
+          name
         }
       }
     }

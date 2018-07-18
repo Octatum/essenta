@@ -57,7 +57,6 @@ const Spacer = styled.div`
 function Unete () {
   return (
     <Layout>
-      <ImageBanner />
       <Breadcrumbs />
       <TitleBanner>
         <TitleBlock>Inicia tu propio negocio hoy</TitleBlock>
