@@ -25,6 +25,10 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
+strong {
+  font-weight: 700;
+}
+
 @font-face {
   font-family: caviarDreams;
   src: url('/fonts/CaviarDreams.ttf');

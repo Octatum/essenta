@@ -1,26 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { TextInput } from '../Input/index';
 import Button from '../Button/index';
+import { device } from '../../utilities/device';
 
 const Layout = styled.div`
   display: flex;
+
+  ${device.laptop} {
+    flex-direction: column;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
-  width: 56%;
+  flex: 3;
   justify-content: space-between;
 `;
 
 const ContactInfo = styled.div`
   display: flex;
-  width: 44%;
+  flex: 2;
   justify-content: space-between;
   align-items: center;
   font-size: 1.2rem;
   box-sizing: border-box;
-  padding: 0 3rem;
+  padding: 0 2rem;
+
+  ${device.laptop} {
+    margin-top: 1em;
+  }
 `;
 
 const CallUs = styled.div`
@@ -73,7 +83,7 @@ class ContactForm extends React.Component {
         <Form action="" name="contacto" netlify>
           <TextInput
             style={{
-              width: '65%',
+              flex: '6',
               fontSize: '1rem',
               textAlign: 'center'
             }}
@@ -86,8 +96,9 @@ class ContactForm extends React.Component {
           <Button
             onClick={this.submitForm}
             style={{
-              width: '31%',
-              fontSize: '1.5rem',
+              flex: '4',
+              marginLeft: '1em',
+              fontSize: '1.3rem',
               textAlign: 'center'
             }}
           >

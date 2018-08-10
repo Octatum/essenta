@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "../../utilities/device";
 
 const HomeHeader = styled.div`
   font-family: ${props => props.theme.fonts.secondary};
@@ -8,6 +9,10 @@ const HomeHeader = styled.div`
   color: ${props => props.theme.color.black};
   text-transform: uppercase;
   letter-spacing: -0.1em;
+
+  ${device.tablet} {
+    font-size: 1.5rem;
+  }
 `;
 
 export default HomeHeader;

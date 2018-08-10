@@ -4,11 +4,10 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.273",
+    "gatsby": "^1.9.277",
     "gatsby-cli": "^1.1.58",
     "gatsby-image": "^1.0.54",
     "gatsby-link": "^1.6.40",
-    "gatsby-plugin-netlify-cms": "^2.0.1",
     "gatsby-plugin-react-helmet": "^2.0.10",
     "gatsby-plugin-react-next": "^1.0.11",
     "gatsby-plugin-sharp": "^1.6.48",
@@ -20,8 +19,10 @@
     "gatsby-source-filesystem": "^1.5.39",
     "gatsby-transformer-remark": "^1.7.44",
     "gatsby-transformer-sharp": "^1.6.27",
+    "mobx": "^5.0.3",
+    "mobx-react": "^5.2.3",
     "moment": "^2.22.2",
-    "netlify-cms": "^1.9.3",
+    "prop-types": "^15.6.2",
     "react-datepicker": "^1.5.0",
     "react-helmet": "^5.2.0",
     "react-markdown": "^3.3.4",
@@ -42,6 +43,7 @@
     "start": "gatsby develop"
   },
   "devDependencies": {
+    "mobx-react-devtools": "^6.0.2",
     "prettier": "^1.12.0"
   },
   "repository": {

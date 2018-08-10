@@ -6,6 +6,7 @@ import NavbarLink from './NavbarLink';
 import Header from './Header';
 
 import logo from './assets/logo_horizontal.png';
+import { device } from '../../utilities/device';
 
 const NavLayout = styled.nav`
   display: flex;
@@ -33,11 +34,17 @@ const LinksSection = styled.div`
   font-family: ${props => props.theme.fonts.secondary};
   position: relative;
   justify-content: space-between;
-  min-width: 60%;
-  max-width: 60%;
+  flex: 6;
+  height: auto;
+
+  > *:not(:last-child) {
+    flex: 1;
+    text-align: center;
+  }
+
 `;
 
-const HoverableItem = styled.div`
+const HoverableItem = NavbarLink.extend`
   font-size: 1.2em;
   color: ${props => props.theme.color.black};
   text-transform: uppercase;
@@ -45,6 +52,12 @@ const HoverableItem = styled.div`
 
   &::after {
     content: "▾";
+  }
+
+  ${device.tablet} {
+    ::after {
+      display: none;
+    }
   }
 
   &::before {
@@ -71,10 +84,16 @@ const NavlinksSection = styled.div`
   padding: 0 3.5em;
   height: 2em;
   font-weight: bold;
+
+  ${device.tablet} {
+    height: auto;
+    padding: 0;
+    flex-direction: column;
+  }
 `;
 
 const ShopLinksSection = styled.div`
-  flex: 1;
+  flex: 3;
 `;
 
 const Img = styled.img`
@@ -122,6 +141,10 @@ const DropdownMenu = styled.div`
       opacity: 1;
     }
   }
+
+  ${device.tablet} {
+    display: none;
+  }
 `;
 
 function loseFocus({target}) {
@@ -136,7 +159,7 @@ function Navbar({urls}) {
       <NavlinksSection>
         <LinksSection>
           <NavbarLink to="/perfume">Elabora tu perfume</NavbarLink>
-          <HoverableItem>Catálogo</HoverableItem>
+          <HoverableItem to="/catalogo">Catálogo</HoverableItem>
           <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
           <DropdownMenu className="navbar">
             {urls.map(({name, path}) => (

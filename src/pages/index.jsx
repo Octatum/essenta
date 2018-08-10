@@ -4,9 +4,10 @@ import Link from 'gatsby-link';
 import Img from "gatsby-image";
 
 import ConditionalLink from '../components/ConditionalLink';
-import MostSold from './home/MostSold';
-import HomeHeader from './home/HomeHeader';
-import SlideshowLayout from './home/SlideshowLayout';
+import MostSold from '../components/home/MostSold';
+import HomeHeader from '../components/home/HomeHeader';
+import SlideshowLayout from '../components/home/SlideshowLayout';
+import { device } from '../utilities/device';
 
 const Layout = styled.div`
   color: ${props => props.theme.mainLightText};
@@ -17,23 +18,6 @@ const Layout = styled.div`
   background: ${props => props.theme.background.main};
   padding-top: 1.5rem;
 `;
-
-const AboutUsBanner = styled.div`
-  background: chocolate;
-  text-transform: uppercase;
-  color: white;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  width: calc(100% - 4em);
-  font-size: 2.7rem;
-  font-family: ${props => props.theme.fonts.secondary};
-  font-weight: bold;
-  min-height: 12rem;
-  height: 27vh;
-  padding: 1em 2em;
-`;
-
 
 const ViewMore = styled(Link)`
   color: ${props => props.theme.color.orange};
@@ -56,6 +40,20 @@ function getRecommendedImageNode(recommendedImages) {
 
   return recommendedImages.edges[0].node;
 }
+function getSlideshowImagesFromData(slideImages) {
+  if(!slideImages || slideImages.edges.length === 0) return [];
+
+  return slideImages.edges.map(({node}) => {
+    const {alt, id, path, image} = node;
+
+    return {
+      key: id,
+      alt,
+      path,
+      src: image.sizes.src
+    }
+  });
+}
 
 function getHighlightedProductsFromCategories(categories) {
   if (!categories) return [];
@@ -76,11 +74,13 @@ function getHighlightedProductsFromCategories(categories) {
 
 function Home({data}) {
   const { 
-    allEssentaProducts, 
-    recommendedImages, 
-    categoriesWithHighlightedProducts 
+    allEssentaProducts,
+    recommendedImages,
+    slideshowImages,
+    categoriesWithHighlightedProducts
   } = data;
   const recommendedImageNode = getRecommendedImageNode(recommendedImages);
+  const cleanSlideshowImages = getSlideshowImagesFromData(slideshowImages);
   const highlightedProducts = getHighlightedProductsFromCategories(categoriesWithHighlightedProducts);
   const imgStyle = {
     width: 'auto', 
@@ -93,12 +93,12 @@ function Home({data}) {
 
   return (
     <Layout>
-      <MostSold products={highlightedProducts}/>
-      <SlideshowLayout items={null}/>
+      <MostSold products={highlightedProducts} />
+      <SlideshowLayout items={cleanSlideshowImages} />
       <SuggestedProducts>
         <HomeHeader>
           Recomendaciones
-          <ViewMore to="/">ver más</ViewMore>
+          <ViewMore to={recommendedImageNode.path}>ver más</ViewMore>
         </HomeHeader>
         <SuggestedProductsImage>
           <ConditionalLink to={recommendedImageNode.path} condition={recommendedImageNode.path && recommendedImageNode.path.length > 0}>
@@ -122,7 +122,7 @@ export const dataQuery = graphql`
             highlight
             image {
               resolutions (width: 100) {
-                src
+              ...GatsbyContentfulResolutions
               }
             }
           }
@@ -147,19 +147,26 @@ export const dataQuery = graphql`
       edges {
         node {
           id
-          usage
           alt
           path
-          image{
+          image {
             sizes(maxWidth: 1300) {
-              base64
-              tracedSVG
-              aspectRatio
-              src
-              srcSet
-              srcWebp
-              srcSetWebp
-              sizes
+              ...GatsbyContentfulSizes
+            }
+          }
+        }
+      }
+    }
+
+    slideshowImages: allContentfulImagenesEssenta(filter: {usage: {eq: "Slideshow"}}) {
+      edges {
+        node {
+          id
+          alt
+          path
+          image {
+            sizes(maxWidth: 1300) {
+              ...GatsbyContentfulSizes
             }
           }
         }
@@ -176,14 +183,7 @@ export const dataQuery = graphql`
             highlight
             image {
               sizes(maxWidth: 300) {
-                base64
-                tracedSVG
-                aspectRatio
-                src
-                srcSet
-                srcWebp
-                srcSetWebp
-                sizes
+                ...GatsbyContentfulSizes
               }
             } 
           }

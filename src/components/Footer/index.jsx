@@ -17,7 +17,6 @@ const ContactInfo = styled.div`
   border: 2px solid ${props => props.theme.background.secondary};
   border-left: 0px;
   border-right: 0px;
-  height: 56px; 
 `;
 
 const JoinUsButton = styled.div`

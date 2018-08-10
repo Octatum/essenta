@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled, { ThemeProvider } from 'styled-components';
+import { Provider } from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
 
+import CartStore from '../stores/CartStore'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { globalTheme } from './themes';
@@ -24,19 +27,7 @@ function getProductsUrlsFromEdges(edges) {
   return data;
 }
 
-function netlifyIdentiy () {
-  if (typeof window !== 'undefined' && window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    })
-  }
-
-  return "";
-}
+const cartStore = new CartStore();
 
 const Layout = ({ children, data }) => {
   const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
@@ -58,17 +49,14 @@ const Layout = ({ children, data }) => {
               crossorigin:"anonymous"
             }
           ]}
-          script={[
-            {
-              src:"https://identity.netlify.com/v1/netlify-identity-widget.js"
-            }
-          ]}
         />
-        <Navbar urls={productsUrls}/>
-        <div>
-          {children()}
-        </div>
-        {netlifyIdentiy()}
+        <Provider cartStore={cartStore}>
+          <div>
+            <Navbar urls={productsUrls}/>
+            {children()}
+            <DevTools />
+          </div>
+        </Provider>
         <Footer />
       </AppLayout>
     </ThemeProvider>

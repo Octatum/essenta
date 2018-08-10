@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { NodeGroup } from 'react-move';
 
-const defaultTimeBetweenSlides = 999999;
+
+const defaultTimeBetweenSlides = 5000;
 
 const Controllers = styled.div`
   position: absolute; 
@@ -34,27 +35,8 @@ const SlideButton = styled.div.attrs({
 `;
 
 class Slideshow extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentSlide: 0
-    };
-
-    this.items = [
-      {
-        key: 1,
-        background: "darkred",
-      },
-      {
-        key: 2,
-        background: "teal",
-      },
-      {
-        key: 3,
-        background: "gray"
-      }
-    ]
+  state = {
+    currentSlide: 0
   }
 
   componentDidMount() {
@@ -100,14 +82,15 @@ class Slideshow extends Component {
 
   render() {
 
-    const SlideButtons = this.items.map((_, index) => (
+    const SlideButtons = this.props.items.map((_, index) => (
       <SlideButton 
         selected={index === this.state.currentSlide}
         key={index}
-        onClick={() => this.setCurrentSlide(index)} />
+        onClick={() => this.setCurrentSlide(index)} 
+      />
     ));
 
-    const currentItem = this.items[this.state.currentSlide];
+    const currentItem = this.props.items[this.state.currentSlide];
 
     return (
       <Fragment>
@@ -135,24 +118,26 @@ class Slideshow extends Component {
             opacity: [0],
             translateY: [10],
             timing: { duration: 200 },
-          })}>
-            {(nodes) => (
-              <FullSizeDiv>
-                {nodes.map(({key, data, state: { opacity } }) => (
-                  <div
-                    key={key}
-                    style={{
-                      position: 'absolute',
-                      width: "100%",
-                      height: "100%",
-                      top: 0,
-                      left: 0,
-                      opacity,
-                    }}>
-                    {data.render ? data.render(data) : this.props.defaultElementRender(data)}
-                  </div>
-                ))}
-              </FullSizeDiv>)} 
+          })}
+        >
+          {(nodes) => (
+            <FullSizeDiv>
+              {nodes.map(({key, data, state: { opacity } }) => (
+                <div
+                  key={key}
+                  style={{
+                    position: 'absolute',
+                    width: "100%",
+                    height: "100%",
+                    top: 0,
+                    left: 0,
+                    opacity,
+                  }}
+                >
+                  {data.render ? data.render(data) : this.props.defaultElementRender(data)} 
+                </div>
+              ))}
+            </FullSizeDiv>)} 
         </NodeGroup>
         <Controllers>
           {SlideButtons}

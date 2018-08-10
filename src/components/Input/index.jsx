@@ -24,6 +24,7 @@ export const Select = styled.select.attrs({
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
   transition: 0.3s ease background-color;
+  margin-right: 1em;
 
   :focus {
     background: ${props => props.orange ? props.theme.color.darkOrange : 'white'};

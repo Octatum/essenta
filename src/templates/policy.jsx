@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 
 import Breadcrumbs from './../components/Breadcrumbs';
+import { device } from '../utilities/device';
 
 const Layout = styled.div`  
   display: flex;
@@ -25,6 +26,11 @@ const TitleBlock = styled.div`
   padding: 0.5rem 1rem;
   color: ${props => props.theme.color.black};
   border: 0.2rem solid ${props => props.theme.color.black};
+
+  ${device.tablet} {
+    max-width: 60%;
+    font-size: 3rem;
+  }
 `;
 
 const ContentBlock = styled.div`
@@ -40,6 +46,15 @@ const Content = styled(ReactMarkdown)`
   line-height: 1.2em;
   width: 60%;
   color: ${props => props.theme.color.black};
+
+  ${device.tablet} {
+    width: 80%; 
+  }
+
+  ${device.mobile} {
+    width: 90%;
+    font-size: 1.2rem;
+  }
 
   & strong {
     font-weight: 700;
@@ -68,7 +83,7 @@ const Content = styled(ReactMarkdown)`
 
 function Privacidad ({data}) {
   const { markdownRemark } = data;
-  const { frontmatter, html, rawMarkdownBody } = markdownRemark;
+  const { frontmatter, rawMarkdownBody } = markdownRemark;
 
   return (
     <Layout>
@@ -77,9 +92,7 @@ function Privacidad ({data}) {
         <TitleBlock>{frontmatter.title}</TitleBlock>
       </TitleBanner>
       <ContentBlock>
-        <Content 
-          source={rawMarkdownBody}
-        />
+        <Content source={rawMarkdownBody} />
       </ContentBlock>
     </Layout>
   );
@@ -90,7 +103,6 @@ export default Privacidad;
 export const pageQuery = graphql`
   query PolicyByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
       rawMarkdownBody
       frontmatter {
         title

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import GatsbyImg from 'gatsby-image';
+import { inject } from 'mobx-react';
 
 import Breadcrumbs from './../components/Breadcrumbs';
 import { Select } from '../components/Input';
 import Button from './../components/Button/index';
-import Img from 'gatsby-image';
+import { device } from '../utilities/device';
 
 const Layout = styled.div`
   display: flex;
@@ -14,22 +16,26 @@ const Layout = styled.div`
 
 const ProductLayout = styled.div`
   display: flex;
-  width: 70rem;
-  height: 45rem;
+  width: 80%;
+  min-height: 35em;
   justify-content: space-between;
   align-items: center;
+
+  ${device.tablet} {
+    flex-direction: column;
+    margin-bottom: 3em;
+  }
 `;
 
 const ProductView = styled.div`
-  width: 35%;
-  box-sizing: border-box;
-  margin: 20% 0;
+  flex: 4;
+  min-width: 400px;
 `;
 
 const ProductInfo = styled.div`
   font-family: ${props => props.theme.fonts.main};
   box-sizing: border-box;
-  width: 57%;
+  flex: 6;
 `;
 
 const ProductTitle = styled.div`
@@ -41,11 +47,6 @@ const ProductTitle = styled.div`
 
 const ProductPrice = styled.div`
   font-size: 1.6rem;
-`;
-
-const ProductDescription = styled.div`
-  font-size: 1.5rem;
-  margin: 2rem 0;
 `;
 
 const ProductPickerLabel = styled.label`
@@ -80,6 +81,11 @@ const ProductPickerLabel = styled.label`
   }
 `;
 
+const Img = styled(GatsbyImg)`
+  width: 100%;
+  max-width: 400px;
+`;
+
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -91,6 +97,10 @@ class Product extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  addProduct = (product) => {
+    this.props.cartStore.addProduct(product);
   }
 
   handleChange(event) {
@@ -147,7 +157,7 @@ class Product extends Component {
               <span>Tamaño</span>
             </ProductPickerLabel>
             <ProductPickerLabel>
-              <Select 
+              <Select
                 onChange={this.handleChange} 
                 orange 
                 required 
@@ -160,7 +170,21 @@ class Product extends Component {
               </Select>
               <span>Color</span>
             </ProductPickerLabel>
-            <Button style={{fontSize: '0.9rem', borderRadius: '0'}}>Añadir al carrito</Button>
+            <Button
+              style={{fontSize: '0.9rem', borderRadius: '0'}}
+              onClick={() => this.addProduct({
+                productId: product.id,
+                color: colors[this.state.colorIndex],
+                size: product.sizes[this.state.sizeIndex].sizeName,
+                sizeId: product.sizes[this.state.sizeIndex].id,
+                fragance: fragances.edges[this.state.fraganceIndex].node.name,
+                name: product.title,
+                price: product.sizes[this.state.sizeIndex].sizePrice,
+                thumbnail: product.sizes[this.state.sizeIndex].image.thumbnail.src
+              })}
+            >
+              Añadir al carrito
+            </Button>
           </ProductInfo>
         </ProductLayout>
       </Layout>
@@ -168,14 +192,16 @@ class Product extends Component {
   }
 }
 
-export default Product;
+export default inject("cartStore")(Product);
 
 export const dataQuery = graphql`
   query ProductByPath($path: String!) {
     product: contentfulProductosEssenta (path: { eq: $path }) {
+      id
       title
       path
       sizes {
+        id
         sizeName
         sizePrice
         image {
@@ -188,6 +214,9 @@ export const dataQuery = graphql`
             srcWebp
             srcSetWebp
             sizes
+          }
+          thumbnail: resize(width: 160, height: 160) {
+            src
           }
         }
       }

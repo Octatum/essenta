@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import ProductSlider from './ProductsSlider';
 import HomeHeader from './HomeHeader';
+import { device } from '../../utilities/device';
 
 const Layout = styled.div`
   display: flex;
@@ -28,6 +29,18 @@ const ProductsLayout = styled.div`
       height: 100%;
       width: 100%;
     }
+  }
+
+  ${device.laptop} {
+    padding: 1rem 4rem;
+  }
+
+  ${device.tablet} {
+    padding: 1rem;
+  }
+
+  ${device.mobile} {
+    padding: 1rem 0;
   }
 `;
 

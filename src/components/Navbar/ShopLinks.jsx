@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { observer, inject } from 'mobx-react';
 
 import NavbarLink from './NavbarLink';
 
@@ -37,10 +38,6 @@ const I = styled.i`
   position: relative;
 `;
 
-const SearchButton = I.extend.attrs({
-  className: 'fa fa-search'
-})``;
-
 const ShoppingCart = I.extend.attrs({
   className: 'fas fa-shopping-cart'
 })`
@@ -49,11 +46,11 @@ const ShoppingCart = I.extend.attrs({
   padding-right: 0.3rem;
 `;
 
-const ShopLinks = () => (
+const ShopLinks = ({cartStore}) => (
   <Layout>
-    <NavbarLink to="/cart"><ShoppingCart />(0)</NavbarLink>
+    <NavbarLink to="/carrito"><ShoppingCart />({cartStore.products.length})</NavbarLink>
     <NavbarLink to="/pedidos">Ayuda</NavbarLink>
   </Layout>
 );
 
-export default ShopLinks;
+export default inject("cartStore")(observer(ShopLinks));

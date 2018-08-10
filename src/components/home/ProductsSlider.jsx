@@ -3,12 +3,7 @@ import Slider from "react-slick";
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 import Link from 'gatsby-link';
-
-const ColorBox = styled.div`
-  background: ${props => props.background};
-  height: 15rem;
-  width: 100%;
-`;
+import { screenBreakpoints } from './../../utilities/device';
 
 const SliderArrow = styled.i`
   font-size: 5em;
@@ -43,6 +38,12 @@ const ImageWrapper = styled.div`
   max-height: 220px;
   max-width: 220px;
   height: auto;
+  position: relative;
+`;
+
+const ProductWrapper = styled(Link)`
+  display: inline-flex !important;
+  justify-content: center;
 `;
 
 const ProductSlider = ({products}) => {
@@ -52,25 +53,49 @@ const ProductSlider = ({products}) => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
     arrows: true,
     autoplaySpeed: 3000,
     autoplay: true,
     prevArrow: <SlickPrevArrow />,
-    nextArrow: <SlickNextArrow />
+    nextArrow: <SlickNextArrow />,
+    responsive: [
+      {
+        breakpoint: screenBreakpoints.laptop,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: screenBreakpoints.tablet,
+        settings: {
+          slidesToShow: 2,
+          dots: false,
+          arrows: true,
+        },
+      },
+      {
+        breakpoint: screenBreakpoints.mobile,
+        settings: {
+          slidesToShow: 1,
+          dots: false,
+          arrows: true,
+        },
+      },
+    ],
   };
 
   return (
     <Slider style={{position: 'relative', height: '100%'}} {...settings}>
       {products && products.map(item => (
-        <Link to={item.path}>
+        <ProductWrapper to={item.path} key={item.key}>
           <ImageWrapper>
             <Img 
               sizes={item.imageSizes} 
               style={{maxWidth: '220px', maxHeight: '220px'}}
             />
           </ImageWrapper>
-        </Link>
+        </ProductWrapper>
       ))}
     </Slider>
   );
