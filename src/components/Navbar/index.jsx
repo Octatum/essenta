@@ -167,7 +167,7 @@ function Navbar({urls}) {
       <NavlinksSection>
         <LinksSection>
           <NavbarLink to="/perfume">Elabora tu perfume</NavbarLink>
-          <HoverableItem to="/catalogo">Catálogo</HoverableItem>
+          <HoverableItem to="/">Catálogo</HoverableItem>
           <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
           <DropdownMenu className="navbar">
             {urls.map(({name, path}) => (
