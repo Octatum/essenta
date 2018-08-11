@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled, { ThemeProvider } from 'styled-components';
 import { Provider } from 'mobx-react';
-import DevTools from 'mobx-react-devtools';
 
 import CartStore from '../stores/CartStore'
 import Navbar from '../components/Navbar';
@@ -60,7 +59,6 @@ const Layout = ({ children, data }) => {
           <div>
             <Navbar urls={productsUrls}/>
             {children()}
-            <DevTools />
           </div>
         </Provider>
         <Footer />
