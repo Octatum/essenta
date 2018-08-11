@@ -56,6 +56,10 @@ const Content = styled(ReactMarkdown)`
     font-size: 1.2rem;
   }
 
+  & a {
+    color: inherit;
+  }
+
   & strong {
     font-weight: 700;
   }

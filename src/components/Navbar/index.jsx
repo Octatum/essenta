@@ -98,6 +98,14 @@ const ShopLinksSection = styled.div`
 
 const Img = styled.img`
   max-height: 100%;
+
+  ${device.tablet} {
+    max-width: 15em;
+  }
+
+  ${device.mobile} {
+    max-width: 10em;
+  }
 `;
 
 const Spacer = styled.div`

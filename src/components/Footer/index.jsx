@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import ContactForm from './ContactForm';
 import AppLink from '../AppLink';
+import { device } from '../../utilities/device';
 
 const Layout = styled.div`
   display: flex;
@@ -46,6 +47,26 @@ const RelevantInformation = styled.div`
   grid-template-areas: 
     "about policy ."
     "copyright terms privacy";
+
+  ${device.tablet} {
+    padding: 4rem 2rem;
+    grid-template: auto auto auto / repeat(2, 1fr);
+    grid-template-areas: 
+      "about policy"
+      "copyright terms"
+      "privacy .";
+  }
+
+  ${device.mobile} {
+    padding: 4rem 2rem;
+    grid-template: repeat(5, auto) / 1fr;
+    grid-template-areas: 
+      "about"
+      "policy"
+      "copyright"
+      "terms"
+      "privacy";
+  }
 `;
 
 const SectionHeader = styled.div`
@@ -82,11 +103,19 @@ const About = InformationSection.extend`
 const HowToBuy = InformationSection.extend`
   grid-area: how-to-buy;
   justify-self: center;
+
+  ${device.tablet} {
+    jusify-self: flex-start;
+  }
 `;
 
 const Policy = InformationSection.extend`
   grid-area: policy;
   justify-self: center;
+
+  ${device.tablet} {
+    justify-self: flex-start;
+  }
 `;
 
 const AditionalInformationSection = styled.div`
@@ -94,6 +123,10 @@ const AditionalInformationSection = styled.div`
   font-size: 1.4rem;
   margin: 4rem 0;
   color: ${props => props.theme.color.black};
+
+  ${device.tablet} {
+    margin: 2rem 0;
+  }
 `;
 
 const Copyright = AditionalInformationSection.extend`
@@ -103,11 +136,19 @@ const Copyright = AditionalInformationSection.extend`
 const TermsNConditions = AditionalInformationSection.extend`
   grid-area: terms;
   justify-self: center;
+  
+  ${device.tablet} {
+    justify-self: flex-start;
+  }
 `;
 
 const Privacy = AditionalInformationSection.extend`
   grid-area: privacy;
   justify-self: flex-end;
+
+  ${device.tablet} {
+    justify-self: flex-start;
+  }
 `;
 
 function Footer() {
