@@ -33,6 +33,7 @@ const SuggestedProducts = styled.div`
 
 const SuggestedProductsImage = styled.div`
   height: 36rem;
+  overflow: hidden;
 `;
 
 function getRecommendedImageNode(recommendedImages) {

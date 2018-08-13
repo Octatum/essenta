@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import _DatePicker from 'react-datepicker';
 import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { TextInput as _TextInput, Select as _Select } from './../../components/Input/index';
 import Button from './../../components/Button/index';
+import { device } from '../../utilities/device';
 
-import 'react-datepicker/dist/react-datepicker.css';
 
 const Layout = styled.div`
   display: flex;
@@ -50,6 +51,10 @@ const Label = styled.label`
   color: ${props => props.theme.color.black};
   padding: 0.5em 0;
 
+  ${device.tablet} {
+    flex-direction: column;
+  }
+
   &[required] > span::after {
     content: "*";
     color: ${props => props.theme.color.orange};
@@ -64,6 +69,10 @@ const Label = styled.label`
   & > div {
     box-sizing: border-box;
     width: 40%;
+
+    ${device.tablet} {
+      width: auto;
+    }
   }
 
   & .react-datepicker-wrapper,
@@ -88,6 +97,22 @@ const Select = _Select.extend`
   font-size: 1.1rem;
   padding: 0.5em 0;
   border-radius: 5px;
+  margin-right: 0;
+
+  ${device.tablet} {
+    flex: 1;
+  }
+`;
+
+const CustomButton = Button.extend`
+  align-self: flex-end;
+  margin-top: 1em;
+  width: 10em;
+  min-width: 10em;
+
+  ${device.tablet} {
+    width: 100%;
+  }
 `;
 
 const DatePicker = styled(_DatePicker)`
@@ -178,17 +203,9 @@ class JoinForm extends React.Component {
               <TextInput type="text" onChange={this.handleChange} name="lineaUno" value={this.state.lineaUno} required/>
             </Label>
           </fieldset>
-          <Button 
-            type="submit"
-            style={{
-              alignSelf: 'flex-end',
-              marginTop: '1em',
-              width: '10em',
-              minWidth: '10em',
-            }}
-          >
+          <CustomButton type="submit">
             Enviar
-          </Button>
+          </CustomButton>
         </FormBlock>
       </Layout>
     );

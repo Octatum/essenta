@@ -13,6 +13,10 @@ const Layout = styled.div`
   ${device.tablet} {
     flex-direction: column-reverse;
   }
+
+  ${device.mobile} {
+    padding-top: 0;
+  }
 `;
 
 const ProductsLayout = styled.div`
@@ -44,6 +48,11 @@ const Header = styled.h1`
   color: ${props => props.theme.color.black};
   margin-bottom: 1rem;
   padding-left: 3rem;
+
+  ${device.mobile} {
+    padding: 0;
+    text-align: center;
+  }
 `;
 
 const ProductCard = styled.div`
@@ -52,6 +61,13 @@ const ProductCard = styled.div`
   box-sizing: border-box;
   background: rgb(81, 83, 98, 0.18);
   display: flex;
+
+  ${device.mobile} {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 `;
 
 const Subtotal = styled.div`
@@ -67,6 +83,10 @@ const ProductThumbnail = styled.img`
   max-height: 10em;
   align-self: flex-start;
   background: white;
+
+  ${device.mobile} {
+    align-self: center;
+  }
 `;
 
 const ProductData = styled.div`
@@ -75,6 +95,16 @@ const ProductData = styled.div`
   flex-direction: column;
   justify-content: space-between;
   flex: 3;
+
+  ${device.mobile} {
+    padding: 0;
+  }
+
+  ${device.mobile} {
+    > * {
+      margin: 0.3em 0;
+    }
+  }
 `;
 
 const ProductDataTitle = styled.h3`
@@ -139,6 +169,10 @@ const ProductSubtotal = styled.div`
   align-self: flex-end;
   text-align: center;
   flex-direction: column;
+
+  ${device.mobile} {
+    width: 100%;
+  }
 `;
 
 const ProductSubtotalHeader = styled.div`  

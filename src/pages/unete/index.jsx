@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Breadcrumbs from '../../components/Breadcrumbs';
 import JoinForm from './JoinForm';
+import { device } from '../../utilities/device';
 
 const Layout = styled.main`
   display: flex;
@@ -23,13 +24,22 @@ const TitleBanner = styled.div`
 `;
 
 const TitleBlock = styled.div`
-  max-width: 50%;
+  max-width: 70%;
   font-size: 4.5rem;
   text-align: center;
   text-transform: uppercase;
   padding: 0.5rem 1rem;
   color: ${props => props.theme.color.black};
   font-family: ${props => props.theme.fonts.main};  
+
+  ${device.laptop} {
+    max-width: 80%;
+  }
+
+  ${device.tablet} {
+    max-width: initial;
+    font-size: 3rem;
+  }
 `;
 
 const FormContent = styled.div`

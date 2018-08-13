@@ -17,6 +17,10 @@ const Form = styled.form`
   display: flex;
   flex: 3;
   justify-content: space-between;
+
+  ${device.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const ContactInfo = styled.div`
@@ -31,10 +35,20 @@ const ContactInfo = styled.div`
   ${device.laptop} {
     margin-top: 1em;
   }
+
+  ${device.mobile} {
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const CallUs = styled.div`
   font-family: ${props => props.theme.fonts.secondary};
+
+  ${device.mobile} {
+    min-width: 100%;
+  }
 `;
 
 const SocialButton = styled.a`
@@ -63,6 +77,34 @@ const Bold = styled.span`
   font-weight: 700;
 `;
 
+const CustomButton = Button.extend`
+  flex: 4;
+  margin-left: 1em;
+  font-size: 1.3rem;
+  text-align: center;
+
+  ${device.mobile} {
+    margin: 0;
+  }
+`;
+
+const CustomTextInput = TextInput.extend`
+  flex: 6;
+  font-size: 1rem;
+  text-align: center;
+
+  ${device.mobile} {
+    padding: 0.5em 0;
+    margin-bottom: 1em;
+  }
+`;
+
+const SocialButtons = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+`;
+
 class ContactForm extends React.Component {
 
   state = {
@@ -81,35 +123,24 @@ class ContactForm extends React.Component {
     return (
       <Layout>
         <Form action="" name="contacto" netlify>
-          <TextInput
-            style={{
-              flex: '6',
-              fontSize: '1rem',
-              textAlign: 'center'
-            }}
+          <CustomTextInput
             type="email" 
             placeholder="Recibe las últimas noticias de ESSENTA" 
             name="email" 
             value={this.state.email} 
             onChange={this.handleChange} 
           />
-          <Button
-            onClick={this.submitForm}
-            style={{
-              flex: '4',
-              marginLeft: '1em',
-              fontSize: '1.3rem',
-              textAlign: 'center'
-            }}
-          >
+          <CustomButton onClick={this.submitForm}>
             Suscríbete
-          </Button>
+          </CustomButton>
         </Form>
         <ContactInfo>
           <CallUs><Bold>LLÁMANOS:</Bold>&nbsp;&nbsp;55-1000-2866</CallUs>
-          <SocialButton target="_blank" href="/"><i className="fab fa-twitter"/></SocialButton>
-          <SocialButton target="_blank" href="/"><i className="fab fa-facebook-f"/></SocialButton>
-          <SocialButton target="_blank" href="/"><i className="fab fa-youtube"/></SocialButton>
+          <SocialButtons>
+            <SocialButton target="_blank" href="/"><i className="fab fa-twitter"/></SocialButton>
+            <SocialButton target="_blank" href="/"><i className="fab fa-facebook-f"/></SocialButton>
+            <SocialButton target="_blank" href="/"><i className="fab fa-youtube"/></SocialButton>
+          </SocialButtons>
         </ContactInfo>
       </Layout>
     );
