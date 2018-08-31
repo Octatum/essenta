@@ -36,7 +36,7 @@ export const dataQuery = graphql`
           colorName
           image {
             sizes	(maxWidth: 500) {
-              src
+              ...GatsbyContentfulSizes
             }
           }
         }

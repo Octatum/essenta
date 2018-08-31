@@ -36,7 +36,8 @@ class ProductPickerContainer extends Component {
   }
 
   startOver = () => {
-    this.setState(...this.initialState);
+    console.log(this.initialState);
+    this.setState({...this.initialState});
   }
   
   onFraganceClick = (fragance) => {

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+// height: 3em;
 const Breadcrumbs = styled.div`
-  height: 3em;
   width: 100%;
+  box-sizing: border-box;
+  background: ${({theme}) => theme.color.black};
 `;
 
 export default Breadcrumbs;

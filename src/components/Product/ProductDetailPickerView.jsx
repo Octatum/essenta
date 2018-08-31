@@ -20,15 +20,34 @@ const ProductLayout = styled.div`
   }
 `;
 
+const BackButton = styled.div`
+  font-family: ${props => props.theme.fonts.secondary};
+  color: ${({theme}) => theme.color.black};
+  font-size: 1.5em;
+  font-weight: 700;
+  align-self: start;
+  cursor: pointer;
+
+  ::before {
+    content: "\u276E ";
+    display: inline;
+  }
+`;
+
 const ProductImage = styled.div`
-  flex: 4;
-  min-width: 400px;
+  flex: 2;
+  min-width: 300px;
+  
+  ${device.tablet} {
+    margin: 2em 0;
+  }
 `;
 
 const ProductInfo = styled.div`
   font-family: ${props => props.theme.fonts.main};
   box-sizing: border-box;
-  flex: 6;
+  flex: 3;
+  padding-left: 3em;
 `;
 
 const ProductTitle = styled.div`
@@ -57,11 +76,7 @@ const ProductPickerLabel = styled.label`
     font-weight: 700;
     padding: 0.5em 1em;
     width: 9rem;
-
-    option {
-      background: white;
-      font-weight: 700;
-    }
+    text-transform: capitalize;
   }
 
   span {
@@ -74,9 +89,44 @@ const ProductPickerLabel = styled.label`
   }
 `;
 
+const Option = styled.option`
+  background: white;
+  font-weight: 700;
+  text-transform: capitalize;
+`;
+
 const Img = styled(GatsbyImg)`
   width: 100%;
   max-width: 400px;
+`;
+
+const FraganceData = styled.section`
+  line-height: 2em;
+  width: 80%;
+  align-self: center;
+
+  ${device.tablet} {
+    width: 90%;
+  }
+  
+  ${device.mobile} {
+    width: 100%;
+  }
+`;
+
+const FraganceDataHeader = styled.h3`
+  font-family: ${props => props.theme.fonts.secondary};
+  color: ${({theme}) => theme.color.black};
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0.2em 0;
+`;
+
+const FraganceDataContent = styled.p`
+  font-family: ${props => props.theme.fonts.secondary};
+  color: ${({theme}) => theme.color.black};
+  font-weight: 700;
+  text-align: justify;
 `;
 
 class ProductDetailPickerView extends Component {
@@ -96,55 +146,77 @@ class ProductDetailPickerView extends Component {
     });
   }
 
+  handleColorChange = e => {
+    this.setState({
+      currentColor: e.target.value
+    });
+  }
+
   render () {
     const {
       product,
       addProduct,
-      fragance
+      fragance,
+      goBack
     } = this.props;
+    const {
+      currentSize,
+      currentColor
+    } = this.state;
 
     return (
-      <ProductLayout>
-        <ProductImage>
-        </ProductImage>
-        <ProductInfo>
-          <ProductTitle>{fragance.displayName}</ProductTitle>
-          <ProductPrice></ProductPrice>
-          <ProductPickerLabel>
-            <Select
-              onChange={this.handleSizeChange}
-              orange
-              required
+      <React.Fragment>
+        <BackButton onClick={() => goBack()}>Regresar</BackButton>
+        <ProductLayout>
+          <ProductImage>
+            <Img sizes={product.sizes[currentSize].colores[currentColor].image.sizes}/>
+          </ProductImage>
+          <ProductInfo>
+            <ProductTitle>{fragance.displayName}</ProductTitle>
+            <ProductPrice></ProductPrice>
+            <ProductPickerLabel>
+              <Select
+                onChange={this.handleSizeChange}
+                orange
+                required
+              >
+                {product.sizes.map((size, index) => (
+                  <Option key={size.id} value={index}>
+                    {size.label}
+                  </Option>
+                ))}
+              </Select>
+              <span>Tamaño</span>
+            </ProductPickerLabel>
+            <ProductPickerLabel>
+              <Select
+                onChange={this.handleColorChange}
+                orange
+                required
+              >
+                {product.sizes[currentSize].colores.map((color, index) => (
+                  <Option key={color.id} value={index}>
+                    {color.colorName}
+                  </Option>
+                ))}
+              </Select>
+              <span>Color</span>
+            </ProductPickerLabel>
+            <Button
+              style={{fontSize: '0.9rem', borderRadius: '0'}}
+              onClick={() => addProduct({})}
             >
-              {product.sizes.map((size, index) => (
-                <option key={size.id} value={index}>
-                  {size.label}
-                </option>
-              ))}
-            </Select>
-            <span>Tamaño</span>
-          </ProductPickerLabel>
-          <ProductPickerLabel>
-            <Select
-              orange
-              required
-            >
-              {product.sizes[this.state.currentSize].colores.map((color, index) => (
-                <option key={color.id} value={index}>
-                  {color.colorName}
-                </option>
-              ))}
-            </Select>
-            <span>Color</span>
-          </ProductPickerLabel>
-          <Button
-            style={{fontSize: '0.9rem', borderRadius: '0'}}
-            onClick={() => addProduct({})}
-          >
-            Añadir al carrito
-          </Button>
-        </ProductInfo>
-      </ProductLayout>
+              Añadir al carrito
+            </Button>
+          </ProductInfo>
+        </ProductLayout>
+        <FraganceData>
+          <FraganceDataHeader>Descripción</FraganceDataHeader>
+          <FraganceDataContent>{fragance.description.description}</FraganceDataContent>
+          <FraganceDataHeader>Sugerencias</FraganceDataHeader>
+          <FraganceDataContent>{fragance.suggestions.suggestions}</FraganceDataContent>
+        </FraganceData>
+      </React.Fragment>
     )
   }
 }
