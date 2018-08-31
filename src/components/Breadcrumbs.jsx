@@ -1,8 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Breadcrumbs = styled.div`
-  background: ${props => props.theme.color.black};
+  height: 3em;
   width: 100%;
 `;
 

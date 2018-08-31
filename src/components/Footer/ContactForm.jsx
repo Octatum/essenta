@@ -102,7 +102,12 @@ const CustomTextInput = TextInput.extend`
 const SocialButtons = styled.div`
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+
+  ${device.tablet} {
+    padding-top: 0.5em;
+    width: 100%;
+  }
 `;
 
 class ContactForm extends React.Component {

@@ -86,17 +86,16 @@ const Content = styled(ReactMarkdown)`
 `;
 
 function Privacidad ({data}) {
-  const { markdownRemark } = data;
-  const { frontmatter, rawMarkdownBody } = markdownRemark;
+  const { title, content: {content} } = data.contentfulPolitica;
 
   return (
     <Layout>
       <Breadcrumbs />
       <TitleBanner>
-        <TitleBlock>{frontmatter.title}</TitleBlock>
+        <TitleBlock>{title}</TitleBlock>
       </TitleBanner>
       <ContentBlock>
-        <Content source={rawMarkdownBody} />
+        <Content source={content} />
       </ContentBlock>
     </Layout>
   );
@@ -105,12 +104,11 @@ function Privacidad ({data}) {
 export default Privacidad;
 
 export const pageQuery = graphql`
-  query PolicyByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      rawMarkdownBody
-      frontmatter {
-        title
-        path
+  query PolicyByPath ($route: String!) {
+    contentfulPolitica (path: {eq: $route}) {
+      title
+      content {
+        content
       }
     }
   }

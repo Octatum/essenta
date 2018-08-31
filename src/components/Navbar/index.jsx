@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import ShopLinks from './ShopLinks';
 import NavbarLink from './NavbarLink';
-import Header from './Header';
 
 import logo from './assets/logo_horizontal.png';
 import { device } from '../../utilities/device';
@@ -18,13 +17,15 @@ const NavLayout = styled.nav`
 
 const LogoSection = styled.div`
   display: flex;
-  padding: 1.7rem 3.5rem;
+  padding: 1rem 3.5rem;
   align-items: space-between;
   justify-content: flex-start;
   color: white;
-  font-size: 1.5em;
-  max-height: 9rem;
   box-sizing: border-box;
+
+  ${device.tablet} {
+    justify-content: center;
+  }
 `;
 
 const LinksSection = styled.div`
@@ -35,13 +36,28 @@ const LinksSection = styled.div`
   position: relative;
   justify-content: space-between;
   flex: 6;
-  height: auto;
 
   > *:not(:last-child) {
     flex: 1;
     text-align: center;
   }
 
+`;
+
+const BackgroundNavbarLink = NavbarLink.extend`
+  padding: 0.5em 0;
+  flex: 1;
+  transition: 0.3s ease-in-out all;
+  box-sizing: border-box;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  :hover {
+    background: ${({theme}) => theme.color.darkOrange};
+  }
 `;
 
 const HoverableItem = NavbarLink.extend`
@@ -51,7 +67,7 @@ const HoverableItem = NavbarLink.extend`
   position: relative;
 
   &::after {
-    content: "▾";
+    content: "";
   }
 
   ${device.tablet} {
@@ -82,8 +98,8 @@ const NavlinksSection = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 3.5em;
-  height: 2em;
   font-weight: bold;
+  background: ${({theme}) => theme.color.orange};
 
   ${device.tablet} {
     height: auto;
@@ -97,31 +113,22 @@ const ShopLinksSection = styled.div`
 `;
 
 const Img = styled.img`
-  max-height: 100%;
-
-  ${device.tablet} {
-    max-width: 15em;
-  }
-
-  ${device.mobile} {
-    max-width: 10em;
-  }
+  max-width: 100%;
 `;
 
 const Spacer = styled.div`
   width: 100%;
   background: ${props => props.theme.background.secondary};
   height: 2px;
-  margin-top: 1rem;
 `;
 
 const DropdownMenu = styled.div`
-  background-color: ${props => props.theme.color.orange};
+  background-color: ${props => props.theme.background.secondary};
   display: flex;
   align-items: center;
   position: absolute;
   pointer-events: none;
-  bottom: -4em;
+  bottom: -3.5em;
   transition: opacity 0.5s ease, z-index 0.1s linear;
   opacity: 0;
   height: 3em;
@@ -155,6 +162,15 @@ const DropdownMenu = styled.div`
   }
 `;
 
+const LogoLink = NavbarLink.extend`
+  width: 25%;
+  min-width: 15em;
+`;
+
+const CustomNavbarLink = NavbarLink.extend`
+  color: ${({theme}) => theme.color.white};
+`;
+
 function loseFocus({target}) {
   target.blur();
 }
@@ -163,17 +179,23 @@ function Navbar({urls}) {
 
   return (
     <NavLayout>
-      <LogoSection><NavbarLink to="/"><Img src={logo} alt="logo"/></NavbarLink></LogoSection>
+      <LogoSection>
+        <LogoLink to="/">
+          <Img src={logo} alt="logo"/>
+        </LogoLink>
+      </LogoSection>
       <NavlinksSection>
         <LinksSection>
-          <NavbarLink to="/perfume">Elabora tu perfume</NavbarLink>
-          <HoverableItem to="/">Catálogo</HoverableItem>
-          <NavbarLink to="/unete">Únete a nosotros </NavbarLink>
+          <BackgroundNavbarLink to="/producto/perfume">Diseña tu perfume</BackgroundNavbarLink>
+          <BackgroundNavbarLink to="/catalogo">Catálogo</BackgroundNavbarLink>
+          <BackgroundNavbarLink to="/unete">Únete a nosotros </BackgroundNavbarLink>
+          {/* 
           <DropdownMenu className="navbar">
             {urls.map(({name, path}) => (
-              <NavbarLink key={path} onClick={loseFocus} to={path}>{name}</NavbarLink>
+              <CustomNavbarLink key={path} onClick={loseFocus} to={path}>{name}</CustomNavbarLink>
             ))}
           </DropdownMenu>
+          */}
         </LinksSection>
         <ShopLinksSection>
           <ShopLinks />

@@ -1,4 +1,0 @@
----
-title: 'vainilla'
-label: 'Vainilla'
----

@@ -37,6 +37,11 @@ const JoinUsButton = styled.div`
   ${AppLink} {
     color: ${props => props.theme.color.white};
   }
+
+  ${device.mobile} {
+    width: 20rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const RelevantInformation = styled.div`
@@ -165,14 +170,14 @@ function Footer() {
         </About>
         <Policy>
           <SectionHeader>Políticas</SectionHeader>
-          <Link to="/pedidos">Pedidos</Link>
-          <Link to="/envios">Políticas de envío</Link>
-          <Link to="/aceptacion">Aviso y aceptación</Link>
-          <Link to="/devolucion">Políticas de devolución</Link>
+          <Link to="/politica/pedidos">Pedidos</Link>
+          <Link to="/politica/envios">Políticas de envío</Link>
+          <Link to="/politica/aceptacion">Aviso y aceptación</Link>
+          <Link to="/politica/devolucion">Políticas de devolución</Link>
         </Policy> 
         <Copyright>© 2018 ESSENTA Fragancias</Copyright>
-        <TermsNConditions><Link to="/terminos">Términos y Condiciones</Link></TermsNConditions>
-        <Privacy><Link to="/privacidad">Privacidad y Seguridad</Link></Privacy>
+        <TermsNConditions><Link to="/politica/terminos">Términos y Condiciones</Link></TermsNConditions>
+        <Privacy><Link to="/privacidad"></Link></Privacy>
       </RelevantInformation>
       <JoinUsButton><AppLink to="/unete">Únete a nosotros</AppLink></JoinUsButton>
     </Layout>

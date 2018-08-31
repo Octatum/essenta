@@ -81,7 +81,7 @@ export const query = graphql`
       }
     }
     
-    productEdges: allContentfulProductosEssenta {
+    productEdges: allContentfulProducto {
       edges {
         node {
           title
