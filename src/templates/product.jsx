@@ -6,15 +6,30 @@ function getCleanFragancesData(fragancesResult) {
   return fragancesResult.edges.map(({node}) => ({...node}));
 }
 
+function groupFragancesByFamily(fragances) {
+  const families = {};
+
+  fragances.forEach(fragance => {
+    if(!!!families[fragance.family]) {
+      families[fragance.family] = [];
+    }
+
+    families[fragance.family].push(fragance);
+  });
+
+  return families;
+}
+
 // Gets product and fragance data and passes it into the corresponding view
 function ProductPickerTemplate({data}) {
   const { product, fragancesResults } = data;
   const fragances = getCleanFragancesData(fragancesResults);
+  const groupedFragances = groupFragancesByFamily(fragances);
   
   return (
     <ProductPickerContainer 
       data={{
-        fragances,
+        fragances: groupedFragances,
         product
       }}
     />

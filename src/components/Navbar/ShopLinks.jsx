@@ -47,7 +47,7 @@ const ShopLinks = ({cartStore}) => (
       <NavbarLink to="/carrito"><ShoppingCart />({cartStore.products.length})</NavbarLink>
     </ShopLinkContainer>
     <ShopLinkContainer>
-      <NavbarLink to="/pedidos">Ayuda</NavbarLink>
+      <NavbarLink to="/politica/pedidos">Ayuda</NavbarLink>
     </ShopLinkContainer>
   </Layout>
 );

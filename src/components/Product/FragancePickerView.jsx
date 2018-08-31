@@ -4,24 +4,28 @@ import GatsbyImg from 'gatsby-image';
 
 import { device } from '../../utilities/device';
 
+const TitleSection = styled.section`
+  display: flex;
+`;
+
 const PageTitle = styled.h1`
+  flex: 1;
   font-size: 2.5em;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
   color: ${({theme}) => theme.color.black};
   position: relative;
 
-  ::after {
-    content: "";
-    display: block;
-    margin: 0.1em 0;
-    height: 2px;
-    background-color: ${({theme}) => theme.color.orange};
-  }
-
   ${device.tablet} {
     font-size: 2em;
   }
+`;
+
+const Spacer = styled.div`
+  display: block;
+  margin: 0.5em 0;
+  height: 2px;
+  background-color: ${({theme}) => theme.color.orange};
 `;
 
 const FraganceListDisplay = styled.section`
@@ -32,7 +36,6 @@ const FraganceListDisplay = styled.section`
   grid-gap: 5vw;
   grid-auto-rows: auto;
   grid-template-columns: repeat(4, minmax(200px, 1fr));
-  margin: 3em 0;
 
   ${device.laptop} {
     grid-template-columns: repeat(3, minmax(200px, 1fr));
@@ -83,6 +86,29 @@ const FraganceName = styled.h4`
   }
 `;
 
+const FamilySection = styled.section`
+  margin-bottom: 2em ;
+`;
+
+const FraganceFamily = FraganceName.withComponent('h5').extend`
+  font-size: 1.5em;
+  text-align: left;
+  margin-top: 1em;
+
+  ${device.tablet} {
+    align-self: center;
+  }
+`;
+
+const FamilySpacer = Spacer.extend`
+  width: 50%;
+  margin: 1em 0;
+
+  ${device.tablet} {
+    align-self: center;
+  }
+`;
+
 class FragancePickerView extends Component {
   state = {
     currentSex: 0,
@@ -93,23 +119,31 @@ class FragancePickerView extends Component {
       fragances, 
       onFraganceClick 
     } = this.props;
-    console.table(fragances);
 
     return (
       <React.Fragment>
-        <PageTitle>Fragancias</PageTitle>
-        <FraganceListDisplay>
-          {fragances.map(fragance => (
-            <FraganceDisplay 
-              key={fragance.id}
-              onClick={() => onFraganceClick(fragance)}
-            >
-              <GatsbyImg sizes={fragance.image.sizes} />
-              <HorizontalBar />
-              <FraganceName>{fragance.displayName}</FraganceName>
-            </FraganceDisplay>
-          ))}
-        </FraganceListDisplay>
+        <TitleSection>
+          <PageTitle>Elige tu fragancia</PageTitle>
+        </TitleSection>
+        <Spacer />
+        {Object.keys(fragances).map((key, index) => (
+          <FamilySection>
+            <FraganceFamily>{key}</FraganceFamily>
+            <FamilySpacer />
+            <FraganceListDisplay key={key}>
+              {fragances[key].map(fragance => (
+                <FraganceDisplay 
+                  key={fragance.id}
+                  onClick={() => onFraganceClick(fragance)}
+                >
+                  <GatsbyImg sizes={fragance.image.sizes} />
+                  <HorizontalBar />
+                  <FraganceName>{fragance.displayName}</FraganceName>
+                </FraganceDisplay>
+              ))}
+            </FraganceListDisplay>
+          </FamilySection>
+        ))}
       </React.Fragment>
     )
   }

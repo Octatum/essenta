@@ -9,7 +9,7 @@ import { device } from '../../utilities/device';
 const ProductLayout = styled.div`
   display: flex;
   width: 80%;
-  min-height: 35em;
+  min-height: 30em;
   align-self: center;
   justify-content: space-between;
   align-items: center;
