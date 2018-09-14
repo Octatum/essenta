@@ -17,7 +17,6 @@ const SlideshowItemRender = styled.div`
   background-repeat: no-repeat;
   background-size: auto 100%;
   background-image: url('${props => props.src}');
-  background-color: teal;
 
   ${device.tablet} {
     background-size: contain;

@@ -23,6 +23,7 @@
     "mobx-react": "^5.2.3",
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
+    "react-credit-cards": "^0.7.0",
     "react-datepicker": "^1.5.0",
     "react-helmet": "^5.2.0",
     "react-markdown": "^3.3.4",
@@ -43,6 +44,7 @@
     "start": "gatsby develop"
   },
   "devDependencies": {
+    "jest": "^23.5.0",
     "mobx-react-devtools": "^6.0.2",
     "prettier": "^1.12.0"
   },

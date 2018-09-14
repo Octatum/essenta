@@ -127,10 +127,10 @@ class FragancePickerView extends Component {
         </TitleSection>
         <Spacer />
         {Object.keys(fragances).map((key, index) => (
-          <FamilySection>
+          <FamilySection key={key}>
             <FraganceFamily>{key}</FraganceFamily>
             <FamilySpacer />
-            <FraganceListDisplay key={key}>
+            <FraganceListDisplay>
               {fragances[key].map(fragance => (
                 <FraganceDisplay 
                   key={fragance.id}

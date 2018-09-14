@@ -1,9 +1,12 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
+import Link from 'gatsby-link';
 
 import Button from './../components/Button/index';
 import { device } from '../utilities/device';
+import ProductList from '../components/Cart/ProductList';
+import PageHeader from './../components/PageHeader';
 
 const Layout = styled.div`
   display: flex;
@@ -42,31 +45,11 @@ const CheckoutLayout = styled.div`
   }
 `;
 
-const Header = styled.h1`
-  font-family: ${props => props.theme.fonts.main};
-  font-size: 3em;
-  color: ${props => props.theme.color.black};
-  margin-bottom: 1rem;
-  padding-left: 3rem;
+const CustomPageHeader = PageHeader.extend`
+  padding: 0 5rem;
 
-  ${device.mobile} {
-    padding: 0;
-    text-align: center;
-  }
-`;
-
-const ProductCard = styled.div`
-  margin-top: 2rem;
-  padding: 1rem 3rem;
-  box-sizing: border-box;
-  background: rgb(81, 83, 98, 0.18);
-  display: flex;
-
-  ${device.mobile} {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  ${device.tablet} {
+    padding: 0 2rem;
   }
 `;
 
@@ -78,89 +61,6 @@ const Subtotal = styled.div`
   font-size: 1.2em;
 `;
 
-const ProductThumbnail = styled.img`
-  max-width: 10em;
-  max-height: 10em;
-  align-self: flex-start;
-  background: white;
-
-  ${device.mobile} {
-    align-self: center;
-  }
-`;
-
-const ProductData = styled.div`
-  padding-left: 1em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 3;
-
-  ${device.mobile} {
-    padding: 0;
-  }
-
-  ${device.mobile} {
-    > * {
-      margin: 0.3em 0;
-    }
-  }
-`;
-
-const ProductDataTitle = styled.h3`
-  text-transform: uppercase;
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
-  font-weight: 700;
-  font-size: 1.5em;
-`;
-
-const ProductDataRow = styled.div`
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
-`;
-
-const ProductBigCell = styled.div`
-  flex: 2;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-`;
-
-const ProductDataCell = styled.div`
-  flex: 2;
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
-  display: flex;
-  flex-direction: column;
-  font-size: 1.2em;
-  text-align: center;
-  justify-content: space-between;
-`;
-
-const ProducDataCellTitle = styled.div`
-  font-size: 1.2em;
-  font-weight: 700;
-`;
-
-const ProductDataCounter = styled.div`
-  display: flex;
-  height: 2em;
-  align-items: center;
-
-  > * {
-    flex: 1;
-  }
-`;
-
-const ProductCounterChangeButton = styled.button`
-  border: 1px solid ${({theme}) => theme.color.black};
-  background: #505362;
-  color: white;
-  margin: 0 1em;
-  padding: 0.5em 0;
-  height: 100%;
-`;
 
 const ProductSubtotal = styled.div`
   display: flex;
@@ -189,74 +89,16 @@ const ProductSubtotalPrice = ProductSubtotalHeader.extend`
   font-size: 1.3em;
 `;
 
+const LinkButton = Button.withComponent(Link).extend`
+  text-decoration: none;
+`;
+
 function Carrito ({cartStore}) {
   return (
     <Layout>
       <ProductsLayout>
-        <Header>Carrito</Header>
-          {cartStore.products.map(({
-            name,
-            color,
-            size,
-            fragance,
-            thumbnail,
-            price,
-            amount
-          }) => {
-            const productKey = `${name}-${color}-${size}-${fragance}`;
-
-            return (
-              <ProductCard key={productKey}>
-                <ProductThumbnail
-                  src={thumbnail}
-                  width="160"
-                  height="160"
-                />
-                <ProductData>
-                  <ProductDataTitle>
-                    {name}
-                  </ProductDataTitle>
-                  <ProductDataRow>
-                    Color {color}
-                  </ProductDataRow>
-                  <ProductDataRow>
-                    Tamaño {size}
-                  </ProductDataRow>
-                  <ProductDataRow>
-                    Fragancia {fragance}
-                  </ProductDataRow>
-                  <Button
-                    style={{fontSize: '0.8rem', borderRadius: '0'}}
-                    onClick={() => cartStore.removeProduct(productKey)}
-                  >
-                    Eliminar producto
-                  </Button>
-                </ProductData>
-                <ProductBigCell>
-                  <ProductDataCell>
-                    <ProducDataCellTitle>Precio</ProducDataCellTitle>
-                    <div>${price}</div>
-                  </ProductDataCell>
-                  <ProductDataCell>
-                    <ProducDataCellTitle>Cantidad</ProducDataCellTitle>
-                    <ProductDataCounter>
-                      <ProductCounterChangeButton 
-                        onClick={() => cartStore.decreaseAmountOfProduct(productKey)}
-                      >
-                        -
-                      </ProductCounterChangeButton>
-                      <div>{amount}</div>
-                      <ProductCounterChangeButton
-                        onClick={() => cartStore.increaseAmountOfProduct(productKey)}
-                      >
-                        +
-                      </ProductCounterChangeButton>
-                    </ProductDataCounter>
-                  </ProductDataCell>
-                </ProductBigCell>
-              </ProductCard>
-            )
-          })}
+        <CustomPageHeader>Carrito</CustomPageHeader>
+        <ProductList products={cartStore.products} />
         <ProductSubtotal>
           <ProductSubtotalHeader>
             Subtotal
@@ -274,12 +116,12 @@ function Carrito ({cartStore}) {
           <ProductSubtotalPrice>
             ${cartStore.total}.00
           </ProductSubtotalPrice>
-          <Button
+          <LinkButton
             style={{fontSize: '1.1rem', borderRadius: '0'}}
-            onClick={() => alert("Esta opción está desabilitada de momento")}
+            to='/checkout'
           >
             Proceder a pago
-          </Button>
+          </LinkButton>
         </Subtotal>
       </CheckoutLayout>
     </Layout>

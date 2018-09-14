@@ -4,7 +4,8 @@ export const globalTheme = {
     black: '#515362',
     orange: 'hsl(21, 100%, 75%)',
     darkOrange: 'hsl(21, 100%, 65%)',
-    gray: '#EFEFEF'
+    gray: '#EFEFEF',
+    darkGray: 'rgb(81, 83, 98, 0.18)'
   },
   background: {
     main: '#EFEFEF',

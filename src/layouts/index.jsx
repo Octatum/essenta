@@ -4,6 +4,8 @@ import Helmet from 'react-helmet';
 import styled, { ThemeProvider } from 'styled-components';
 import { Provider } from 'mobx-react';
 
+import MobxTools from 'mobx-react-devtools';
+
 import CartStore from '../stores/CartStore'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -55,8 +57,10 @@ const Layout = ({ children, data }) => {
             type: "image/x-icon"
           }]}
         />
+        <html lang="es" />
         <Provider cartStore={cartStore}>
           <div>
+            <MobxTools />
             <Navbar urls={productsUrls}/>
             {children()}
           </div>

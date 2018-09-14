@@ -204,7 +204,14 @@ class ProductDetailPickerView extends Component {
             </ProductPickerLabel>
             <Button
               style={{fontSize: '0.9rem', borderRadius: '0'}}
-              onClick={() => addProduct({})}
+              onClick={() => addProduct({
+                name: `${product.title} ${fragance.displayName}`,
+                color: product.sizes[currentSize].colores[currentColor].colorName,
+                size: product.sizes[currentSize].label,
+                fragance: fragance.displayName,
+                thumbnail: null, 
+                price: product.sizes[currentSize].sizePrice
+              })}
             >
               Añadir al carrito
             </Button>

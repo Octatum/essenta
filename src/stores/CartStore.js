@@ -81,7 +81,6 @@ class _CartStore {
   }
 
   get total() {
-    console.log(this.products);
     return this.products.reduce((a, p) => a + parseInt(p.amount) * parseInt(p.price), 0);
   }
 }

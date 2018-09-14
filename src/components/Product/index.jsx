@@ -31,8 +31,8 @@ class ProductPickerContainer extends Component {
     ...this.initialState
   }
 
-  addProduct = () => {
-
+  addProduct = (product) => {
+    this.props.cartStore.addProduct(product);
   }
 
   startOver = () => {
