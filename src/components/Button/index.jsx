@@ -6,9 +6,10 @@ const Button = styled.button.attrs({
   background: ${props => props.theme.color.orange};
   color: ${props => props.theme.color.white};
   border: none;
+  box-sizing: border-box;
   font-family: ${props => props.theme.fonts.secondary};
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: ${({small}) => small ? '1' : '1.5'}em;
   border-radius: 6px;
   transition: 0.3s ease all;
   -webkit-box-shdow: 0px 0.2em 1em -0.2em rgba(0, 0, 0, 0.3);
