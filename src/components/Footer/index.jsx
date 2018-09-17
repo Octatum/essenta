@@ -159,7 +159,9 @@ const Privacy = AditionalInformationSection.extend`
 function Footer() {
   return (
     <Layout>
-      <ContactInfo><ContactForm /></ContactInfo>
+      <ContactInfo>
+        <ContactForm />
+      </ContactInfo>
       <RelevantInformation>
         <About>
           <SectionHeader>Acerca de Essenta</SectionHeader>
@@ -176,8 +178,8 @@ function Footer() {
           <Link to="/politica/devolucion">Políticas de devolución</Link>
         </Policy> 
         <Copyright>© 2018 ESSENTA Fragancias</Copyright>
-        <TermsNConditions><Link to="/politica/terminos">Términos y Condiciones</Link></TermsNConditions>
-        <Privacy><Link to="/privacidad"></Link></Privacy>
+        <TermsNConditions><Link to="/politica/terminos"></Link></TermsNConditions>
+        <Privacy><Link to="/politica/privacidad">Aviso de privacidad</Link></Privacy>
       </RelevantInformation>
       <JoinUsButton><AppLink to="/unete">Únete a nosotros</AppLink></JoinUsButton>
     </Layout>
