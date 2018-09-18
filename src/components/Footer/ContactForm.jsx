@@ -142,9 +142,9 @@ class ContactForm extends React.Component {
         <ContactInfo>
           <CallUs><Bold>LLÁMANOS:</Bold>&nbsp;&nbsp;55-1000-2866</CallUs>
           <SocialButtons>
-            <SocialButton target="_blank" href="/"><i className="fab fa-twitter"/></SocialButton>
-            <SocialButton target="_blank" href="/"><i className="fab fa-facebook-f"/></SocialButton>
-            <SocialButton target="_blank" href="/"><i className="fab fa-youtube"/></SocialButton>
+            <SocialButton target="_blank" href="https://facebook.com/essentamx"><i className="fab fa-facebook-f"/></SocialButton>
+            {/* <SocialButton target="_blank" href="/"><i className="fab fa-twitter"/></SocialButton>
+            <SocialButton target="_blank" href="/"><i className="fab fa-youtube"/></SocialButton> */}
           </SocialButtons>
         </ContactInfo>
       </Layout>

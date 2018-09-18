@@ -67,21 +67,47 @@ const Content = styled(ReactMarkdown)`
   & > :not(:last-child) {
     padding-bottom: 1.5em;
   }
+  counter-reset: inner-counter;
 
-  & ol {
+  ol {
     list-style-position: inside;
     list-style: none;
+    counter-reset: inner-counter;
 
-    & > li {
-      counter-increment: ctr;
+    > li {
+      counter-increment: inner-counter;
+      margin-left: 1em;
 
       &::before {
-        content: counter(ctr, upper-roman) ". ";
-        display: inline;
+        content: counter(inner-counter) ". ";
         color: ${props => props.theme.color.orange};
         font-weight: 700;
       }
-    }    
+
+      > p:first-of-type {
+        display: inline;
+        margin-left: 0;
+      }
+
+      > p {
+        margin: 0.5em 1em;
+        margin-right: 0;
+      }
+    }  
+  }
+
+  > ol {
+    counter-reset: none;
+
+    > li {
+      &::before {
+        content: counter(inner-counter, upper-roman) ". ";
+      }
+
+      > p:first-of-type {
+        font-weight: 700;
+      }
+    }
   }
 `;
 
