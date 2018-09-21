@@ -167,8 +167,6 @@ function Footer() {
           <SectionHeader>Acerca de Essenta</SectionHeader>
           <Link to="/unete">Empleos</Link>
           <Link to="/">Nosotros</Link>
-          <Link to="/">Nuestras causas</Link>
-          <Link to="/">Nuestros fundadores</Link>
         </About>
         <Policy>
           <SectionHeader>Políticas</SectionHeader>

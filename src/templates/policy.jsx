@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 
 import Breadcrumbs from './../components/Breadcrumbs';
 import { device } from '../utilities/device';
+import AppLayout from '../components/AppLayout';
 
 const Layout = styled.div`  
   display: flex;
@@ -115,15 +116,17 @@ function Privacidad ({data}) {
   const { title, content: {content} } = data.contentfulPolitica;
 
   return (
-    <Layout>
-      <Breadcrumbs />
-      <TitleBanner>
-        <TitleBlock>{title}</TitleBlock>
-      </TitleBanner>
-      <ContentBlock>
-        <Content source={content} />
-      </ContentBlock>
-    </Layout>
+    <AppLayout>
+      <Layout>
+        <Breadcrumbs />
+        <TitleBanner>
+          <TitleBlock>{title}</TitleBlock>
+        </TitleBanner>
+        <ContentBlock>
+          <Content source={content} />
+        </ContentBlock>
+      </Layout>
+    </AppLayout>
   );
 }
 

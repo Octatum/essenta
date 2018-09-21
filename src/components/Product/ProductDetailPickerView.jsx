@@ -209,7 +209,7 @@ class ProductDetailPickerView extends Component {
                 color: product.sizes[currentSize].colores[currentColor].colorName,
                 size: product.sizes[currentSize].label,
                 fragance: fragance.displayName,
-                thumbnail: null, 
+                thumbnail: product.sizes[currentSize].colores[currentColor].image.sizes,
                 price: product.sizes[currentSize].sizePrice
               })}
             >

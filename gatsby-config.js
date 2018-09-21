@@ -4,7 +4,6 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet', 
-    'gatsby-plugin-react-next',
     {
       resolve: `gatsby-source-contentful`,
       options: {
@@ -13,7 +12,5 @@ module.exports = {
       },
     },
     'gatsby-plugin-styled-components',
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`
   ],
 }
