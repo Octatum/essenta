@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import JoinForm from './JoinForm';
 import { device } from '../../utilities/device';
+import AppLayout from '../../components/AppLayout';
 
 const Layout = styled.main`
   display: flex;
@@ -66,19 +67,21 @@ const Spacer = styled.div`
 
 function Unete () {
   return (
-    <Layout>
-      <Breadcrumbs />
-      <TitleBanner>
-        <TitleBlock>Inicia tu propio negocio hoy</TitleBlock>
-      </TitleBanner>
-      <FormContent>
-        <FormDescription>
-          Llena este formulario con los datos tal y como aparecen en tu documentación probatoria (acta de nacimiento, CURP, IFE y comprobante de domicilio reciente).
-        </FormDescription>
-        <Spacer />
-        <JoinForm />
-      </FormContent>
-    </Layout>
+    <AppLayout>
+      <Layout>
+        <Breadcrumbs />
+        <TitleBanner>
+          <TitleBlock>Inicia tu propio negocio hoy</TitleBlock>
+        </TitleBanner>
+        <FormContent>
+          <FormDescription>
+            Llena este formulario con los datos tal y como aparecen en tu documentación probatoria (acta de nacimiento, CURP, IFE y comprobante de domicilio reciente).
+          </FormDescription>
+          <Spacer />
+          <JoinForm />
+        </FormContent>
+      </Layout>
+    </AppLayout>
   );
 }
 

@@ -186,7 +186,7 @@ function Navbar({urls}) {
       </LogoSection>
       <NavlinksSection>
         <LinksSection>
-          <BackgroundNavbarLink to="/producto/perfume">Diseña tu perfume</BackgroundNavbarLink>
+          <BackgroundNavbarLink to="/producto/perfume/mujer">Diseña tu perfume</BackgroundNavbarLink>
           <BackgroundNavbarLink to="/catalogo">Catálogo</BackgroundNavbarLink>
           <BackgroundNavbarLink to="/unete">Únete a nosotros </BackgroundNavbarLink>
           {/* 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ProductPickerContainer from '../components/Product';
+import AppLayout from '../components/AppLayout';
 
 function getCleanFragancesData(fragancesResult) {
   return fragancesResult.edges.map(({node}) => ({...node}));
@@ -13,6 +14,7 @@ function groupFragancesByFamily(fragances) {
     if(!!!families[fragance.family]) {
       families[fragance.family] = [];
     }
+    console.log(families);
 
     families[fragance.family].push(fragance);
   });
@@ -27,12 +29,14 @@ function ProductPickerTemplate({data}) {
   const groupedFragances = groupFragancesByFamily(fragances);
   
   return (
-    <ProductPickerContainer 
-      data={{
-        fragances: groupedFragances,
-        product
-      }}
-    />
+    <AppLayout>
+      <ProductPickerContainer 
+        data={{
+          fragances: groupedFragances,
+          product
+        }}
+      />
+    </AppLayout>
   );
 }
 

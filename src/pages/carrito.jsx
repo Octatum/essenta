@@ -7,6 +7,7 @@ import Button from './../components/Button/index';
 import { device } from '../utilities/device';
 import ProductList from '../components/Cart/ProductList';
 import PageHeader from './../components/PageHeader';
+import AppLayout from '../components/AppLayout';
 
 const Layout = styled.div`
   display: flex;
@@ -95,36 +96,38 @@ const LinkButton = Button.withComponent(Link).extend`
 
 function Carrito ({cartStore}) {
   return (
-    <Layout>
-      <ProductsLayout>
-        <CustomPageHeader>Carrito</CustomPageHeader>
-        <ProductList products={cartStore.products} />
-        <ProductSubtotal>
-          <ProductSubtotalHeader>
-            Subtotal
-          </ProductSubtotalHeader>
-          <ProductSubtotalPrice>
-            ${cartStore.total}.00
-          </ProductSubtotalPrice>
-        </ProductSubtotal>
-      </ProductsLayout>
-      <CheckoutLayout>
-        <Subtotal>
-          <ProductSubtotalHeader>
-            Subtotal
-          </ProductSubtotalHeader>
-          <ProductSubtotalPrice>
-            ${cartStore.total}.00
-          </ProductSubtotalPrice>
-          <LinkButton
-            style={{fontSize: '1.1rem', borderRadius: '0'}}
-            to='/checkout'
-          >
-            Proceder a pago
-          </LinkButton>
-        </Subtotal>
-      </CheckoutLayout>
-    </Layout>
+    <AppLayout>
+      <Layout>
+        <ProductsLayout>
+          <CustomPageHeader>Carrito</CustomPageHeader>
+          <ProductList products={cartStore.products} />
+          <ProductSubtotal>
+            <ProductSubtotalHeader>
+              Subtotal
+            </ProductSubtotalHeader>
+            <ProductSubtotalPrice>
+              ${cartStore.total}.00
+            </ProductSubtotalPrice>
+          </ProductSubtotal>
+        </ProductsLayout>
+        <CheckoutLayout>
+          <Subtotal>
+            <ProductSubtotalHeader>
+              Subtotal
+            </ProductSubtotalHeader>
+            <ProductSubtotalPrice>
+              ${cartStore.total}.00
+            </ProductSubtotalPrice>
+            <LinkButton
+              style={{fontSize: '1.1rem', borderRadius: '0'}}
+              to='/checkout'
+            >
+              Proceder a pago
+            </LinkButton>
+          </Subtotal>
+        </CheckoutLayout>
+      </Layout>
+    </AppLayout>
   )
 }
 

@@ -7,6 +7,7 @@ import ConditionalLink from '../ConditionalLink';
 import MostSold from './MostSold';
 import HomeHeader from './HomeHeader';
 import SlideshowLayout from './SlideshowLayout';
+import AppLayout from '../AppLayout';
 
 const Layout = styled.div`
   color: ${props => props.theme.mainLightText};
@@ -45,7 +46,6 @@ const imgStyle = {
 }
 
 function Home ({data}) {
-  console.table(data);
   const {
     recommendedImage,
     slideshowImages,
@@ -53,21 +53,23 @@ function Home ({data}) {
   } = data
 
   return (
-    <Layout>
-      <MostSold products={highlightedProducts} />
-      <SlideshowLayout items={slideshowImages} />
-      <SuggestedProducts>
-        <HomeHeader>
-          Recomendaciones
-          <ViewMore to={recommendedImage.path}>ver más</ViewMore>
-        </HomeHeader>
-        <SuggestedProductsImage>
-          <ConditionalLink to={recommendedImage.path} condition={recommendedImage.path && recommendedImage.path.length > 0}>
-            <Img sizes={recommendedImage.image.sizes} imgStyle={imgStyle} position='absolute' />
-          </ConditionalLink>
-        </SuggestedProductsImage>
-      </SuggestedProducts>
-    </Layout>
+    <AppLayout>
+      <Layout>
+        <MostSold products={highlightedProducts} />
+        <SlideshowLayout items={slideshowImages} />
+        <SuggestedProducts>
+          <HomeHeader>
+            Recomendaciones
+            <ViewMore to={recommendedImage.path}>ver más</ViewMore>
+          </HomeHeader>
+          <SuggestedProductsImage>
+            <ConditionalLink to={recommendedImage.path} condition={recommendedImage.path && recommendedImage.path.length > 0}>
+              <Img sizes={recommendedImage.image.sizes} imgStyle={imgStyle} position='absolute' />
+            </ConditionalLink>
+          </SuggestedProductsImage>
+        </SuggestedProducts>
+      </Layout>
+    </AppLayout>
   )
 }
 

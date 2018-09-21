@@ -36,7 +36,6 @@ class ProductPickerContainer extends Component {
   }
 
   startOver = () => {
-    console.log(this.initialState);
     this.setState({...this.initialState});
   }
   

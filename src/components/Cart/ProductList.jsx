@@ -21,9 +21,10 @@ const ProductCard = styled.div`
   }
 `;
 
-const ProductThumbnail = styled.img`
-  max-width: 10em;
-  max-height: 10em;
+const ProductThumbnailArea = styled.div`
+  width: 10em;
+  height: 10em;
+
   align-self: flex-start;
 
   ${device.mobile} {
@@ -85,9 +86,14 @@ const ProductDataCounter = styled.div`
   display: flex;
   height: 2em;
   align-items: center;
+  justify-content: center;
 
-  > * {
-    flex: 1;
+  > *:not(:last-child):not(:first-child) {
+    margin: 0 1.5em;
+
+    ${device.laptop} {
+      margin: 0 1em;
+    }
   }
 `;
 
@@ -95,9 +101,11 @@ const ProductCounterChangeButton = styled.button`
   border: 1px solid ${({theme}) => theme.color.black};
   background: #505362;
   color: white;
-  margin: 0 1em;
-  padding: 0.5em 0;
+  padding: 0.5em 1.5em;
   height: 100%;
+  box-sizing: border-box;
+  min-width: 1em;
+  max-width: 4em;
 `;
 
 const RemoveProductIcon = styled.div`
@@ -113,69 +121,73 @@ function ProductList ({cartStore}) {
   return (
     <React.Fragment>
       {cartStore.products.map(({
-          name,
-          color,
-          size,
-          fragance,
-          thumbnail,
-          price,
-          amount
-        }) => {
-          const productKey = `${name}-${color}-${size}-${fragance}`;
+        name,
+        color,
+        size,
+        fragance,
+        thumbnail,
+        price,
+        amount
+      }) => {
+        const productKey = `${name}-${color}-${size}-${fragance}`;
+        console.log(thumbnail);
 
-          return (
-            <ProductCard key={productKey}>
-              <ProductThumbnail width="160" height="160" />
-              <ProductData>
-                <ProductDataTitle>
-                  {name}
-                </ProductDataTitle>
-                <ProductDataRow>
-                  Color {color}
-                </ProductDataRow>
-                <ProductDataRow>
-                  Tamaño {size}
-                </ProductDataRow>
-                <ProductDataRow>
-                  Fragancia {fragance}
-                </ProductDataRow>
-                {/* 
-                <Button
-                  style={{fontSize: '0.8rem', borderRadius: '0'}}
-                >
-                  Eliminar producto
-                </Button>
-                */}
-              </ProductData>
-              <ProductBigCell>
-                <ProductDataCell>
-                  <ProducDataCellTitle>Precio</ProducDataCellTitle>
-                  <div>${price}</div>
-                </ProductDataCell>
-                <ProductDataCell>
-                  <ProducDataCellTitle>Cantidad</ProducDataCellTitle>
-                  <ProductDataCounter>
-                    <ProductCounterChangeButton 
-                      onClick={() => cartStore.decreaseAmountOfProduct(productKey)}
-                    >
-                      -
-                    </ProductCounterChangeButton>
-                    <div>{amount}</div>
-                    <ProductCounterChangeButton
-                      onClick={() => cartStore.increaseAmountOfProduct(productKey)}
-                    >
-                      +
-                    </ProductCounterChangeButton>
-                  </ProductDataCounter>
-                </ProductDataCell>
-              </ProductBigCell>
-              <RemoveProductIcon
-                onClick={() => cartStore.removeProduct(productKey)}
+        return (
+          <ProductCard key={productKey}>
+            <ProductThumbnailArea> 
+              <GatsbyImg width="160" height="160" sizes={thumbnail} />
+            </ProductThumbnailArea>
+            <ProductData>
+              <ProductDataTitle>
+                {name}
+              </ProductDataTitle>
+              <ProductDataRow>
+                Color {color}
+              </ProductDataRow>
+              <ProductDataRow>
+                Tamaño {size}
+              </ProductDataRow>
+              <ProductDataRow>
+                Fragancia {fragance}
+              </ProductDataRow>
+              {/* 
+              <Button
+                style={{fontSize: '0.8rem', borderRadius: '0'}}
               >
-                &times;
-              </RemoveProductIcon>
-            </ProductCard>
-          )})}
+                Eliminar producto
+              </Button>
+              */}
+            </ProductData>
+            <ProductBigCell>
+              <ProductDataCell>
+                <ProducDataCellTitle>Precio</ProducDataCellTitle>
+                <div>${price}</div>
+              </ProductDataCell>
+              <ProductDataCell>
+                <ProducDataCellTitle>Cantidad</ProducDataCellTitle>
+                <ProductDataCounter>
+                  <ProductCounterChangeButton 
+                    onClick={() => cartStore.decreaseAmountOfProduct(productKey)}
+                  >
+                    -
+                  </ProductCounterChangeButton>
+                  <div>{amount}</div>
+                  <ProductCounterChangeButton
+                    onClick={() => cartStore.increaseAmountOfProduct(productKey)}
+                  >
+                    +
+                  </ProductCounterChangeButton>
+                </ProductDataCounter>
+              </ProductDataCell>
+            </ProductBigCell>
+            <RemoveProductIcon
+              onClick={() => cartStore.removeProduct(productKey)}
+            >
+              &times;
+            </RemoveProductIcon>
+          </ProductCard>
+        )
+      })}
     </React.Fragment>
   )
 }

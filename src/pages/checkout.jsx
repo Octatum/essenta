@@ -13,6 +13,7 @@ import cardLogo from '../components/Checkout/assets/logo-card.png';
 import speiLogo from '../components/Checkout/assets/logo-spei.png';
 import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
 import Button from './../components/Button/index';
+import AppLayout from '../components/AppLayout';
 
 
 const GraySection = styled.section`
@@ -273,201 +274,203 @@ class Checkout extends React.Component {
 
   render() {
     return (
-      <PageLayout fluid>
-        <PageHeaderWithPadding>Checkout</PageHeaderWithPadding>
-        <GraySectionWithPadding>
-          <FormContentSection>
-            <SubsectionHeader>
-              Dirección de envío
-            </SubsectionHeader>
-            <Paragraph>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde placeat, est cumque repudiandae aperiam optio quis reprehenderit possimus perferendis accusantium deserunt dicta, mollitia sint recusandae libero nobis aliquam ut porro? Maiores ducimus aperiam natus provident, animi hic facilis dolorem iusto, nesciunt quia, tempora itaque voluptas velit vitae porro a eius delectus! Et delectus, modi molestias beatae vel aspernatur laboriosam dolores ipsum quas ipsa hic, maxime ea aperiam labore ad dolor id iste. Totam, accusamus alias suscipit odio vel qui, blanditiis exercitationem ut facilis eveniet, error sunt nostrum ea voluptatem est. Quia totam architecto ut rem alias nihil ex beatae quasi?
-            </Paragraph>
-            <UserDataForm>
-              <InputLabel>
-                <LabelText>Nombre</LabelText>
-                <Input 
-                  value={this.state.customerName} 
-                  onChange={this.handleChange}
-                  name="customerName"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>Correo</LabelText>
-                <Input 
-                  value={this.state.customerEmail} 
-                  onChange={this.handleChange}
-                  name="customerEmail"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>Teléfono</LabelText>
-                <Input 
-                  value={this.state.customerPhone} 
-                  onChange={this.handleChange}
-                  name="customerPhone"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>Calle y número</LabelText>
-                <Input 
-                  value={this.state.customerAddressLine1} 
-                  onChange={this.handleChange}
-                  name="customerAddressLine1"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>Colonia y CP</LabelText>
-                <Input 
-                  value={this.state.customerAddressLin2} 
-                  onChange={this.handleChange}
-                  name="customerAddressLin2"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>Ciudad</LabelText>
-                <Input 
-                  value={this.state.customerCity} 
-                  onChange={this.handleChange}
-                  name="customerCity"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>Estado o provincia</LabelText>
-                <Input 
-                  value={this.state.customerState} 
-                  onChange={this.handleChange}
-                  name="customerState"
-                />
-              </InputLabel>
-              <InputLabel>
-                <LabelText>País</LabelText>
-                <Input 
-                  value={this.state.customerCountry} 
-                  onChange={this.handleChange}
-                  name="customerCountry"
-                />
-              </InputLabel>
-            </UserDataForm>
-          </FormContentSection>
-        </GraySectionWithPadding>
-        <Spacer />
-        <GraySectionWithPadding>
-          <HorizontalFlex>
-            <VerticalFlex>
+      <AppLayout>
+        <PageLayout fluid>
+          <PageHeaderWithPadding>Checkout</PageHeaderWithPadding>
+          <GraySectionWithPadding>
+            <FormContentSection>
               <SubsectionHeader>
-                Método de envío
+                Dirección de envío
               </SubsectionHeader>
               <Paragraph>
-                Selecciona tu método de envío.
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde placeat, est cumque repudiandae aperiam optio quis reprehenderit possimus perferendis accusantium deserunt dicta, mollitia sint recusandae libero nobis aliquam ut porro? Maiores ducimus aperiam natus provident, animi hic facilis dolorem iusto, nesciunt quia, tempora itaque voluptas velit vitae porro a eius delectus! Et delectus, modi molestias beatae vel aspernatur laboriosam dolores ipsum quas ipsa hic, maxime ea aperiam labore ad dolor id iste. Totam, accusamus alias suscipit odio vel qui, blanditiis exercitationem ut facilis eveniet, error sunt nostrum ea voluptatem est. Quia totam architecto ut rem alias nihil ex beatae quasi?
               </Paragraph>
-            </VerticalFlex>
-            <VerticalFieldset>
-              <DeliveryInputLabel>
-                <input 
-                  type="radio"
-                  name="delivery"
-                  value="2-5 dias"
-                  checked={this.state.delivery === '2-5 dias'} 
-                  onChange={this.handleChange}
-                />
-                <DeliveryInputText>2 a 5 días hábiles (gratis)</DeliveryInputText>
-              </DeliveryInputLabel>
-              <DeliveryInputLabel>
-                <input 
-                  type="radio"
-                  name="delivery"
-                  value="dia siguiente"
-                  checked={this.state.delivery === 'dia siguiente'} 
-                  onChange={this.handleChange}
-                />
-                <DeliveryInputText>Día siguiente ($50.00)</DeliveryInputText>
-              </DeliveryInputLabel>
-            </VerticalFieldset>
-          </HorizontalFlex>
-          
-        </GraySectionWithPadding>
-        <Spacer />
-        <GraySectionWithPadding>
-          <FormContentSection>
-            <SubsectionHeader>
-              Opciones de pago
-            </SubsectionHeader> 
-            <Paragraph>
-              Selecciona tu método de pago preferido.
-            </Paragraph>
-            <PaymentOptions>
-              <PaymentInputLabel>
-                <input 
-                  type="radio"
-                  name="paymentMethod"
-                  value="SPEI"
-                  checked={this.state.paymentMethod === 'SPEI'} 
-                  onChange={this.handleChange}
-                />
-                <PaymentMethodLogo src={speiLogo} alt="Pago por spei" />
-              </PaymentInputLabel>
-              <PaymentInputLabel>
-                <input 
-                  type="radio"
-                  name="paymentMethod"
-                  value="OXXO"
-                  checked={this.state.paymentMethod === 'OXXO'} 
-                  onChange={this.handleChange}
-                />
-                <PaymentMethodLogo src={oxxoLogo} alt="Pago por Oxxo" />
-              </PaymentInputLabel>
-              <PaymentInputLabel>
-                <input 
-                  type="radio"
-                  name="paymentMethod"
-                  value="CARD"
-                  checked={this.state.paymentMethod === 'CARD'} 
-                  onChange={this.handleChange}
-                />
-                <PaymentMethodLogo src={cardLogo} alt="Pago por tarjeta" />
-              </PaymentInputLabel>
-            </PaymentOptions>
-          </FormContentSection>
-          <PaymentMethods 
-            {...this.state}
-            visibleOption={this.state.paymentMethod} 
-            handleChange={this.handleChange}
-            cardChildren={(
-              <React.Fragment>  
-                <CardPaymentLabel vertical>
-                  <LabelText>Datos de tarjeta</LabelText>
-                  <CreditCardInput
-                    cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCardNumberChange }}
-                    cardExpiryInputProps={{ value: this.state.cardExpiry, onChange: this.handleCardExpiryChange }}
-                    cardCVCInputRenderer={({ props }) => (
-                      <input
-                        {...props}
-                        onChange={this.handleCardCVCChange}
-                        value={this.state.cardCvc}
-                        onFocus={this.focusCvc}
-                        onBlur={this.blurCvc}
-                      />
-                    )}
-                    fieldClassName="input"
-                  />
-                </CardPaymentLabel>
-                <CardPaymentLabel vertical>
-                  <LabelText>Nombre en tarjeta</LabelText>
-                  <Input
+              <UserDataForm>
+                <InputLabel>
+                  <LabelText>Nombre</LabelText>
+                  <Input 
+                    value={this.state.customerName} 
                     onChange={this.handleChange}
-                    name="cardName"
-                    value={this.state.cardName}
-                    full
-                    white
+                    name="customerName"
                   />
-                </CardPaymentLabel>
-              </React.Fragment>
-            )}
-          />
-          <PaymentButton onClick={this.handleSubmit} small>Proceder a pago</PaymentButton>
-        </GraySectionWithPadding>
-      </PageLayout>
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>Correo</LabelText>
+                  <Input 
+                    value={this.state.customerEmail} 
+                    onChange={this.handleChange}
+                    name="customerEmail"
+                  />
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>Teléfono</LabelText>
+                  <Input 
+                    value={this.state.customerPhone} 
+                    onChange={this.handleChange}
+                    name="customerPhone"
+                  />
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>Calle y número</LabelText>
+                  <Input 
+                    value={this.state.customerAddressLine1} 
+                    onChange={this.handleChange}
+                    name="customerAddressLine1"
+                  />
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>Colonia y CP</LabelText>
+                  <Input 
+                    value={this.state.customerAddressLin2} 
+                    onChange={this.handleChange}
+                    name="customerAddressLin2"
+                  />
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>Ciudad</LabelText>
+                  <Input 
+                    value={this.state.customerCity} 
+                    onChange={this.handleChange}
+                    name="customerCity"
+                  />
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>Estado o provincia</LabelText>
+                  <Input 
+                    value={this.state.customerState} 
+                    onChange={this.handleChange}
+                    name="customerState"
+                  />
+                </InputLabel>
+                <InputLabel>
+                  <LabelText>País</LabelText>
+                  <Input 
+                    value={this.state.customerCountry} 
+                    onChange={this.handleChange}
+                    name="customerCountry"
+                  />
+                </InputLabel>
+              </UserDataForm>
+            </FormContentSection>
+          </GraySectionWithPadding>
+          <Spacer />
+          <GraySectionWithPadding>
+            <HorizontalFlex>
+              <VerticalFlex>
+                <SubsectionHeader>
+                  Método de envío
+                </SubsectionHeader>
+                <Paragraph>
+                  Selecciona tu método de envío.
+                </Paragraph>
+              </VerticalFlex>
+              <VerticalFieldset>
+                <DeliveryInputLabel>
+                  <input 
+                    type="radio"
+                    name="delivery"
+                    value="2-5 dias"
+                    checked={this.state.delivery === '2-5 dias'} 
+                    onChange={this.handleChange}
+                  />
+                  <DeliveryInputText>2 a 5 días hábiles (gratis)</DeliveryInputText>
+                </DeliveryInputLabel>
+                <DeliveryInputLabel>
+                  <input 
+                    type="radio"
+                    name="delivery"
+                    value="dia siguiente"
+                    checked={this.state.delivery === 'dia siguiente'} 
+                    onChange={this.handleChange}
+                  />
+                  <DeliveryInputText>Día siguiente ($50.00)</DeliveryInputText>
+                </DeliveryInputLabel>
+              </VerticalFieldset>
+            </HorizontalFlex>
+            
+          </GraySectionWithPadding>
+          <Spacer />
+          <GraySectionWithPadding>
+            <FormContentSection>
+              <SubsectionHeader>
+                Opciones de pago
+              </SubsectionHeader> 
+              <Paragraph>
+                Selecciona tu método de pago preferido.
+              </Paragraph>
+              <PaymentOptions>
+                <PaymentInputLabel>
+                  <input 
+                    type="radio"
+                    name="paymentMethod"
+                    value="SPEI"
+                    checked={this.state.paymentMethod === 'SPEI'} 
+                    onChange={this.handleChange}
+                  />
+                  <PaymentMethodLogo src={speiLogo} alt="Pago por spei" />
+                </PaymentInputLabel>
+                <PaymentInputLabel>
+                  <input 
+                    type="radio"
+                    name="paymentMethod"
+                    value="OXXO"
+                    checked={this.state.paymentMethod === 'OXXO'} 
+                    onChange={this.handleChange}
+                  />
+                  <PaymentMethodLogo src={oxxoLogo} alt="Pago por Oxxo" />
+                </PaymentInputLabel>
+                <PaymentInputLabel>
+                  <input 
+                    type="radio"
+                    name="paymentMethod"
+                    value="CARD"
+                    checked={this.state.paymentMethod === 'CARD'} 
+                    onChange={this.handleChange}
+                  />
+                  <PaymentMethodLogo src={cardLogo} alt="Pago por tarjeta" />
+                </PaymentInputLabel>
+              </PaymentOptions>
+            </FormContentSection>
+            <PaymentMethods 
+              {...this.state}
+              visibleOption={this.state.paymentMethod} 
+              handleChange={this.handleChange}
+              cardChildren={(
+                <React.Fragment>  
+                  <CardPaymentLabel vertical>
+                    <LabelText>Datos de tarjeta</LabelText>
+                    <CreditCardInput
+                      cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCardNumberChange }}
+                      cardExpiryInputProps={{ value: this.state.cardExpiry, onChange: this.handleCardExpiryChange }}
+                      cardCVCInputRenderer={({ props }) => (
+                        <input
+                          {...props}
+                          onChange={this.handleCardCVCChange}
+                          value={this.state.cardCvc}
+                          onFocus={this.focusCvc}
+                          onBlur={this.blurCvc}
+                        />
+                      )}
+                      fieldClassName="input"
+                    />
+                  </CardPaymentLabel>
+                  <CardPaymentLabel vertical>
+                    <LabelText>Nombre en tarjeta</LabelText>
+                    <Input
+                      onChange={this.handleChange}
+                      name="cardName"
+                      value={this.state.cardName}
+                      full
+                      white
+                    />
+                  </CardPaymentLabel>
+                </React.Fragment>
+              )}
+            />
+            <PaymentButton onClick={this.handleSubmit} small>Proceder a pago</PaymentButton>
+          </GraySectionWithPadding>
+        </PageLayout>
+      </AppLayout>
     );
   }
 }
