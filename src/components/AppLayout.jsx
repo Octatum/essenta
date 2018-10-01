@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled, { ThemeProvider } from 'styled-components';
-import { Provider } from 'mobx-react';
 import { StaticQuery, graphql } from 'gatsby';
 
-import CartStore from '../stores/CartStore';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { globalTheme } from '../utilities/themes';
 import './assets/index.css';
 
 const Layout = styled.div`
@@ -27,7 +24,6 @@ function getProductsUrlsFromEdges(edges) {
   return data;
 }
 
-const cartStore = new CartStore();
 
 const AppLayout = ({ children }) => {
   return (
@@ -54,45 +50,41 @@ const AppLayout = ({ children }) => {
         const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
 
         return (
-          <ThemeProvider theme={globalTheme}>
-            <Layout>
-              <Helmet
-                title={data.siteTitle.siteMetadata.title}
-                meta={[
-                  { name: 'description', content: 'Essenta' },
-                  { name: 'keywords', content: 'Essenta, perfumes' },
-                ]}
-                link={[
-                  {
-                    rel: 'stylesheet',
-                    href:
-                      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-                    integrity:
-                      'sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt',
-                    crossorigin: 'anonymous',
-                  },
-                  {
-                    rel: 'shortcut icon',
-                    href: '/favicon.ico',
-                    type: 'image/x-icon',
-                  },
-                  {
-                    rel: 'icon',
-                    href: '/favicon.ico',
-                    type: 'image/x-icon',
-                  },
-                ]}
-              />
-              <html lang="es" />
-              <Provider cartStore={cartStore}>
-                <div>
-                  <Navbar urls={productsUrls} />
-                  {children}
-                </div>
-              </Provider>
-              <Footer />
-            </Layout>
-          </ThemeProvider>
+          <Layout>
+            <Helmet
+              title={data.siteTitle.siteMetadata.title}
+              meta={[
+                { name: 'description', content: 'Essenta' },
+                { name: 'keywords', content: 'Essenta, perfumes' },
+              ]}
+              link={[
+                {
+                  rel: 'stylesheet',
+                  href:
+                    'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+                  integrity:
+                    'sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt',
+                  crossorigin: 'anonymous',
+                },
+                {
+                  rel: 'shortcut icon',
+                  href: '/favicon.ico',
+                  type: 'image/x-icon',
+                },
+                {
+                  rel: 'icon',
+                  href: '/favicon.ico',
+                  type: 'image/x-icon',
+                },
+              ]}
+            />
+            <html lang="es" />
+              <div>
+                <Navbar urls={productsUrls} />
+                {children}
+              </div>
+            <Footer />
+          </Layout>
         );
       }}
     />
