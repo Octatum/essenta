@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import GatsbyImg from 'gatsby-image';
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import GatsbyImg from 'gatsby-image'
 
-import { device } from '../../utilities/device';
+import { device } from '../../utilities/device'
 
 const TitleSection = styled.section`
   display: flex;
-`;
+`
 
 const PageTitle = styled.h1`
   flex: 1;
   font-size: 2.5em;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   position: relative;
 
   ${device.tablet} {
     font-size: 2em;
   }
-`;
+`
 
 const Spacer = styled.div`
   display: block;
   margin: 0.5em 0;
   height: 2px;
-  background-color: ${({theme}) => theme.color.orange};
-`;
+  background-color: ${({ theme }) => theme.color.orange};
+`
 
 const FraganceListDisplay = styled.section`
   display: flex;
@@ -48,7 +48,7 @@ const FraganceListDisplay = styled.section`
   ${device.mobile} {
     grid-template-columns: repeat(1, minmax(200px, 1fr));
   }
-`;
+`
 
 const FraganceDisplay = styled.figure`
   cursor: pointer;
@@ -62,21 +62,21 @@ const FraganceDisplay = styled.figure`
     margin: 0;
     width: auto;
   }
-`;
+`
 
 const HorizontalBar = styled.div`
-  background: ${({theme}) => theme.color.orange};
+  background: ${({ theme }) => theme.color.orange};
   height: 2px;
   margin: 1em;
   width: 30%;
   align-self: center;
   box-sizing: border-box;
-`;
+`
 
 const FraganceName = styled.h4`
   text-align: center;
   font-family: ${props => props.theme.fonts.secondary};
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   font-size: 1.5em;
   font-weight: 700;
   text-transform: lowercase;
@@ -84,11 +84,11 @@ const FraganceName = styled.h4`
   ::first-letter {
     text-transform: uppercase;
   }
-`;
+`
 
 const FamilySection = styled.section`
-  margin-bottom: 2em ;
-`;
+  margin-bottom: 2em;
+`
 
 const FraganceFamily = FraganceName.withComponent('h5').extend`
   font-size: 1.5em;
@@ -98,7 +98,7 @@ const FraganceFamily = FraganceName.withComponent('h5').extend`
   ${device.tablet} {
     align-self: center;
   }
-`;
+`
 
 const FamilySpacer = Spacer.extend`
   width: 50%;
@@ -107,7 +107,7 @@ const FamilySpacer = Spacer.extend`
   ${device.tablet} {
     align-self: center;
   }
-`;
+`
 
 class FragancePickerView extends Component {
   state = {
@@ -115,10 +115,7 @@ class FragancePickerView extends Component {
   }
 
   render() {
-    const { 
-      fragances, 
-      onFraganceClick 
-    } = this.props;
+    const { fragances, onFraganceClick } = this.props
 
     return (
       <React.Fragment>
@@ -132,7 +129,7 @@ class FragancePickerView extends Component {
             <FamilySpacer />
             <FraganceListDisplay>
               {fragances[key].map(fragance => (
-                <FraganceDisplay 
+                <FraganceDisplay
                   key={fragance.id}
                   onClick={() => onFraganceClick(fragance)}
                 >
@@ -149,4 +146,4 @@ class FragancePickerView extends Component {
   }
 }
 
-export default FragancePickerView;
+export default FragancePickerView

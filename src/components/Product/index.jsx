@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { inject } from 'mobx-react';
-import styled from 'styled-components';
+import React, { Component } from 'react'
+import { inject } from 'mobx-react'
+import styled from 'styled-components'
 
-import FragancePickerView from './FragancePickerView';
-import ProductDetailPickerView from './ProductDetailPickerView';
-import Breadcrumbs from './../Breadcrumbs';
-import { device } from '../../utilities/device';
+import FragancePickerView from './FragancePickerView'
+import ProductDetailPickerView from './ProductDetailPickerView'
+import Breadcrumbs from './../Breadcrumbs'
+import { device } from '../../utilities/device'
 
 const Layout = styled.main`
   display: flex;
@@ -19,60 +19,60 @@ const Layout = styled.main`
   ${device.mobile} {
     padding: 2em 1em;
   }
-`;
+`
 
 class ProductPickerContainer extends Component {
   initialState = {
     currentStep: 0,
-    selectedFragance: null
+    selectedFragance: null,
   }
 
   state = {
-    ...this.initialState
+    ...this.initialState,
   }
 
-  addProduct = (product) => {
-    this.props.cartStore.addProduct(product);
+  addProduct = product => {
+    this.props.cartStore.addProduct(product)
   }
 
   startOver = () => {
-    this.setState({...this.initialState});
+    this.setState({ ...this.initialState })
   }
-  
-  onFraganceClick = (fragance) => {
+
+  onFraganceClick = fragance => {
     this.setState(() => {
       return {
         currentStep: 1,
-        selectedFragance: fragance
+        selectedFragance: fragance,
       }
     })
   }
 
   render() {
-    const { data } = this.props;
-    
+    const { data } = this.props
+
     return (
       <React.Fragment>
         <Breadcrumbs />
         <Layout>
-          {this.state.currentStep === 0 && 
-            <FragancePickerView 
-              fragances={data.fragances} 
+          {this.state.currentStep === 0 && (
+            <FragancePickerView
+              fragances={data.fragances}
               onFraganceClick={this.onFraganceClick}
-            />}
-          {this.state.currentStep === 1 && 
+            />
+          )}
+          {this.state.currentStep === 1 && (
             <ProductDetailPickerView
               product={data.product}
               goBack={this.startOver}
               fragance={this.state.selectedFragance}
               addProduct={this.addProduct}
-            />}
+            />
+          )}
         </Layout>
       </React.Fragment>
-    );
+    )
   }
 }
 
-
-
-export default inject("cartStore")(ProductPickerContainer);
+export default inject('cartStore')(ProductPickerContainer)

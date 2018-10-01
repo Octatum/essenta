@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import ShopLinks from './ShopLinks';
-import NavbarLink from './NavbarLink';
+import ShopLinks from './ShopLinks'
+import NavbarLink from './NavbarLink'
 
-import logo from './assets/logo_horizontal.png';
-import { device } from '../../utilities/device';
+import logo from './assets/logo_horizontal.png'
+import { device } from '../../utilities/device'
 
 const NavLayout = styled.nav`
   display: flex;
@@ -13,7 +13,7 @@ const NavLayout = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   background: ${props => props.theme.background.main};
-`;
+`
 
 const LogoSection = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const LogoSection = styled.div`
   ${device.tablet} {
     justify-content: center;
   }
-`;
+`
 
 const LinksSection = styled.div`
   display: flex;
@@ -41,8 +41,7 @@ const LinksSection = styled.div`
     flex: 1;
     text-align: center;
   }
-
-`;
+`
 
 const BackgroundNavbarLink = NavbarLink.extend`
   padding: 0.5em 0;
@@ -56,9 +55,9 @@ const BackgroundNavbarLink = NavbarLink.extend`
   justify-content: center;
 
   :hover {
-    background: ${({theme}) => theme.color.darkOrange};
+    background: ${({ theme }) => theme.color.darkOrange};
   }
-`;
+`
 
 const HoverableItem = NavbarLink.extend`
   font-size: 1.2em;
@@ -67,7 +66,7 @@ const HoverableItem = NavbarLink.extend`
   position: relative;
 
   &::after {
-    content: "";
+    content: '';
   }
 
   ${device.tablet} {
@@ -77,7 +76,7 @@ const HoverableItem = NavbarLink.extend`
   }
 
   &::before {
-    content: "";
+    content: '';
     height: 120%;
     width: 300%;
     position: absolute;
@@ -92,35 +91,35 @@ const HoverableItem = NavbarLink.extend`
     z-index: 1;
     opacity: 1;
   }
-`;
+`
 
 const NavlinksSection = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 3.5em;
   font-weight: bold;
-  background: ${({theme}) => theme.color.orange};
+  background: ${({ theme }) => theme.color.orange};
 
   ${device.tablet} {
     height: auto;
     padding: 0;
     flex-direction: column;
   }
-`;
+`
 
 const ShopLinksSection = styled.div`
   flex: 3;
-`;
+`
 
 const Img = styled.img`
   max-width: 100%;
-`;
+`
 
 const Spacer = styled.div`
   width: 100%;
   background: ${props => props.theme.background.secondary};
   height: 2px;
-`;
+`
 
 const DropdownMenu = styled.div`
   background-color: ${props => props.theme.background.secondary};
@@ -138,9 +137,9 @@ const DropdownMenu = styled.div`
   overflow-y: hidden;
   box-sizing: border-box;
   z-index: 0;
-  -webkit-box-shadow: 0px 0.5em 1em 0px rgba(0,0,0,0.25);
-  -moz-box-shadow: 0px 0.5em 1em 0px rgba(0,0,0,0.25);
-  box-shadow: 0px 0.5em 1em 0px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
 
   > * {
     padding: 1em 1.5em;
@@ -160,35 +159,38 @@ const DropdownMenu = styled.div`
   ${device.tablet} {
     display: none;
   }
-`;
+`
 
 const LogoLink = NavbarLink.extend`
   width: 25%;
   min-width: 15em;
-`;
+`
 
 const CustomNavbarLink = NavbarLink.extend`
-  color: ${({theme}) => theme.color.white};
-`;
+  color: ${({ theme }) => theme.color.white};
+`
 
-function loseFocus({target}) {
-  target.blur();
+function loseFocus({ target }) {
+  target.blur()
 }
 
-function Navbar({urls}) {
-
+function Navbar({ urls }) {
   return (
     <NavLayout>
       <LogoSection>
         <LogoLink to="/">
-          <Img src={logo} alt="logo"/>
+          <Img src={logo} alt="logo" />
         </LogoLink>
       </LogoSection>
       <NavlinksSection>
         <LinksSection>
-          <BackgroundNavbarLink to="/producto/perfume/mujer">Diseña tu perfume</BackgroundNavbarLink>
+          <BackgroundNavbarLink to="/producto/perfume/mujer">
+            Diseña tu perfume
+          </BackgroundNavbarLink>
           <BackgroundNavbarLink to="/catalogo">Catálogo</BackgroundNavbarLink>
-          <BackgroundNavbarLink to="/unete">Únete a nosotros </BackgroundNavbarLink>
+          <BackgroundNavbarLink to="/unete">
+            Únete a nosotros{' '}
+          </BackgroundNavbarLink>
           {/* 
           <DropdownMenu className="navbar">
             {urls.map(({name, path}) => (
@@ -203,7 +205,7 @@ function Navbar({urls}) {
       </NavlinksSection>
       <Spacer />
     </NavLayout>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

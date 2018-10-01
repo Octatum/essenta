@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { observer, inject } from 'mobx-react';
+import React from 'react'
+import styled from 'styled-components'
+import { observer, inject } from 'mobx-react'
 
-import NavbarLink from './NavbarLink';
+import NavbarLink from './NavbarLink'
 
 const Layout = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const Layout = styled.div`
     position: relative;
 
     &::before {
-      content: "";
+      content: '';
       left: 0;
       height: 1.2rem;
       position: absolute;
@@ -22,34 +22,36 @@ const Layout = styled.div`
       background-color: ${props => props.theme.color.black};
     }
   }
-`;
+`
 
 const ShopLinkContainer = styled.div`
   padding: 0.5em;
-`;
+`
 
 const I = styled.i`
   color: ${props => props.theme.color.black};
   font-size: 1.5rem;
   position: relative;
-`;
+`
 
 const ShoppingCart = I.extend.attrs({
-  className: 'fas fa-shopping-cart'
+  className: 'fas fa-shopping-cart',
 })`
-  position: relative; 
+  position: relative;
   padding-right: 0.3rem;
-`;
+`
 
-const ShopLinks = ({cartStore}) => (
+const ShopLinks = ({ cartStore }) => (
   <Layout>
     <ShopLinkContainer>
-      <NavbarLink to="/carrito"><ShoppingCart />({cartStore.products.length})</NavbarLink>
+      <NavbarLink to="/carrito">
+        <ShoppingCart />({cartStore.products.length})
+      </NavbarLink>
     </ShopLinkContainer>
     <ShopLinkContainer>
       <NavbarLink to="/politica/pedidos">Ayuda</NavbarLink>
     </ShopLinkContainer>
   </Layout>
-);
+)
 
-export default inject("cartStore")(observer(ShopLinks));
+export default inject('cartStore')(observer(ShopLinks))

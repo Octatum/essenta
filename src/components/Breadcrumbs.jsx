@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 // height: 3em;
 const Breadcrumbs = styled.div`
   width: 100%;
   box-sizing: border-box;
-  background: ${({theme}) => theme.color.black};
-`;
+  background: ${({ theme }) => theme.color.black};
+`
 
-export default Breadcrumbs;
+export default Breadcrumbs

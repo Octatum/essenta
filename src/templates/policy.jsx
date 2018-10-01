@@ -1,23 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown';
-import { graphql } from 'gatsby';
+import React from 'react'
+import styled from 'styled-components'
+import ReactMarkdown from 'react-markdown'
+import { graphql } from 'gatsby'
 
-import Breadcrumbs from './../components/Breadcrumbs';
-import { device } from '../utilities/device';
-import AppLayout from '../components/AppLayout';
+import Breadcrumbs from './../components/Breadcrumbs'
+import { device } from '../utilities/device'
+import AppLayout from '../components/AppLayout'
 
-const Layout = styled.div`  
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 
 const TitleBanner = styled.div`
   background: ${props => props.theme.color.orange};
   padding: 2rem 0;
   display: flex;
   justify-content: center;
-`;
+`
 
 const TitleBlock = styled.div`
   max-width: 40%;
@@ -33,14 +33,14 @@ const TitleBlock = styled.div`
     max-width: 60%;
     font-size: 3rem;
   }
-`;
+`
 
 const ContentBlock = styled.div`
   background: ${props => props.theme.color.gray};
   display: flex;
   justify-content: center;
   padding: 8rem 0;
-`;
+`
 
 const Content = styled(ReactMarkdown)`
   font-family: ${props => props.theme.fonts.main};
@@ -50,7 +50,7 @@ const Content = styled(ReactMarkdown)`
   color: ${props => props.theme.color.black};
 
   ${device.tablet} {
-    width: 80%; 
+    width: 80%;
   }
 
   ${device.mobile} {
@@ -81,7 +81,7 @@ const Content = styled(ReactMarkdown)`
       margin-left: 1em;
 
       &::before {
-        content: counter(inner-counter) ". ";
+        content: counter(inner-counter) '. ';
         color: ${props => props.theme.color.orange};
         font-weight: 700;
       }
@@ -95,7 +95,7 @@ const Content = styled(ReactMarkdown)`
         margin: 0.5em 1em;
         margin-right: 0;
       }
-    }  
+    }
   }
 
   > ol {
@@ -103,7 +103,7 @@ const Content = styled(ReactMarkdown)`
 
     > li {
       &::before {
-        content: counter(inner-counter, upper-roman) ". ";
+        content: counter(inner-counter, upper-roman) '. ';
       }
 
       > p:first-of-type {
@@ -111,10 +111,13 @@ const Content = styled(ReactMarkdown)`
       }
     }
   }
-`;
+`
 
-function Privacidad ({data}) {
-  const { title, content: {content} } = data.contentfulPolitica;
+function Privacidad({ data }) {
+  const {
+    title,
+    content: { content },
+  } = data.contentfulPolitica
 
   return (
     <AppLayout>
@@ -128,18 +131,18 @@ function Privacidad ({data}) {
         </ContentBlock>
       </Layout>
     </AppLayout>
-  );
+  )
 }
 
-export default Privacidad;
+export default Privacidad
 
 export const pageQuery = graphql`
-  query PolicyByPath ($route: String!) {
-    contentfulPolitica (path: {eq: $route}) {
+  query PolicyByPath($route: String!) {
+    contentfulPolitica(path: { eq: $route }) {
       title
       content {
         content
       }
     }
   }
-`;
+`

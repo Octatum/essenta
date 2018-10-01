@@ -1,37 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import styled, { ThemeProvider } from 'styled-components';
-import { Provider } from 'mobx-react';
-import { StaticQuery, graphql } from "gatsby";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
+import styled, { ThemeProvider } from 'styled-components'
+import { Provider } from 'mobx-react'
+import { StaticQuery, graphql } from 'gatsby'
 
 import CartStore from '../stores/CartStore'
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { globalTheme } from '../utilities/themes';
-import './assets/index.css';
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import { globalTheme } from '../utilities/themes'
+import './assets/index.css'
 
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
   background: ${props => props.theme.color.gray};
-`;
+`
 
 function getProductsUrlsFromEdges(edges) {
-  const data = edges.map(({node}) => ({
+  const data = edges.map(({ node }) => ({
     name: node.title,
     path: node.path,
-  }));
+  }))
 
-  return data;
+  return data
 }
 
-const cartStore = new CartStore();
+const cartStore = new CartStore()
 
 const AppLayout = ({ children }) => {
   return (
-    <StaticQuery 
+    <StaticQuery
       query={graphql`
         query PageData {
           siteTitle: site {
@@ -39,7 +39,7 @@ const AppLayout = ({ children }) => {
               title
             }
           }
-          
+
           productEdges: allContentfulProducto {
             edges {
               node {
@@ -51,7 +51,7 @@ const AppLayout = ({ children }) => {
         }
       `}
       render={data => {
-        const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
+        const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges)
 
         return (
           <ThemeProvider theme={globalTheme}>
@@ -62,25 +62,31 @@ const AppLayout = ({ children }) => {
                   { name: 'description', content: 'Essenta' },
                   { name: 'keywords', content: 'Essenta, perfumes' },
                 ]}
-                link={[{
-                  rel:"stylesheet",
-                  href:"https://use.fontawesome.com/releases/v5.1.0/css/all.css", 
-                  integrity:"sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt", 
-                  crossorigin:"anonymous"
-                }, {
-                  rel: "shortcut icon",
-                  href: "/favicon.ico",
-                  type: "image/x-icon"
-                }, {
-                  rel: "icon",
-                  href: "/favicon.ico",
-                  type: "image/x-icon"
-                }]}
+                link={[
+                  {
+                    rel: 'stylesheet',
+                    href:
+                      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+                    integrity:
+                      'sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt',
+                    crossorigin: 'anonymous',
+                  },
+                  {
+                    rel: 'shortcut icon',
+                    href: '/favicon.ico',
+                    type: 'image/x-icon',
+                  },
+                  {
+                    rel: 'icon',
+                    href: '/favicon.ico',
+                    type: 'image/x-icon',
+                  },
+                ]}
               />
               <html lang="es" />
               <Provider cartStore={cartStore}>
                 <div>
-                  <Navbar urls={productsUrls}/>
+                  <Navbar urls={productsUrls} />
                   {children}
                 </div>
               </Provider>
@@ -90,12 +96,11 @@ const AppLayout = ({ children }) => {
         )
       }}
     />
-    
-  );
+  )
 }
 
 AppLayout.propTypes = {
   children: PropTypes.object,
-};
+}
 
-export default AppLayout;
+export default AppLayout

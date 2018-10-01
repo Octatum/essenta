@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -14,10 +14,8 @@ const StyledHeader = styled.div`
   font-family: ${props => props.theme.fonts.secondary};
   font-size: 1.35rem;
   text-align: center;
-`;
+`
 
-const Header = () => (
-  <StyledHeader>conoce los métodos de pago</StyledHeader>
-);
+const Header = () => <StyledHeader>conoce los métodos de pago</StyledHeader>
 
-export default Header;
+export default Header
