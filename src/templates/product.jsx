@@ -1,4 +1,5 @@
 import React from 'react';
+import { graphql } from 'gatsby';
 
 import ProductPickerContainer from '../components/Product';
 import AppLayout from '../components/AppLayout';
@@ -14,7 +15,6 @@ function groupFragancesByFamily(fragances) {
     if(!!!families[fragance.family]) {
       families[fragance.family] = [];
     }
-    console.log(families);
 
     families[fragance.family].push(fragance);
   });
@@ -42,7 +42,7 @@ function ProductPickerTemplate({data}) {
 
 export default ProductPickerTemplate;
 
-export const dataQuery = graphql`
+export const pageQuery = graphql`
   query ProductByPath($route: String!) {
     product: contentfulProducto (path: { eq: $route }) {
       title

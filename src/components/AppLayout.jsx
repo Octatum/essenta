@@ -30,7 +30,6 @@ function getProductsUrlsFromEdges(edges) {
 const cartStore = new CartStore();
 
 const AppLayout = ({ children }) => {
-
   return (
     <StaticQuery 
       query={graphql`
@@ -60,8 +59,8 @@ const AppLayout = ({ children }) => {
               <Helmet
                 title={data.siteTitle.siteMetadata.title}
                 meta={[
-                  { name: 'description', content: 'Sample' },
-                  { name: 'keywords', content: 'sample, something' },
+                  { name: 'description', content: 'Essenta' },
+                  { name: 'keywords', content: 'Essenta, perfumes' },
                 ]}
                 link={[{
                   rel:"stylesheet",
@@ -96,7 +95,7 @@ const AppLayout = ({ children }) => {
 }
 
 AppLayout.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.object,
 };
 
 export default AppLayout;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'gatsby-link';
+import { graphql } from 'gatsby';
 
 import { device } from '../utilities/device';
 import GatsbyImg from 'gatsby-image';
@@ -111,23 +112,21 @@ function Catalogo ({
         <PageTitle>Nuestros Productos</PageTitle>
         <PrductListDisplay>
           {allProducts.map(product => (
-            <React.Fragment>
-              <ProductLink
-                key={product.id}
-                to={`/producto${product.path}`}
-                width={400}
-                height={400}
-              >
-                <ProductCard>
-                  <ProductCardBannerDiv>
-                    <ProductCardBanner sizes={product.image.sizes} />
-                  </ProductCardBannerDiv>
-                  <ProductCardName>
-                    Diseña tu {product.title}
-                  </ProductCardName>
-                </ProductCard>
-              </ProductLink>
-            </React.Fragment>
+            <ProductLink
+              key={product.id}
+              to={`/producto${product.path}`}
+              width={400}
+              height={400}
+            >
+              <ProductCard>
+                <ProductCardBannerDiv>
+                  <ProductCardBanner sizes={product.image.sizes} />
+                </ProductCardBannerDiv>
+                <ProductCardName>
+                  Diseña tu {product.title}
+                </ProductCardName>
+              </ProductCard>
+            </ProductLink>
           ))}
         </PrductListDisplay>
       </Layout>

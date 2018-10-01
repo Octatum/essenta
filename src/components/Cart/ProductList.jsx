@@ -130,7 +130,6 @@ function ProductList ({cartStore}) {
         amount
       }) => {
         const productKey = `${name}-${color}-${size}-${fragance}`;
-        console.log(thumbnail);
 
         return (
           <ProductCard key={productKey}>

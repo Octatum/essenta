@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
+import { graphql } from 'gatsby';
 
 import Breadcrumbs from './../components/Breadcrumbs';
 import { device } from '../utilities/device';

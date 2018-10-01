@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
+  "name": "essenta-gatsby",
+  "description": "Essenta's website",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Octatum <contacto@octatum.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.7.1",
     "gatsby": "^2.0.6",
@@ -47,6 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/robruizr/essenta-gatsby"
   }
 }
