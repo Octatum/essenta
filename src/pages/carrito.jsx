@@ -117,7 +117,8 @@ function Carrito({ cartStore }) {
             </ProductSubtotalPrice>
             <LinkButton
               style={{ fontSize: '1.1rem', borderRadius: '0' }}
-              to="/checkout">
+              to="/checkout"
+            >
               Proceder a pago
             </LinkButton>
           </Subtotal>

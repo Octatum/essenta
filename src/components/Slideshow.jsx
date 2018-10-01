@@ -122,7 +122,8 @@ class Slideshow extends Component {
             opacity: [0],
             translateY: [10],
             timing: { duration: 200 },
-          })}>
+          })}
+        >
           {nodes => (
             <FullSizeDiv>
               {nodes.map(({ key, data, state: { opacity } }) => (
@@ -135,7 +136,8 @@ class Slideshow extends Component {
                     top: 0,
                     left: 0,
                     opacity,
-                  }}>
+                  }}
+                >
                   {data.render
                     ? data.render(data)
                     : this.props.defaultElementRender(data)}

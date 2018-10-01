@@ -153,21 +153,24 @@ function ProductList({ cartStore }) {
                     <ProductCounterChangeButton
                       onClick={() =>
                         cartStore.decreaseAmountOfProduct(productKey)
-                      }>
+                      }
+                    >
                       -
                     </ProductCounterChangeButton>
                     <div>{amount}</div>
                     <ProductCounterChangeButton
                       onClick={() =>
                         cartStore.increaseAmountOfProduct(productKey)
-                      }>
+                      }
+                    >
                       +
                     </ProductCounterChangeButton>
                   </ProductDataCounter>
                 </ProductDataCell>
               </ProductBigCell>
               <RemoveProductIcon
-                onClick={() => cartStore.removeProduct(productKey)}>
+                onClick={() => cartStore.removeProduct(productKey)}
+              >
                 &times;
               </RemoveProductIcon>
             </ProductCard>

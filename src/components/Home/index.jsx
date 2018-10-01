@@ -63,7 +63,8 @@ function Home({ data }) {
               to={recommendedImage.path}
               condition={
                 recommendedImage.path && recommendedImage.path.length > 0
-              }>
+              }
+            >
               <Img
                 sizes={recommendedImage.image.sizes}
                 imgStyle={imgStyle}

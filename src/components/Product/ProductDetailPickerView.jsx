@@ -204,7 +204,8 @@ class ProductDetailPickerView extends Component {
                       .sizes,
                   price: product.sizes[currentSize].sizePrice,
                 })
-              }>
+              }
+            >
               Añadir al carrito
             </Button>
           </ProductInfo>

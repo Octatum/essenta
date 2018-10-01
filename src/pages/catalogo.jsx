@@ -114,7 +114,8 @@ function Catalogo({ data: { productResults } }) {
               key={product.id}
               to={`/producto${product.path}`}
               width={400}
-              height={400}>
+              height={400}
+            >
               <ProductCard>
                 <ProductCardBannerDiv>
                   <ProductCardBanner sizes={product.image.sizes} />

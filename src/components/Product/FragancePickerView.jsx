@@ -131,7 +131,8 @@ class FragancePickerView extends Component {
               {fragances[key].map(fragance => (
                 <FraganceDisplay
                   key={fragance.id}
-                  onClick={() => onFraganceClick(fragance)}>
+                  onClick={() => onFraganceClick(fragance)}
+                >
                   <GatsbyImg sizes={fragance.image.sizes} />
                   <HorizontalBar />
                   <FraganceName>{fragance.displayName}</FraganceName>

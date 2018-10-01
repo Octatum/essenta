@@ -24,7 +24,6 @@ function getProductsUrlsFromEdges(edges) {
   return data;
 }
 
-
 const AppLayout = ({ children }) => {
   return (
     <StaticQuery
@@ -79,10 +78,10 @@ const AppLayout = ({ children }) => {
               ]}
             />
             <html lang="es" />
-              <div>
-                <Navbar urls={productsUrls} />
-                {children}
-              </div>
+            <div>
+              <Navbar urls={productsUrls} />
+              {children}
+            </div>
             <Footer />
           </Layout>
         );
