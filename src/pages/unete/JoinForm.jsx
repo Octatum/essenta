@@ -1,22 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
-import _DatePicker from 'react-datepicker'
-import moment from 'moment'
-import 'react-datepicker/dist/react-datepicker.css'
+import React from 'react';
+import styled from 'styled-components';
+import _DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import {
   TextInput as _TextInput,
   Select as _Select,
-} from './../../components/Input/index'
-import Button from './../../components/Button/index'
-import { device } from '../../utilities/device'
+} from './../../components/Input/index';
+import Button from './../../components/Button/index';
+import { device } from '../../utilities/device';
 
 const Layout = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
   padding: 5rem 0;
-`
+`;
 
 const FormBlock = styled.form`
   width: 82%;
@@ -24,7 +24,7 @@ const FormBlock = styled.form`
   counter-reset: fieldset;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const Legend = styled.legend`
   padding: 1em 0;
@@ -42,7 +42,7 @@ const Legend = styled.legend`
     content: counter(fieldset) ". ";
   }
   */
-`
+`;
 
 const Label = styled.label`
   font-size: 1.8rem;
@@ -87,13 +87,13 @@ const Label = styled.label`
       width: 100%;
     }
   }
-`
+`;
 
 const TextInput = _TextInput.extend`
   font-size: 1.1rem;
   padding: 0.5em 0;
   border-radius: 5px;
-`
+`;
 
 const Select = _Select.extend`
   font-size: 1.1rem;
@@ -104,7 +104,7 @@ const Select = _Select.extend`
   ${device.tablet} {
     flex: 1;
   }
-`
+`;
 
 const CustomButton = Button.extend`
   align-self: flex-end;
@@ -115,7 +115,7 @@ const CustomButton = Button.extend`
   ${device.tablet} {
     width: 100%;
   }
-`
+`;
 
 const DatePicker = styled(_DatePicker)`
   background: transparent;
@@ -126,7 +126,7 @@ const DatePicker = styled(_DatePicker)`
   font-size: 1.1rem;
   padding: 0.5em 0;
   border-radius: 5px;
-`
+`;
 
 class JoinForm extends React.Component {
   state = {
@@ -140,21 +140,21 @@ class JoinForm extends React.Component {
     lineaUno: '',
     lineaDos: '',
     estado: '',
-  }
+  };
 
   handleChange = ({ target }) => {
-    this.setState({ [target.name]: target.value })
-  }
+    this.setState({ [target.name]: target.value });
+  };
 
-  handleEmailChange = ({ target }) => {}
+  handleEmailChange = ({ target }) => {};
 
   handleBirthdateChange = date => {
-    this.setState({ nacimiento: date })
-  }
+    this.setState({ nacimiento: date });
+  };
 
   handleSubmit = event => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
   render() {
     return (
@@ -242,8 +242,8 @@ class JoinForm extends React.Component {
           <CustomButton type="submit">Enviar</CustomButton>
         </FormBlock>
       </Layout>
-    )
+    );
   }
 }
 
-export default JoinForm
+export default JoinForm;

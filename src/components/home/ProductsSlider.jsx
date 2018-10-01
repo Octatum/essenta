@@ -1,31 +1,31 @@
-import React from 'react'
-import Slider from 'react-slick'
-import styled from 'styled-components'
-import Img from 'gatsby-image'
-import Link from 'gatsby-link'
-import { screenBreakpoints } from './../../utilities/device'
+import React from 'react';
+import Slider from 'react-slick';
+import styled from 'styled-components';
+import Img from 'gatsby-image';
+import Link from 'gatsby-link';
+import { screenBreakpoints } from './../../utilities/device';
 
 const SliderArrow = styled.i`
   font-size: 5em;
   z-index: 10;
   cursor: pointer;
-`
+`;
 
 const LeftArrow = SliderArrow.extend`
   left: -2.5rem;
-`
+`;
 
 const RightArrow = SliderArrow.extend`
   right: -2.5rem;
-`
+`;
 
 const SlickPrevArrow = ({ className, onClick }) => (
   <LeftArrow className="fa fa-chevron-left" onClick={onClick} />
-)
+);
 
 const SlickNextArrow = ({ className, style, onClick }) => (
   <RightArrow className="fa fa-chevron-right" onClick={onClick} />
-)
+);
 
 const ImageWrapper = styled.div`
   width: 220px;
@@ -33,12 +33,12 @@ const ImageWrapper = styled.div`
   max-width: 220px;
   height: auto;
   position: relative;
-`
+`;
 
 const ProductWrapper = styled(Link)`
   display: inline-flex !important;
   justify-content: center;
-`
+`;
 
 const ProductSlider = ({ products }) => {
   const settings = {
@@ -76,7 +76,7 @@ const ProductSlider = ({ products }) => {
         },
       },
     ],
-  }
+  };
 
   return (
     <Slider style={{ position: 'relative', height: '100%' }} {...settings}>
@@ -92,7 +92,7 @@ const ProductSlider = ({ products }) => {
           </ProductWrapper>
         ))}
     </Slider>
-  )
-}
+  );
+};
 
-export default ProductSlider
+export default ProductSlider;

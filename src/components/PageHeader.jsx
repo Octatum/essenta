@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import { device } from '../utilities/device'
+import { device } from '../utilities/device';
 
 const PageHeader = styled.h1`
   font-size: 2.5em;
@@ -19,6 +19,6 @@ const PageHeader = styled.h1`
     }`} ${device.tablet} {
     font-size: 2em;
   }
-`
+`;
 
-export default PageHeader
+export default PageHeader;

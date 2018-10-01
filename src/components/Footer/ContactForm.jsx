@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import { TextInput } from '../Input/index'
-import Button from '../Button/index'
-import { device } from '../../utilities/device'
+import { TextInput } from '../Input/index';
+import Button from '../Button/index';
+import { device } from '../../utilities/device';
 
 const Layout = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const Layout = styled.div`
   ${device.laptop} {
     flex-direction: column;
   }
-`
+`;
 
 const Form = styled.form`
   display: flex;
@@ -21,7 +21,7 @@ const Form = styled.form`
   ${device.mobile} {
     flex-direction: column;
   }
-`
+`;
 
 const ContactInfo = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ const ContactInfo = styled.div`
     flex-direction: column;
     justify-content: center;
   }
-`
+`;
 
 const CallUs = styled.div`
   font-family: ${props => props.theme.fonts.secondary};
@@ -49,7 +49,7 @@ const CallUs = styled.div`
   ${device.mobile} {
     min-width: 100%;
   }
-`
+`;
 
 const SocialButton = styled.a`
   text-decoration: none;
@@ -71,11 +71,11 @@ const SocialButton = styled.a`
   &:focus {
     background: ${props => props.theme.color.darkOrange};
   }
-`
+`;
 
 const Bold = styled.span`
   font-weight: 700;
-`
+`;
 
 const CustomButton = Button.extend`
   flex: 4;
@@ -86,7 +86,7 @@ const CustomButton = Button.extend`
   ${device.mobile} {
     margin: 0;
   }
-`
+`;
 
 const CustomTextInput = TextInput.extend`
   flex: 6;
@@ -97,7 +97,7 @@ const CustomTextInput = TextInput.extend`
     padding: 0.5em 0;
     margin-bottom: 1em;
   }
-`
+`;
 
 const SocialButtons = styled.div`
   flex: 1;
@@ -108,20 +108,20 @@ const SocialButtons = styled.div`
     padding-top: 0.5em;
     width: 100%;
   }
-`
+`;
 
 class ContactForm extends React.Component {
   state = {
     email: '',
-  }
+  };
 
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value })
-  }
+    this.setState({ [name]: value });
+  };
 
   submitForm = e => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   render() {
     return (
@@ -150,8 +150,8 @@ class ContactForm extends React.Component {
           </SocialButtons>
         </ContactInfo>
       </Layout>
-    )
+    );
   }
 }
 
-export default ContactForm
+export default ContactForm;

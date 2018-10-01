@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { observer, inject } from 'mobx-react'
+import React from 'react';
+import styled from 'styled-components';
+import { observer, inject } from 'mobx-react';
 
-import NavbarLink from './NavbarLink'
+import NavbarLink from './NavbarLink';
 
 const Layout = styled.div`
   display: flex;
@@ -22,24 +22,24 @@ const Layout = styled.div`
       background-color: ${props => props.theme.color.black};
     }
   }
-`
+`;
 
 const ShopLinkContainer = styled.div`
   padding: 0.5em;
-`
+`;
 
 const I = styled.i`
   color: ${props => props.theme.color.black};
   font-size: 1.5rem;
   position: relative;
-`
+`;
 
 const ShoppingCart = I.extend.attrs({
   className: 'fas fa-shopping-cart',
 })`
   position: relative;
   padding-right: 0.3rem;
-`
+`;
 
 const ShopLinks = ({ cartStore }) => (
   <Layout>
@@ -52,6 +52,6 @@ const ShopLinks = ({ cartStore }) => (
       <NavbarLink to="/politica/pedidos">Ayuda</NavbarLink>
     </ShopLinkContainer>
   </Layout>
-)
+);
 
-export default inject('cartStore')(observer(ShopLinks))
+export default inject('cartStore')(observer(ShopLinks));

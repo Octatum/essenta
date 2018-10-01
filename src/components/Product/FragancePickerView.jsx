@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import GatsbyImg from 'gatsby-image'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import GatsbyImg from 'gatsby-image';
 
-import { device } from '../../utilities/device'
+import { device } from '../../utilities/device';
 
 const TitleSection = styled.section`
   display: flex;
-`
+`;
 
 const PageTitle = styled.h1`
   flex: 1;
@@ -19,14 +19,14 @@ const PageTitle = styled.h1`
   ${device.tablet} {
     font-size: 2em;
   }
-`
+`;
 
 const Spacer = styled.div`
   display: block;
   margin: 0.5em 0;
   height: 2px;
   background-color: ${({ theme }) => theme.color.orange};
-`
+`;
 
 const FraganceListDisplay = styled.section`
   display: flex;
@@ -48,7 +48,7 @@ const FraganceListDisplay = styled.section`
   ${device.mobile} {
     grid-template-columns: repeat(1, minmax(200px, 1fr));
   }
-`
+`;
 
 const FraganceDisplay = styled.figure`
   cursor: pointer;
@@ -62,7 +62,7 @@ const FraganceDisplay = styled.figure`
     margin: 0;
     width: auto;
   }
-`
+`;
 
 const HorizontalBar = styled.div`
   background: ${({ theme }) => theme.color.orange};
@@ -71,7 +71,7 @@ const HorizontalBar = styled.div`
   width: 30%;
   align-self: center;
   box-sizing: border-box;
-`
+`;
 
 const FraganceName = styled.h4`
   text-align: center;
@@ -84,11 +84,11 @@ const FraganceName = styled.h4`
   ::first-letter {
     text-transform: uppercase;
   }
-`
+`;
 
 const FamilySection = styled.section`
   margin-bottom: 2em;
-`
+`;
 
 const FraganceFamily = FraganceName.withComponent('h5').extend`
   font-size: 1.5em;
@@ -98,7 +98,7 @@ const FraganceFamily = FraganceName.withComponent('h5').extend`
   ${device.tablet} {
     align-self: center;
   }
-`
+`;
 
 const FamilySpacer = Spacer.extend`
   width: 50%;
@@ -107,15 +107,15 @@ const FamilySpacer = Spacer.extend`
   ${device.tablet} {
     align-self: center;
   }
-`
+`;
 
 class FragancePickerView extends Component {
   state = {
     currentSex: 0,
-  }
+  };
 
   render() {
-    const { fragances, onFraganceClick } = this.props
+    const { fragances, onFraganceClick } = this.props;
 
     return (
       <React.Fragment>
@@ -131,8 +131,7 @@ class FragancePickerView extends Component {
               {fragances[key].map(fragance => (
                 <FraganceDisplay
                   key={fragance.id}
-                  onClick={() => onFraganceClick(fragance)}
-                >
+                  onClick={() => onFraganceClick(fragance)}>
                   <GatsbyImg sizes={fragance.image.sizes} />
                   <HorizontalBar />
                   <FraganceName>{fragance.displayName}</FraganceName>
@@ -142,8 +141,8 @@ class FragancePickerView extends Component {
           </FamilySection>
         ))}
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default FragancePickerView
+export default FragancePickerView;

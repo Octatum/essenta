@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
-import { NodeGroup } from 'react-move'
+import React, { Component, Fragment } from 'react';
+import styled from 'styled-components';
+import { NodeGroup } from 'react-move';
 
-const defaultTimeBetweenSlides = 5000
+const defaultTimeBetweenSlides = 5000;
 
 const Controllers = styled.div`
   position: absolute;
@@ -12,14 +12,14 @@ const Controllers = styled.div`
   width: 100%;
   justify-content: center;
   align-items: flex-start;
-`
+`;
 
 const FullSizeDiv = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-`
+`;
 
 const SlideButton = styled.div.attrs({
   style: ({ selected }) => ({
@@ -31,56 +31,57 @@ const SlideButton = styled.div.attrs({
   height: 1.2rem;
   border-radius: 100%;
   transition: 0.3s linear all;
-`
+`;
 
 class Slideshow extends Component {
   state = {
     currentSlide: 0,
-  }
+  };
 
   componentDidMount() {
     this.timeBetweenSlides =
-      this.props.timeBetweenSlides || defaultTimeBetweenSlides
+      this.props.timeBetweenSlides || defaultTimeBetweenSlides;
     // Set timer and store it
-    this.slideTimer = setInterval(this.nextSlide, this.timeBetweenSlides)
+    this.slideTimer = setInterval(this.nextSlide, this.timeBetweenSlides);
   }
 
   componentWillUnmount() {
     // Delete slide-changing timer
-    clearInterval(this.slideTimer)
+    clearInterval(this.slideTimer);
   }
 
   nextSlide = () => {
     // Advance slide counter and set it
-    const currentSlide = (this.state.currentSlide + 1) % this.props.items.length
-    this.setState({ currentSlide })
-  }
+    const currentSlide =
+      (this.state.currentSlide + 1) % this.props.items.length;
+    this.setState({ currentSlide });
+  };
 
   previousSlide = () => {
     // Make counter go back one slide.
     const currentSlide =
       (this.state.currentSlide + this.props.items.length - 1) %
-      this.props.items.length
-    this.setState({ currentSlide })
-  }
+      this.props.items.length;
+    this.setState({ currentSlide });
+  };
 
   /**
    * Reset slide-changing timer
    */
   resetTimer = () => {
     // Clear interval if it exists, then create it again
-    if (!this.slideTimer) return
+    if (!this.slideTimer) return;
 
-    clearInterval(this.slideTimer)
-    this.slideTimer = setInterval(this.nextSlide, this.timeBetweenSlides)
-  }
+    clearInterval(this.slideTimer);
+    this.slideTimer = setInterval(this.nextSlide, this.timeBetweenSlides);
+  };
 
   setCurrentSlide = slideIndex => {
     this.setState({
       currentSlide: slideIndex,
-    })
-    this.resetTimer()
-  }
+    });
+    this.resetTimer();
+  };
 
   render() {
     const SlideButtons = this.props.items.map((_, index) => (
@@ -89,9 +90,9 @@ class Slideshow extends Component {
         key={index}
         onClick={() => this.setCurrentSlide(index)}
       />
-    ))
+    ));
 
-    const currentItem = this.props.items[this.state.currentSlide]
+    const currentItem = this.props.items[this.state.currentSlide];
 
     return (
       <Fragment>
@@ -121,8 +122,7 @@ class Slideshow extends Component {
             opacity: [0],
             translateY: [10],
             timing: { duration: 200 },
-          })}
-        >
+          })}>
           {nodes => (
             <FullSizeDiv>
               {nodes.map(({ key, data, state: { opacity } }) => (
@@ -135,8 +135,7 @@ class Slideshow extends Component {
                     top: 0,
                     left: 0,
                     opacity,
-                  }}
-                >
+                  }}>
                   {data.render
                     ? data.render(data)
                     : this.props.defaultElementRender(data)}
@@ -147,8 +146,8 @@ class Slideshow extends Component {
         </NodeGroup>
         <Controllers>{SlideButtons}</Controllers>
       </Fragment>
-    )
+    );
   }
 }
 
-export default Slideshow
+export default Slideshow;

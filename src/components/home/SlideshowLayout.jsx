@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import Slideshow from '../../components/Slideshow'
-import { device } from '../../utilities/device'
+import Slideshow from '../../components/Slideshow';
+import { device } from '../../utilities/device';
 
 const Layout = styled.div`
   margin-top: 2rem;
   height: 33rem;
   position: relative;
-`
+`;
 
 const SlideshowItemRender = styled.div`
   height: 100%;
@@ -21,7 +21,7 @@ const SlideshowItemRender = styled.div`
   ${device.tablet} {
     background-size: contain;
   }
-`
+`;
 
 function SlideshowLayout({ items }) {
   return (
@@ -32,7 +32,7 @@ function SlideshowLayout({ items }) {
         timeBetweenSlides={5000}
       />
     </Layout>
-  )
+  );
 }
 
-export default SlideshowLayout
+export default SlideshowLayout;

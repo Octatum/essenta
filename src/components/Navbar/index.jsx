@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import ShopLinks from './ShopLinks'
-import NavbarLink from './NavbarLink'
+import ShopLinks from './ShopLinks';
+import NavbarLink from './NavbarLink';
 
-import logo from './assets/logo_horizontal.png'
-import { device } from '../../utilities/device'
+import logo from './assets/logo_horizontal.png';
+import { device } from '../../utilities/device';
 
 const NavLayout = styled.nav`
   display: flex;
@@ -13,7 +13,7 @@ const NavLayout = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   background: ${props => props.theme.background.main};
-`
+`;
 
 const LogoSection = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const LogoSection = styled.div`
   ${device.tablet} {
     justify-content: center;
   }
-`
+`;
 
 const LinksSection = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ const LinksSection = styled.div`
     flex: 1;
     text-align: center;
   }
-`
+`;
 
 const BackgroundNavbarLink = NavbarLink.extend`
   padding: 0.5em 0;
@@ -57,7 +57,7 @@ const BackgroundNavbarLink = NavbarLink.extend`
   :hover {
     background: ${({ theme }) => theme.color.darkOrange};
   }
-`
+`;
 
 const HoverableItem = NavbarLink.extend`
   font-size: 1.2em;
@@ -91,7 +91,7 @@ const HoverableItem = NavbarLink.extend`
     z-index: 1;
     opacity: 1;
   }
-`
+`;
 
 const NavlinksSection = styled.div`
   display: flex;
@@ -105,21 +105,21 @@ const NavlinksSection = styled.div`
     padding: 0;
     flex-direction: column;
   }
-`
+`;
 
 const ShopLinksSection = styled.div`
   flex: 3;
-`
+`;
 
 const Img = styled.img`
   max-width: 100%;
-`
+`;
 
 const Spacer = styled.div`
   width: 100%;
   background: ${props => props.theme.background.secondary};
   height: 2px;
-`
+`;
 
 const DropdownMenu = styled.div`
   background-color: ${props => props.theme.background.secondary};
@@ -159,19 +159,19 @@ const DropdownMenu = styled.div`
   ${device.tablet} {
     display: none;
   }
-`
+`;
 
 const LogoLink = NavbarLink.extend`
   width: 25%;
   min-width: 15em;
-`
+`;
 
 const CustomNavbarLink = NavbarLink.extend`
   color: ${({ theme }) => theme.color.white};
-`
+`;
 
 function loseFocus({ target }) {
-  target.blur()
+  target.blur();
 }
 
 function Navbar({ urls }) {
@@ -205,7 +205,7 @@ function Navbar({ urls }) {
       </NavlinksSection>
       <Spacer />
     </NavLayout>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

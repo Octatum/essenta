@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import Link from 'gatsby-link'
+import styled from 'styled-components';
+import Link from 'gatsby-link';
 
-import { device } from '../../utilities/device'
+import { device } from '../../utilities/device';
 
 const AppLink = styled(Link)`
   text-decoration: none;
@@ -9,7 +9,7 @@ const AppLink = styled(Link)`
   &:visited {
     text-decoration: none;
   }
-`
+`;
 
 const NavbarLink = AppLink.extend`
   text-transform: uppercase;
@@ -20,6 +20,6 @@ const NavbarLink = AppLink.extend`
   ${device.mobile} {
     font-size: 0.9em;
   }
-`
+`;
 
-export default NavbarLink
+export default NavbarLink;

@@ -1,13 +1,13 @@
-import React from 'react'
-import { observer, inject } from 'mobx-react'
-import styled from 'styled-components'
-import Link from 'gatsby-link'
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+import styled from 'styled-components';
+import Link from 'gatsby-link';
 
-import Button from './../components/Button/index'
-import { device } from '../utilities/device'
-import ProductList from '../components/Cart/ProductList'
-import PageHeader from './../components/PageHeader'
-import AppLayout from '../components/AppLayout'
+import Button from './../components/Button/index';
+import { device } from '../utilities/device';
+import ProductList from '../components/Cart/ProductList';
+import PageHeader from './../components/PageHeader';
+import AppLayout from '../components/AppLayout';
 
 const Layout = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Layout = styled.div`
   ${device.mobile} {
     padding-top: 0;
   }
-`
+`;
 
 const ProductsLayout = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const ProductsLayout = styled.div`
   ${device.laptop} {
     padding-right: 0;
   }
-`
+`;
 
 const CheckoutLayout = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const CheckoutLayout = styled.div`
   ${device.laptop} {
     margin: 0 1rem;
   }
-`
+`;
 
 const CustomPageHeader = PageHeader.extend`
   padding: 0 5rem;
@@ -52,7 +52,7 @@ const CustomPageHeader = PageHeader.extend`
   ${device.tablet} {
     padding: 0 2rem;
   }
-`
+`;
 
 const Subtotal = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ const Subtotal = styled.div`
   padding: 4em 0;
   text-align: center;
   font-size: 1.2em;
-`
+`;
 
 const ProductSubtotal = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ const ProductSubtotal = styled.div`
   ${device.mobile} {
     width: 100%;
   }
-`
+`;
 
 const ProductSubtotalHeader = styled.div`
   color: ${({ theme }) => theme.color.black};
@@ -82,16 +82,16 @@ const ProductSubtotalHeader = styled.div`
   font-size: 1.2em;
   font-weight: 700;
   padding: 0.5em 0;
-`
+`;
 
 const ProductSubtotalPrice = ProductSubtotalHeader.extend`
   font-weight: unset;
   font-size: 1.3em;
-`
+`;
 
 const LinkButton = Button.withComponent(Link).extend`
   text-decoration: none;
-`
+`;
 
 function Carrito({ cartStore }) {
   return (
@@ -117,15 +117,14 @@ function Carrito({ cartStore }) {
             </ProductSubtotalPrice>
             <LinkButton
               style={{ fontSize: '1.1rem', borderRadius: '0' }}
-              to="/checkout"
-            >
+              to="/checkout">
               Proceder a pago
             </LinkButton>
           </Subtotal>
         </CheckoutLayout>
       </Layout>
     </AppLayout>
-  )
+  );
 }
 
-export default inject('cartStore')(observer(Carrito))
+export default inject('cartStore')(observer(Carrito));

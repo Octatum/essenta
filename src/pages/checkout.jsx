@@ -1,29 +1,29 @@
-import React from 'react'
-import styled from 'styled-components'
-import CreditCardInput from 'react-credit-card-input'
+import React from 'react';
+import styled from 'styled-components';
+import CreditCardInput from 'react-credit-card-input';
 
-import PageLayout from '../components/PageLayout'
-import PageHeader from '../components/PageHeader'
-import { withHorizontalPadding } from './../components/PageLayout'
-import { device } from '../utilities/device'
-import { TextInput } from '../components/Input'
-import PaymentMethods from '../components/Checkout/PaymentMethods'
+import PageLayout from '../components/PageLayout';
+import PageHeader from '../components/PageHeader';
+import { withHorizontalPadding } from './../components/PageLayout';
+import { device } from '../utilities/device';
+import { TextInput } from '../components/Input';
+import PaymentMethods from '../components/Checkout/PaymentMethods';
 
-import cardLogo from '../components/Checkout/assets/logo-card.png'
-import speiLogo from '../components/Checkout/assets/logo-spei.png'
-import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png'
-import Button from './../components/Button/index'
-import AppLayout from '../components/AppLayout'
+import cardLogo from '../components/Checkout/assets/logo-card.png';
+import speiLogo from '../components/Checkout/assets/logo-spei.png';
+import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
+import Button from './../components/Button/index';
+import AppLayout from '../components/AppLayout';
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
   flex: 1;
-`
+`;
 
 const GraySectionWithPadding = withHorizontalPadding(GraySection.extend`
   padding-top: 1em;
   padding-bottom: 1em;
-`)
+`);
 
 const FormContentSection = styled.section`
   width: 60%;
@@ -35,7 +35,7 @@ const FormContentSection = styled.section`
   ${device.tablet} {
     width: 100%;
   }
-`
+`;
 
 const PageHeaderWithPadding = withHorizontalPadding(PageHeader.extend`
   padding-bottom: 3rem;
@@ -43,13 +43,13 @@ const PageHeaderWithPadding = withHorizontalPadding(PageHeader.extend`
   ${device.tablet} {
     padding-bottom: 2em;
   }
-`)
+`);
 
 const Spacer = styled.div`
   background: ${({ theme }) => theme.color.black};
   height: 1px;
   flex: 1;
-`
+`;
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.main};
@@ -57,7 +57,7 @@ const Paragraph = styled.p`
   line-height: 1.3em;
   color: ${({ theme }) => theme.color.black};
   text-align: justify;
-`
+`;
 
 const SubsectionHeader = styled.h2`
   font-family: ${({ theme }) => theme.fonts.secondary};
@@ -65,11 +65,11 @@ const SubsectionHeader = styled.h2`
   font-size: 1.5em;
   color: ${({ theme }) => theme.color.black};
   line-height: 1.5em;
-`
+`;
 
 const UserDataForm = styled.form`
   margin: 1em 0;
-`
+`;
 
 const Label = styled.label`
   font-family: ${({ theme }) => theme.fonts.main};
@@ -79,7 +79,7 @@ const Label = styled.label`
   ${device.tablet} {
     flex-direction: column;
   }
-`
+`;
 
 const InputLabel = styled(Label)`
   align-items: center;
@@ -94,13 +94,13 @@ const InputLabel = styled(Label)`
   ${device.tablet} {
     align-items: flex-start;
   }
-`
+`;
 
 const CardPaymentLabel = styled(Label)`
   > * {
     margin-bottom: 0.5rem;
   }
-`
+`;
 
 const PaymentInputLabel = styled(InputLabel)`
   justify-content: start;
@@ -113,7 +113,7 @@ const PaymentInputLabel = styled(InputLabel)`
   ${device.mobile} {
     justify-content: center;
   }
-`
+`;
 
 const LabelText = styled.div`
   font-size: 1.2em;
@@ -122,7 +122,7 @@ const LabelText = styled.div`
   ${device.tablet} {
     margin: 0.5em 0;
   }
-`
+`;
 
 const Input = TextInput.extend`
   width: ${({ full }) => (full ? '100%' : '65%')};
@@ -140,7 +140,7 @@ const Input = TextInput.extend`
   ${device.tablet} {
     width: 100%;
   }
-`
+`;
 
 const PaymentMethodLogo = styled.img`
   --c-height: 3.5em;
@@ -156,11 +156,11 @@ const PaymentMethodLogo = styled.img`
   ${device.mobile} {
     --c-height: 2.5em;
   }
-`
+`;
 
 const PaymentOptions = styled.div`
   display: flex;
-`
+`;
 
 const HorizontalFlex = styled.div`
   display: flex;
@@ -169,21 +169,21 @@ const HorizontalFlex = styled.div`
     flex-direction: column;
     margin-bottom: 0.5em;
   }
-`
+`;
 
 const VerticalFlex = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const VerticalFieldset = styled(VerticalFlex)`
   justify-content: space-between;
-`
+`;
 
 const PaymentButton = styled(Button)`
   margin: 2em 0;
-`
+`;
 
 const DeliveryInputLabel = styled.label`
   display: flex;
@@ -195,11 +195,11 @@ const DeliveryInputLabel = styled.label`
   ${device.tablet} {
     margin-top: 1em;
   }
-`
+`;
 
 const DeliveryInputText = styled.div`
   margin-left: 0.5em;
-`
+`;
 
 class Checkout extends React.Component {
   state = {
@@ -222,54 +222,54 @@ class Checkout extends React.Component {
     cleanCardNumber: '',
     cleanCardExpiry: '',
     inputFocus: '',
-  }
+  };
 
   handleChange = ({ target }) => {
-    const { name, value } = target
+    const { name, value } = target;
 
     this.setState({
       [name]: value,
-    })
-  }
+    });
+  };
 
   handleCardNumberChange = ({ target }) => {
-    const { value } = target
+    const { value } = target;
     this.setState({
       cardNumber: value,
       cleanCardNumber: value.replace(/\s/g, ''),
-    })
-  }
+    });
+  };
 
   handleCardExpiryChange = ({ target }) => {
-    const { value } = target
+    const { value } = target;
     this.setState({
       cardExpiry: value,
       cleanCardExpiry: value.replace(/[\s\/]/g, ''),
-    })
-  }
+    });
+  };
 
   handleCardCVCChange = ({ target }) => {
-    const { value } = target
+    const { value } = target;
     this.setState({
       cardCvc: value,
-    })
-  }
+    });
+  };
 
   focusCvc = () => {
     this.setState({
       inputFocus: 'cvc',
-    })
-  }
+    });
+  };
 
   blurCvc = () => {
     this.setState({
       inputFocus: '',
-    })
-  }
+    });
+  };
 
   handleSubmit = () => {
-    alert('Esta opción está deshabilitada de momento')
-  }
+    alert('Esta opción está deshabilitada de momento');
+  };
 
   render() {
     return (
@@ -480,8 +480,8 @@ class Checkout extends React.Component {
           </GraySectionWithPadding>
         </PageLayout>
       </AppLayout>
-    )
+    );
   }
 }
 
-export default Checkout
+export default Checkout;

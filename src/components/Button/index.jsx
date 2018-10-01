@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Button = styled.button.attrs({
   style: ({ style }) => ({ ...style }),
@@ -26,6 +26,6 @@ const Button = styled.button.attrs({
   &:focus {
     background: ${props => props.theme.color.darkOrange};
   }
-`
+`;
 
-export default Button
+export default Button;

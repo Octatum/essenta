@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const TextInput = styled.input.attrs({
   style: ({ style }) => ({ ...style }),
@@ -13,7 +13,7 @@ export const TextInput = styled.input.attrs({
   :focus {
     background: rgba(255, 255, 255, 0.7);
   }
-`
+`;
 
 export const Select = styled.select.attrs({
   style: ({ style }) => ({ ...style }),
@@ -31,4 +31,4 @@ export const Select = styled.select.attrs({
     background: ${props =>
       props.orange ? props.theme.color.darkOrange : 'white'};
   }
-`
+`;

@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import Cards from 'react-credit-cards'
-import 'react-credit-cards/es/styles-compiled.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Cards from 'react-credit-cards';
+import 'react-credit-cards/es/styles-compiled.css';
 
-import { device } from '../../utilities/device'
+import { device } from '../../utilities/device';
 
 const SubsectionHeader = styled.h3`
   font-family: ${({ theme }) => theme.fonts.secondary};
@@ -12,7 +12,7 @@ const SubsectionHeader = styled.h3`
   font-size: 1.2em;
   color: ${({ theme }) => theme.color.black};
   margin: 1rem 0;
-`
+`;
 
 const PaymentSection = styled.div`
   width: 70%;
@@ -24,7 +24,7 @@ const PaymentSection = styled.div`
   ${device.tablet} {
     width: 100%;
   }
-`
+`;
 
 const CardOption = styled.div`
   display: flex;
@@ -33,13 +33,13 @@ const CardOption = styled.div`
   ${device.tablet} {
     flex-direction: column;
   }
-`
+`;
 
 const CardInputForm = styled.div`
   font-family: ${({ theme }) => theme.fonts.main};
   font-weight: 700;
   min-width: 19em;
-`
+`;
 
 const CardDisplay = styled.div`
   flex: 1;
@@ -55,7 +55,7 @@ const CardDisplay = styled.div`
     margin: 0.5em 0;
     margin-bottom: 1em;
   }
-`
+`;
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.main};
@@ -63,7 +63,7 @@ const Paragraph = styled.p`
   line-height: 1.3em;
   color: ${({ theme }) => theme.color.black};
   text-align: justify;
-`
+`;
 
 function PaymentMethods({
   visibleOption,
@@ -113,12 +113,12 @@ function PaymentMethods({
         </CardOption>
       </PaymentSection>
     </div>
-  )
+  );
 }
 
 PaymentMethods.propTypes = {
   visibleOption: PropTypes.string.isRequired,
   cardChildren: PropTypes.element.isRequired,
-}
+};
 
-export default PaymentMethods
+export default PaymentMethods;

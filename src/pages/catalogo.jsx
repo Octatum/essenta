@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import Link from 'gatsby-link'
-import { graphql } from 'gatsby'
+import React from 'react';
+import styled from 'styled-components';
+import Link from 'gatsby-link';
+import { graphql } from 'gatsby';
 
-import { device } from '../utilities/device'
-import GatsbyImg from 'gatsby-image'
-import AppLayout from './../components/AppLayout'
+import { device } from '../utilities/device';
+import GatsbyImg from 'gatsby-image';
+import AppLayout from './../components/AppLayout';
 
 const Layout = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const Layout = styled.div`
   ${device.mobile} {
     padding: 2em;
   }
-`
+`;
 
 const PageTitle = styled.h1`
   font-size: 2.5em;
@@ -39,7 +39,7 @@ const PageTitle = styled.h1`
   ${device.tablet} {
     font-size: 2em;
   }
-`
+`;
 
 const ProductLink = styled(Link)`
   font-family: ${props => props.theme.fonts.secondary};
@@ -54,11 +54,11 @@ const ProductLink = styled(Link)`
     max-width: 33%
     box-sizing: border-box;
   }
-`
+`;
 
 const ProductCardName = styled.div`
   font-size: 1.5em;
-`
+`;
 
 const PrductListDisplay = styled.section`
   display: flex;
@@ -81,28 +81,28 @@ const PrductListDisplay = styled.section`
   ${device.mobile} {
     grid-template-columns: repeat(1, minmax(200px, 1fr));
   }
-`
+`;
 
 const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const ProductCardBannerDiv = styled.div`
   margin: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const ProductCardBanner = styled(GatsbyImg)`
   --size: 15em;
   width: var(--size);
   height: var(--size);
-`
+`;
 
 function Catalogo({ data: { productResults } }) {
-  const allProducts = productResults.edges.map(({ node }) => ({ ...node }))
+  const allProducts = productResults.edges.map(({ node }) => ({ ...node }));
 
   return (
     <AppLayout>
@@ -114,8 +114,7 @@ function Catalogo({ data: { productResults } }) {
               key={product.id}
               to={`/producto${product.path}`}
               width={400}
-              height={400}
-            >
+              height={400}>
               <ProductCard>
                 <ProductCardBannerDiv>
                   <ProductCardBanner sizes={product.image.sizes} />
@@ -127,10 +126,10 @@ function Catalogo({ data: { productResults } }) {
         </PrductListDisplay>
       </Layout>
     </AppLayout>
-  )
+  );
 }
 
-export default Catalogo
+export default Catalogo;
 
 export const query = graphql`
   query AllProducts {
@@ -149,4 +148,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import { device } from '../utilities/device'
+import { device } from '../utilities/device';
 
 const LayoutComponent = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const LayoutComponent = styled.div`
   ${device.tablet} {
     padding: 2rem 0;
   }
-`
+`;
 
 export const withHorizontalPadding = component => styled(component)`
   padding-left: 5rem;
@@ -21,14 +21,14 @@ export const withHorizontalPadding = component => styled(component)`
     padding-left: 2rem;
     padding-right: 2rem;
   }
-`
+`;
 
 function PageLayout({ fluid, ...other }) {
-  let Component = LayoutComponent
+  let Component = LayoutComponent;
   if (!fluid) {
-    Component = withHorizontalPadding(Component)
+    Component = withHorizontalPadding(Component);
   }
-  return <Component {...other} />
+  return <Component {...other} />;
 }
 
-export default PageLayout
+export default PageLayout;

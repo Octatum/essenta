@@ -1,32 +1,32 @@
-import React from 'react'
-import { graphql } from 'gatsby'
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import ProductPickerContainer from '../components/Product'
-import AppLayout from '../components/AppLayout'
+import ProductPickerContainer from '../components/Product';
+import AppLayout from '../components/AppLayout';
 
 function getCleanFragancesData(fragancesResult) {
-  return fragancesResult.edges.map(({ node }) => ({ ...node }))
+  return fragancesResult.edges.map(({ node }) => ({ ...node }));
 }
 
 function groupFragancesByFamily(fragances) {
-  const families = {}
+  const families = {};
 
   fragances.forEach(fragance => {
     if (!!!families[fragance.family]) {
-      families[fragance.family] = []
+      families[fragance.family] = [];
     }
 
-    families[fragance.family].push(fragance)
-  })
+    families[fragance.family].push(fragance);
+  });
 
-  return families
+  return families;
 }
 
 // Gets product and fragance data and passes it into the corresponding view
 function ProductPickerTemplate({ data }) {
-  const { product, fragancesResults } = data
-  const fragances = getCleanFragancesData(fragancesResults)
-  const groupedFragances = groupFragancesByFamily(fragances)
+  const { product, fragancesResults } = data;
+  const fragances = getCleanFragancesData(fragancesResults);
+  const groupedFragances = groupFragancesByFamily(fragances);
 
   return (
     <AppLayout>
@@ -37,10 +37,10 @@ function ProductPickerTemplate({ data }) {
         }}
       />
     </AppLayout>
-  )
+  );
 }
 
-export default ProductPickerTemplate
+export default ProductPickerTemplate;
 
 export const pageQuery = graphql`
   query ProductByPath($route: String!) {
@@ -84,4 +84,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

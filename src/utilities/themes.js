@@ -15,4 +15,4 @@ export const globalTheme = {
     main: 'caviarDreams',
     secondary: 'sansumiRegular',
   },
-}
+};
