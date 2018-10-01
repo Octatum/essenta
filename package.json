@@ -37,7 +37,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write 'src/**/*.js' 'src/**/*.jsx'",
+    "format": "prettier --write \"./src/**/*.js\" \".\\src/**/*.jsx\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gatsby develop"
   },

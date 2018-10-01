@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CreditCardInput from 'react-credit-card-input';
 
 import PageLayout from '../components/PageLayout';
-import PageHeader from '../components/PageHeader';
+import { PageHeaderStyledComponent } from '../components/PageHeader';
 import { withHorizontalPadding } from './../components/PageLayout';
 import { device } from '../utilities/device';
 import { TextInput } from '../components/Input';
@@ -37,7 +37,7 @@ const FormContentSection = styled.section`
   }
 `;
 
-const PageHeaderWithPadding = withHorizontalPadding(PageHeader.extend`
+const PageHeaderWithPadding = withHorizontalPadding(styled(PageHeaderStyledComponent)`
   padding-bottom: 3rem;
 
   ${device.tablet} {
@@ -275,7 +275,7 @@ class Checkout extends React.Component {
     return (
       <AppLayout>
         <PageLayout fluid>
-          <PageHeaderWithPadding>Checkout</PageHeaderWithPadding>
+          <PageHeaderWithPadding underline>Checkout</PageHeaderWithPadding>
           <GraySectionWithPadding>
             <FormContentSection>
               <SubsectionHeader>Dirección de envío</SubsectionHeader>

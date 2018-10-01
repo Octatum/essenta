@@ -6,7 +6,7 @@ import Link from 'gatsby-link';
 import Button from './../components/Button/index';
 import { device } from '../utilities/device';
 import ProductList from '../components/Cart/ProductList';
-import PageHeader from './../components/PageHeader';
+import { PageHeaderStyledComponent } from './../components/PageHeader';
 import AppLayout from '../components/AppLayout';
 
 const Layout = styled.div`
@@ -46,7 +46,7 @@ const CheckoutLayout = styled.div`
   }
 `;
 
-const CustomPageHeader = PageHeader.extend`
+const CustomPageHeader = styled(PageHeaderStyledComponent)`
   padding: 0 5rem;
 
   ${device.tablet} {
@@ -84,7 +84,7 @@ const ProductSubtotalHeader = styled.div`
   padding: 0.5em 0;
 `;
 
-const ProductSubtotalPrice = ProductSubtotalHeader.extend`
+const ProductSubtotalPrice = styled(ProductSubtotalHeader)`
   font-weight: unset;
   font-size: 1.3em;
 `;
