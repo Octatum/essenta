@@ -59,22 +59,20 @@ class ProductPickerContainer extends Component {
       <React.Fragment>
         <Breadcrumbs />
         <Layout>
-          <Router>
-            <FragancePickerView
-              path="/producto/perfume/:fraganceFilter/:productFilter"
-              fragances={data.fragances}
-              handleFilterChange={this.handleFilterChange}
-              onFraganceClick={this.onFraganceClick}
+          <FragancePickerView
+            path="/producto/perfume/:fraganceFilter/:productFilter"
+            fragances={data.fragances}
+            handleFilterChange={this.handleFilterChange}
+            onFraganceClick={this.onFraganceClick}
+          />
+          {this.state.currentStep === 1 && (
+            <ProductDetailPickerView
+              product={data.product}
+              goBack={this.startOver}
+              fragance={this.state.selectedFragance}
+              addProduct={this.addProduct}
             />
-            {this.state.currentStep === 1 && (
-              <ProductDetailPickerView
-                product={data.product}
-                goBack={this.startOver}
-                fragance={this.state.selectedFragance}
-                addProduct={this.addProduct}
-              />
-            )}
-          </Router>
+          )}
         </Layout>
       </React.Fragment>
     );

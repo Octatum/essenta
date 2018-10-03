@@ -24,27 +24,27 @@ function getSlideshowImagesFromData(slideImages) {
   });
 }
 
-function getHighlightedProductsFromCategories(categories) {
-  if (!categories) return [];
+function getHighlightedContainers(containers) {
+  if (!containers) return [];
 
-  const listOfProducts = categories.edges.map(({ node: { path, sizes } }) => {
+  const listOfContainers = containers.edges.map(({ node: { category, colores } }) => {
     const filteredProducts = [];
-    sizes.forEach(({ colores }) => {
-      colores.forEach(color => {
-        if (!color.highlighted || !color.image) return;
+    const { path } = category;
 
-        filteredProducts.push({
-          key: color.id,
-          imageSizes: color.image.sizes,
-          colorName: color.colorName,
-          path,
-        });
+    colores.forEach(color => {
+      if (!color.highlighted || !color.image) return;
+
+      filteredProducts.push({
+        key: color.id,
+        imageSizes: color.image.sizes,
+        colorName: color.colorName,
+        path,
       });
     });
     return filteredProducts;
   });
 
-  return listOfProducts.reduce(
+  return listOfContainers.reduce(
     (accumulator, current) => [...accumulator, ...current],
     []
   );
@@ -54,13 +54,11 @@ function HomeContainer({ data }) {
   const {
     recommendedImages: recommendedResult,
     slideshowImages: slideshowImagesResult,
-    categoriesWithHighlightedProducts: highlightedProductsResult,
+    allContainers: containerProductResults,
   } = data;
   const recommendedImage = getRecommendedImageData(recommendedResult);
   const slideshowImages = getSlideshowImagesFromData(slideshowImagesResult);
-  const highlightedProducts = getHighlightedProductsFromCategories(
-    highlightedProductsResult
-  );
+  const highlightedProducts = getHighlightedContainers(containerProductResults);
 
   return (
     <Home
@@ -77,7 +75,7 @@ export default HomeContainer;
 
 export const dataQuery = graphql`
   query HomeImages {
-    recommendedImages: allContentfulImagenGeneral(
+    recommendedImages: allContentfulImagen(
       filter: { usage: { eq: "Recomendados" } }
     ) {
       edges {
@@ -94,7 +92,7 @@ export const dataQuery = graphql`
       }
     }
 
-    slideshowImages: allContentfulImagenGeneral(
+    slideshowImages: allContentfulImagen(
       filter: { usage: { eq: "Slideshow" } }
     ) {
       edges {
@@ -111,19 +109,19 @@ export const dataQuery = graphql`
       }
     }
 
-    categoriesWithHighlightedProducts: allContentfulProducto {
+    allContainers: allContentfulRecipiente {
       edges {
         node {
-          path
-          sizes {
-            colores {
-              id
-              highlighted
-              colorName
-              image {
-                sizes(maxWidth: 300) {
-                  ...GatsbyContentfulSizes
-                }
+          category {
+            path
+          }
+          colores {
+            id
+            highlighted
+            colorName
+            image {
+              sizes(maxWidth: 300) {
+                ...GatsbyContentfulSizes
               }
             }
           }

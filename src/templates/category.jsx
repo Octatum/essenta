@@ -43,20 +43,14 @@ function ProductPickerTemplate({ data }) {
 export default ProductPickerTemplate;
 
 export const pageQuery = graphql`
-  query ProductByPath($route: String!) {
-    product: contentfulProducto(path: { eq: $route }) {
-      title
-      sizes {
-        id
-        label
-        sizePrice
-        colores {
-          id
-          colorName
-          image {
-            sizes(maxWidth: 500) {
-              ...GatsbyContentfulSizes
-            }
+  query CategoryByPath($route: String!) {
+    containers: allContentfulRecipiente(
+      filter: {category: {path: {eq: $route}}}
+    ) {
+      edges {
+        node {
+          category {
+            path
           }
         }
       }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import { StaticQuery, graphql } from 'gatsby';
 
 import Navbar from '../components/Navbar';
@@ -35,7 +35,7 @@ const AppLayout = ({ children }) => {
             }
           }
 
-          productEdges: allContentfulProducto {
+          categoryEdges: allContentfulCategoria {
             edges {
               node {
                 title
@@ -46,7 +46,7 @@ const AppLayout = ({ children }) => {
         }
       `}
       render={data => {
-        const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
+        const categoryUrls = getProductsUrlsFromEdges(data.categoryEdges.edges);
 
         return (
           <Layout>
@@ -79,7 +79,7 @@ const AppLayout = ({ children }) => {
             />
             <html lang="es" />
             <div>
-              <Navbar urls={productsUrls} />
+              <Navbar urls={categoryUrls} />
               {children}
             </div>
             <Footer />

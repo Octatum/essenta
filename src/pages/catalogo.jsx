@@ -134,7 +134,7 @@ export default Catalogo;
 
 export const query = graphql`
   query AllProducts {
-    productResults: allContentfulProducto {
+    productResults: allContentfulCategoria {
       edges {
         node {
           id
