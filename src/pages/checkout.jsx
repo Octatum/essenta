@@ -37,7 +37,9 @@ const FormContentSection = styled.section`
   }
 `;
 
-const PageHeaderWithPadding = withHorizontalPadding(styled(PageHeaderStyledComponent)`
+const PageHeaderWithPadding = withHorizontalPadding(styled(
+  PageHeaderStyledComponent
+)`
   padding-bottom: 3rem;
 
   ${device.tablet} {

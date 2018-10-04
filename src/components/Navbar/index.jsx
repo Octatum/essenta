@@ -59,14 +59,9 @@ const BackgroundNavbarLink = NavbarLink.extend`
   }
 `;
 
-const HoverableItem = NavbarLink.extend`
-  font-size: 1.2em;
-  color: ${props => props.theme.color.black};
-  text-transform: uppercase;
-  position: relative;
-
+const HoverableItem = styled(BackgroundNavbarLink)`
   &::after {
-    content: '';
+    
   }
 
   ${device.tablet} {
@@ -75,18 +70,9 @@ const HoverableItem = NavbarLink.extend`
     }
   }
 
-  &::before {
-    content: '';
-    height: 120%;
-    width: 300%;
-    position: absolute;
-    left: -100%;
-    bottom: -120%;
-  }
-
-  &:hover ~ .navbar,
-  & ~ .navbar:hover,
-  & ~ .navbar:focus-within {
+  &:hover ~ div,
+  & ~ div:hover,
+  & ~ div:focus-within {
     pointer-events: auto;
     z-index: 1;
     opacity: 1;
@@ -122,13 +108,14 @@ const Spacer = styled.div`
 `;
 
 const DropdownMenu = styled.div`
-  background-color: ${props => props.theme.background.secondary};
+  background-color: ${props => props.theme.color.orange};
   display: flex;
   align-items: center;
   position: absolute;
   pointer-events: none;
-  bottom: -3.5em;
-  transition: opacity 0.5s ease, z-index 0.1s linear;
+  bottom: -3em;
+  transition: opacity 0.5s ease 100ms;
+  border-top: 1px solid ${({theme}) => theme.color.black};
   opacity: 0;
   height: 3em;
   width: 100vw;
@@ -140,15 +127,16 @@ const DropdownMenu = styled.div`
   -webkit-box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
+  color: ${({theme}) => theme.color.black};
 
   > * {
     padding: 1em 1.5em;
     transition: ease 0.3s background-color;
-    background: rgba(255, 255, 255, 0);
+    background: ${({theme}) => theme.color.orange};
 
     :hover,
     :focus {
-      background: rgba(255, 255, 255, 0.2);
+      background: ${({theme}) => theme.color.darkOrange};
     }
 
     :focus & {
@@ -166,8 +154,8 @@ const LogoLink = NavbarLink.extend`
   min-width: 15em;
 `;
 
-const CustomNavbarLink = NavbarLink.extend`
-  color: ${({ theme }) => theme.color.white};
+const CustomNavbarLink = styled(NavbarLink)`
+  text-transform: initial;
 `;
 
 function loseFocus({ target }) {
@@ -184,20 +172,26 @@ function Navbar({ urls }) {
       </LogoSection>
       <NavlinksSection>
         <LinksSection>
-          <BackgroundNavbarLink to="/producto/perfume/mujer">
-            Diseña tu perfume
-          </BackgroundNavbarLink>
-          <BackgroundNavbarLink to="/catalogo">Catálogo</BackgroundNavbarLink>
+          <div>
+            <HoverableItem to="/producto/perfume/general">
+              Diseña tu perfume
+            </HoverableItem>
+            <DropdownMenu>
+              <CustomNavbarLink onClick={loseFocus} to="/producto/perfume/hombre">Perfume de hombre</CustomNavbarLink>
+              <CustomNavbarLink onClick={loseFocus} to="/producto/perfume/mujer">Perfume de mujer</CustomNavbarLink>              
+            </DropdownMenu>
+          </div>
+          <div>
+            <HoverableItem to="/catalogo">Catálogo</HoverableItem>
+            <DropdownMenu>
+              {urls.map(({name, path}) => (
+                <CustomNavbarLink key={path} onClick={loseFocus} to={`/producto${path}/general`}>{name}</CustomNavbarLink>
+              ))}
+            </DropdownMenu>
+          </div>
           <BackgroundNavbarLink to="/unete">
             Únete a nosotros{' '}
           </BackgroundNavbarLink>
-          {/* 
-          <DropdownMenu className="navbar">
-            {urls.map(({name, path}) => (
-              <CustomNavbarLink key={path} onClick={loseFocus} to={path}>{name}</CustomNavbarLink>
-            ))}
-          </DropdownMenu>
-          */}
         </LinksSection>
         <ShopLinksSection>
           <ShopLinks />

@@ -5,6 +5,8 @@ import GatsbyImg from 'gatsby-image';
 import { Select } from '../Input';
 import Button from '../Button/index';
 import { device } from '../../utilities/device';
+import { inject } from 'mobx-react';
+import { Link } from '@reach/router';
 
 const ProductLayout = styled.div`
   display: flex;
@@ -20,13 +22,13 @@ const ProductLayout = styled.div`
   }
 `;
 
-const BackButton = styled.div`
+const BackButton = styled(Link)`
   font-family: ${props => props.theme.fonts.secondary};
   color: ${({ theme }) => theme.color.black};
   font-size: 1.5em;
   font-weight: 700;
   align-self: start;
-  cursor: pointer;
+  text-decoration: none;
 
   ::before {
     content: '\u276E ';
@@ -76,7 +78,6 @@ const ProductPickerLabel = styled.label`
     font-weight: 700;
     padding: 0.5em 1em;
     width: 9rem;
-    text-transform: capitalize;
   }
 
   span {
@@ -139,6 +140,33 @@ class ProductDetailPickerView extends Component {
     ...this.initialState,
   };
 
+  constructor(props) {
+    super(props);
+
+    const {
+      fraganceId,
+      containers,
+      fragances,
+      categoryPath,
+      genderFilter,
+    } = props;
+    Object.keys(fragances).map(key => {
+      const fraganceGroup = fragances[key];
+
+      fraganceGroup.forEach(fragance => {
+        if (fragance.id !== fraganceId) return;
+
+        this.fragance = fragance;
+      });
+    });
+    this.filteredContainers = containers.filter(
+      container =>
+        container.category.path.toLowerCase().includes(categoryPath) &&
+        (genderFilter.toLowerCase() === 'general' ||
+          container.gender.toLowerCase() === genderFilter.toLowerCase())
+    );
+  }
+
   handleSizeChange = e => {
     this.setState({
       currentSize: e.target.value,
@@ -152,29 +180,35 @@ class ProductDetailPickerView extends Component {
     });
   };
 
+  addProduct = product => {
+    this.props.cartStore.addProduct(product);
+    alert("Se agregó el producto a su carrito");
+  };
+
   render() {
-    const { product, addProduct, fragance, goBack } = this.props;
+    const { categoryPath, genderFilter } = this.props;
     const { currentSize, currentColor } = this.state;
+    const fragance = this.fragance;
+    const filteredContainers = this.filteredContainers;
+    const currentContainer = filteredContainers[currentSize];
 
     return (
       <React.Fragment>
-        <BackButton onClick={() => goBack()}>Regresar</BackButton>
+        <BackButton to={`/producto/${categoryPath}/${genderFilter}`}>
+          Regresar
+        </BackButton>
         <ProductLayout>
           <ProductImage>
-            <Img
-              sizes={
-                product.sizes[currentSize].colores[currentColor].image.sizes
-              }
-            />
+            <Img fluid={currentContainer.colores[currentColor].image.fluid} />
           </ProductImage>
           <ProductInfo>
             <ProductTitle>{fragance.displayName}</ProductTitle>
             <ProductPrice />
             <ProductPickerLabel>
               <Select onChange={this.handleSizeChange} orange required>
-                {product.sizes.map((size, index) => (
-                  <Option key={size.id} value={index}>
-                    {size.label}
+                {filteredContainers.map((container, index) => (
+                  <Option key={container.id} value={index}>
+                    {container.label}
                   </Option>
                 ))}
               </Select>
@@ -182,7 +216,7 @@ class ProductDetailPickerView extends Component {
             </ProductPickerLabel>
             <ProductPickerLabel>
               <Select onChange={this.handleColorChange} orange required>
-                {product.sizes[currentSize].colores.map((color, index) => (
+                {filteredContainers[currentSize].colores.map((color, index) => (
                   <Option key={color.id} value={index}>
                     {color.colorName}
                   </Option>
@@ -193,16 +227,13 @@ class ProductDetailPickerView extends Component {
             <Button
               style={{ fontSize: '0.9rem', borderRadius: '0' }}
               onClick={() =>
-                addProduct({
-                  name: `${product.title} ${fragance.displayName}`,
-                  color:
-                    product.sizes[currentSize].colores[currentColor].colorName,
-                  size: product.sizes[currentSize].label,
+                this.addProduct({
+                  name: `${currentContainer.category.title} ${fragance.displayName}`,
+                  color: currentContainer.colores[currentColor],
+                  size: currentContainer.label,
                   fragance: fragance.displayName,
-                  thumbnail:
-                    product.sizes[currentSize].colores[currentColor].image
-                      .sizes,
-                  price: product.sizes[currentSize].sizePrice,
+                  thumbnail: null,
+                  price: currentContainer.price,
                 })
               }
             >
@@ -225,4 +256,4 @@ class ProductDetailPickerView extends Component {
   }
 }
 
-export default ProductDetailPickerView;
+export default inject('cartStore')(ProductDetailPickerView);

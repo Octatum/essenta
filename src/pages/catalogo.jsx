@@ -112,7 +112,7 @@ function Catalogo({ data: { productResults } }) {
           {allProducts.map(product => (
             <ProductLink
               key={product.id}
-              to={`/producto${product.path}`}
+              to={`/producto${product.path}/general`}
               width={400}
               height={400}
             >

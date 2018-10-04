@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ContactForm from './ContactForm';
+import NewsForm from './NewsForm';
 import AppLink from '../AppLink';
 import { device } from '../../utilities/device';
+import ContactForm from './ContactForm';
 
 const Layout = styled.div`
   display: flex;
@@ -50,7 +51,7 @@ const RelevantInformation = styled.div`
   padding: 4rem 7rem;
   grid-template: auto auto / repeat(3, 1fr);
   grid-template-areas:
-    'about policy .'
+    'about policy contact'
     'copyright terms privacy';
 
   ${device.tablet} {
@@ -58,7 +59,7 @@ const RelevantInformation = styled.div`
     grid-template: auto auto auto / repeat(2, 1fr);
     grid-template-areas:
       'about policy'
-      'copyright terms'
+      'copyright contact'
       'privacy .';
   }
 
@@ -68,6 +69,7 @@ const RelevantInformation = styled.div`
     grid-template-areas:
       'about'
       'policy'
+      'contact'
       'copyright'
       'terms'
       'privacy';
@@ -78,6 +80,7 @@ const SectionHeader = styled.div`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.5rem;
+  color: ${({theme}) => theme.color.black};
 `;
 
 const Link = AppLink.extend`
@@ -115,7 +118,6 @@ const HowToBuy = InformationSection.extend`
 
 const Policy = InformationSection.extend`
   grid-area: policy;
-  justify-self: center;
 
   ${device.tablet} {
     justify-self: flex-start;
@@ -155,11 +157,15 @@ const Privacy = AditionalInformationSection.extend`
   }
 `;
 
+const ContactDisplay = styled(InformationSection)`
+  grid-area: contact;
+`;
+
 function Footer() {
   return (
     <Layout>
       <ContactInfo>
-        <ContactForm />
+        <NewsForm />
       </ContactInfo>
       <RelevantInformation>
         <About>
@@ -174,6 +180,10 @@ function Footer() {
           <Link to="/politica/aceptacion">Aviso y aceptación</Link>
           <Link to="/politica/devolucion">Políticas de devolución</Link>
         </Policy>
+        <ContactDisplay>
+          <SectionHeader>Contacto</SectionHeader>
+          <ContactForm />
+        </ContactDisplay>
         <Copyright>© 2018 ESSENTA Fragancias</Copyright>
         <TermsNConditions>
           <Link to="/politica/terminos" />

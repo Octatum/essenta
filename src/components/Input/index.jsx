@@ -13,6 +13,10 @@ export const TextInput = styled.input.attrs({
   :focus {
     background: rgba(255, 255, 255, 0.7);
   }
+
+  :disabled {
+    background: rgba(0, 0, 0, 0.1);
+  }
 `;
 
 export const Select = styled.select.attrs({

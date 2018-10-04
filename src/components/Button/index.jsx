@@ -26,6 +26,10 @@ const Button = styled.button.attrs({
   &:focus {
     background: ${props => props.theme.color.darkOrange};
   }
+
+  :disabled {
+    background: rgba(0, 0, 0, 0.2);
+  }
 `;
 
 export default Button;

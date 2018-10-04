@@ -32,13 +32,12 @@ const SuggestedProducts = styled.div`
 `;
 
 const SuggestedProductsImage = styled.div`
-  height: 36rem;
+  width: 100%;
   overflow: hidden;
 `;
 
 const imgStyle = {
-  width: 'auto',
-  height: '36rem',
+  width: '100%',
   marginLeft: 'auto',
   marginRight: 'auto',
   left: 0,
@@ -66,7 +65,7 @@ function Home({ data }) {
               }
             >
               <Img
-                sizes={recommendedImage.image.sizes}
+                fluid={recommendedImage.image.fluid}
                 imgStyle={imgStyle}
                 position="absolute"
               />

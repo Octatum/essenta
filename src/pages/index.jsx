@@ -3,46 +3,28 @@ import { graphql } from 'gatsby';
 
 import Home from '../components/Home';
 
-function getRecommendedImageData(recommendedImages) {
-  if (!recommendedImages || recommendedImages.edges.length === 0) return null;
-
-  return recommendedImages.edges[0].node;
-}
-
-function getSlideshowImagesFromData(slideImages) {
-  if (!slideImages || slideImages.edges.length === 0) return [];
-
-  return slideImages.edges.map(({ node }) => {
-    const { alt, id, path, image } = node;
-
-    return {
-      key: id,
-      alt,
-      path,
-      src: image.sizes.src,
-    };
-  });
-}
-
 function getHighlightedContainers(containers) {
   if (!containers) return [];
 
-  const listOfContainers = containers.edges.map(({ node: { category, colores } }) => {
-    const filteredProducts = [];
-    const { path } = category;
+  const listOfContainers = containers.edges.map(
+    ({ node: { category, colores, gender } }) => {
+      const filteredProducts = [];
+      const { path } = category;
 
-    colores.forEach(color => {
-      if (!color.highlighted || !color.image) return;
+      colores.forEach(color => {
+        if (!color.highlighted || !color.image) return;
 
-      filteredProducts.push({
-        key: color.id,
-        imageSizes: color.image.sizes,
-        colorName: color.colorName,
-        path,
+        filteredProducts.push({
+          key: color.id,
+          fluid: color.image.fluid,
+          colorName: color.colorName,
+          gender,
+          path,
+        });
       });
-    });
-    return filteredProducts;
-  });
+      return filteredProducts;
+    }
+  );
 
   return listOfContainers.reduce(
     (accumulator, current) => [...accumulator, ...current],
@@ -52,12 +34,11 @@ function getHighlightedContainers(containers) {
 
 function HomeContainer({ data }) {
   const {
-    recommendedImages: recommendedResult,
-    slideshowImages: slideshowImagesResult,
+    recommendedImage,
+    slideshowImagesResult,
     allContainers: containerProductResults,
   } = data;
-  const recommendedImage = getRecommendedImageData(recommendedResult);
-  const slideshowImages = getSlideshowImagesFromData(slideshowImagesResult);
+  const slideshowImages = slideshowImagesResult.edges.map(({node}) => ({...node}));
   const highlightedProducts = getHighlightedContainers(containerProductResults);
 
   return (
@@ -75,24 +56,20 @@ export default HomeContainer;
 
 export const dataQuery = graphql`
   query HomeImages {
-    recommendedImages: allContentfulImagen(
-      filter: { usage: { eq: "Recomendados" } }
+    recommendedImage: contentfulImagen(
+      usage: { eq: "Recomendaciones" }
     ) {
-      edges {
-        node {
-          id
-          alt
-          path
-          image {
-            sizes(maxWidth: 1300) {
-              ...GatsbyContentfulSizes
-            }
-          }
+      id
+      alt
+      path
+      image {
+        fluid {
+          ...GatsbyContentfulFluid
         }
       }
     }
 
-    slideshowImages: allContentfulImagen(
+    slideshowImagesResult: allContentfulImagen(
       filter: { usage: { eq: "Slideshow" } }
     ) {
       edges {
@@ -101,8 +78,8 @@ export const dataQuery = graphql`
           alt
           path
           image {
-            sizes(maxWidth: 1300) {
-              ...GatsbyContentfulSizes
+            fluid {
+              ...GatsbyContentfulFluid
             }
           }
         }
@@ -115,13 +92,14 @@ export const dataQuery = graphql`
           category {
             path
           }
+          gender
           colores {
             id
             highlighted
             colorName
             image {
-              sizes(maxWidth: 300) {
-                ...GatsbyContentfulSizes
+              fluid {
+                ...GatsbyContentfulFluid
               }
             }
           }

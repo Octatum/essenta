@@ -24,16 +24,17 @@ function groupFragancesByFamily(fragances) {
 
 // Gets product and fragance data and passes it into the corresponding view
 function ProductPickerTemplate({ data }) {
-  const { product, fragancesResults } = data;
+  const { containers, fragancesResults } = data;
   const fragances = getCleanFragancesData(fragancesResults);
   const groupedFragances = groupFragancesByFamily(fragances);
+  const cleanContainersData = containers.edges.map(({ node }) => ({ ...node }));
 
   return (
     <AppLayout>
       <ProductPickerContainer
         data={{
           fragances: groupedFragances,
-          product,
+          containers: cleanContainersData,
         }}
       />
     </AppLayout>
@@ -43,14 +44,24 @@ function ProductPickerTemplate({ data }) {
 export default ProductPickerTemplate;
 
 export const pageQuery = graphql`
-  query CategoryByPath($route: String!) {
-    containers: allContentfulRecipiente(
-      filter: {category: {path: {eq: $route}}}
-    ) {
+  query AllProductsAndFragances {
+    containers: allContentfulRecipiente {
       edges {
         node {
+          id
+          label
+          gender
           category {
             path
+            title
+          }
+          colores {
+            colorName
+            image {
+              fluid {
+                ...GatsbyContentfulFluid
+              }
+            }
           }
         }
       }
@@ -61,11 +72,11 @@ export const pageQuery = graphql`
         node {
           id
           displayName
-          gender
+          objectiveGender
           family
           image {
-            sizes {
-              ...GatsbyContentfulSizes
+            fluid {
+              ...GatsbyContentfulFluid
             }
           }
           suggestions {

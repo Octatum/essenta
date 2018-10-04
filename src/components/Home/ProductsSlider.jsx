@@ -2,13 +2,15 @@ import React from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
-import Link from 'gatsby-link';
+import { Link } from '@reach/router';
+
 import { screenBreakpoints } from './../../utilities/device';
 
 const SliderArrow = styled.i`
-  font-size: 5em;
+  font-size: 3em;
   z-index: 10;
   cursor: pointer;
+  color: ${({theme}) => theme.color.black};
 `;
 
 const LeftArrow = SliderArrow.extend`
@@ -77,15 +79,14 @@ const ProductSlider = ({ products }) => {
       },
     ],
   };
-
   return (
     <Slider style={{ position: 'relative', height: '100%' }} {...settings}>
       {products &&
         products.map(item => (
-          <ProductWrapper to={item.path} key={item.key}>
+          <ProductWrapper to={`/producto${item.path}/${item.gender.toLowerCase()}`} key={item.key}>
             <ImageWrapper>
               <Img
-                sizes={item.imageSizes}
+                fluid={item.fluid}
                 style={{ maxWidth: '220px', maxHeight: '220px' }}
               />
             </ImageWrapper>
