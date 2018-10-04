@@ -8,6 +8,7 @@ import MostSold from './MostSold';
 import HomeHeader from './HomeHeader';
 import SlideshowLayout from './SlideshowLayout';
 import AppLayout from '../AppLayout';
+import { withHeaderUnderline } from '../PageHeader';
 
 const Layout = styled.div`
   color: ${props => props.theme.mainLightText};
@@ -44,6 +45,8 @@ const imgStyle = {
   right: 0,
 };
 
+const HomeHeaderWithUnderline = withHeaderUnderline(HomeHeader);
+
 function Home({ data }) {
   const { recommendedImage, slideshowImages, highlightedProducts } = data;
 
@@ -53,10 +56,10 @@ function Home({ data }) {
         <MostSold products={highlightedProducts} />
         <SlideshowLayout items={slideshowImages} />
         <SuggestedProducts>
-          <HomeHeader>
+          <HomeHeaderWithUnderline>
             Recomendaciones
             <ViewMore to={recommendedImage.path}>ver más</ViewMore>
-          </HomeHeader>
+          </HomeHeaderWithUnderline>
           <SuggestedProductsImage>
             <ConditionalLink
               to={recommendedImage.path}

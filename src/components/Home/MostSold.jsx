@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ProductSlider from './ProductsSlider';
 import HomeHeader from './HomeHeader';
 import { device } from '../../utilities/device';
+import { withHeaderUnderline } from '../PageHeader';
 
 const Layout = styled.div`
   display: flex;
@@ -43,11 +44,12 @@ const ProductsLayout = styled.div`
     padding: 1rem 0;
   }
 `;
+const CustomHomeHeader = withHeaderUnderline(HomeHeader);
 
 function MostSold({ products }) {
   return (
     <Layout>
-      <HomeHeader>Lo más vendido</HomeHeader>
+      <CustomHomeHeader>Lo más vendido</CustomHomeHeader>
       <ProductsLayout>
         <ProductSlider products={products} />
       </ProductsLayout>

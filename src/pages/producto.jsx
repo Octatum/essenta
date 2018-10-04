@@ -51,11 +51,13 @@ export const pageQuery = graphql`
           id
           label
           gender
+          price: sizePrice
           category {
             path
             title
           }
           colores {
+            id
             colorName
             image {
               fluid {

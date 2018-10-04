@@ -22,16 +22,18 @@ const ContactInfo = styled.div`
 `;
 
 const JoinUsButton = styled.div`
+  position: fixed;
+  bottom: 0;
   align-self: center;
   text-transform: uppercase;
   background: ${props => props.theme.background.secondary};
   padding: 1rem 0;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  width: 30rem;
   color: white;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  width: 15em;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
 
@@ -39,9 +41,12 @@ const JoinUsButton = styled.div`
     color: ${props => props.theme.color.white};
   }
 
-  ${device.mobile} {
-    width: 20rem;
+  ${device.tablet} {
     font-size: 1.5rem;
+  }
+
+  ${device.mobile} {
+    font-size: 1.2rem;
   }
 `;
 

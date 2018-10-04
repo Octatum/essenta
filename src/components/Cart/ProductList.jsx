@@ -127,20 +127,13 @@ function ProductList({ cartStore }) {
           return (
             <ProductCard key={productKey}>
               <ProductThumbnailArea>
-                <GatsbyImg width="160" height="160" sizes={thumbnail} />
+                <GatsbyImg width="160" height="160" fluid={thumbnail} />
               </ProductThumbnailArea>
               <ProductData>
                 <ProductDataTitle>{name}</ProductDataTitle>
                 <ProductDataRow>Color {color}</ProductDataRow>
                 <ProductDataRow>Tamaño {size}</ProductDataRow>
                 <ProductDataRow>Fragancia {fragance}</ProductDataRow>
-                {/* 
-              <Button
-                style={{fontSize: '0.8rem', borderRadius: '0'}}
-              >
-                Eliminar producto
-              </Button>
-              */}
               </ProductData>
               <ProductBigCell>
                 <ProductDataCell>
