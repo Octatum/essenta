@@ -117,9 +117,13 @@ const RemoveProductIcon = styled.div`
   cursor: pointer;
 `;
 
+const ProductCardsLayout = styled.div`
+
+`;
+
 function ProductList({ cartStore }) {
   return (
-    <React.Fragment>
+    <ProductCardsLayout>
       {cartStore.products.map(
         ({ name, color, size, fragance, thumbnail, price, amount }) => {
           const productKey = `${name}-${color}-${size}-${fragance}`;
@@ -170,7 +174,7 @@ function ProductList({ cartStore }) {
           );
         }
       )}
-    </React.Fragment>
+    </ProductCardsLayout>
   );
 }
 
