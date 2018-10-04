@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'gatsby-link';
-import Img from "gatsby-image";
+import Img from 'gatsby-image';
 
 import ConditionalLink from '../ConditionalLink';
 import MostSold from './MostSold';
 import HomeHeader from './HomeHeader';
 import SlideshowLayout from './SlideshowLayout';
 import AppLayout from '../AppLayout';
+import { withHeaderUnderline } from '../PageHeader';
 
 const Layout = styled.div`
   color: ${props => props.theme.mainLightText};
@@ -32,25 +33,22 @@ const SuggestedProducts = styled.div`
 `;
 
 const SuggestedProductsImage = styled.div`
-  height: 36rem;
+  width: 100%;
   overflow: hidden;
 `;
 
 const imgStyle = {
-  width: 'auto', 
-  height: '36rem',
+  width: '100%',
   marginLeft: 'auto',
   marginRight: 'auto',
   left: 0,
-  right: 0
-}
+  right: 0,
+};
 
-function Home ({data}) {
-  const {
-    recommendedImage,
-    slideshowImages,
-    highlightedProducts
-  } = data
+const HomeHeaderWithUnderline = withHeaderUnderline(HomeHeader);
+
+function Home({ data }) {
+  const { recommendedImage, slideshowImages, highlightedProducts } = data;
 
   return (
     <AppLayout>
@@ -58,19 +56,28 @@ function Home ({data}) {
         <MostSold products={highlightedProducts} />
         <SlideshowLayout items={slideshowImages} />
         <SuggestedProducts>
-          <HomeHeader>
+          <HomeHeaderWithUnderline>
             Recomendaciones
             <ViewMore to={recommendedImage.path}>ver más</ViewMore>
-          </HomeHeader>
+          </HomeHeaderWithUnderline>
           <SuggestedProductsImage>
-            <ConditionalLink to={recommendedImage.path} condition={recommendedImage.path && recommendedImage.path.length > 0}>
-              <Img sizes={recommendedImage.image.sizes} imgStyle={imgStyle} position='absolute' />
+            <ConditionalLink
+              to={recommendedImage.path}
+              condition={
+                recommendedImage.path && recommendedImage.path.length > 0
+              }
+            >
+              <Img
+                fluid={recommendedImage.image.fluid}
+                imgStyle={imgStyle}
+                position="absolute"
+              />
             </ConditionalLink>
           </SuggestedProductsImage>
         </SuggestedProducts>
       </Layout>
     </AppLayout>
-  )
+  );
 }
 
 export default Home;

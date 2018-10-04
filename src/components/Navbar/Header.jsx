@@ -16,8 +16,6 @@ const StyledHeader = styled.div`
   text-align: center;
 `;
 
-const Header = () => (
-  <StyledHeader>conoce los métodos de pago</StyledHeader>
-);
+const Header = () => <StyledHeader>conoce los métodos de pago</StyledHeader>;
 
 export default Header;

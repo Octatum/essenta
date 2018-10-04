@@ -9,7 +9,7 @@ const ProductCard = styled.div`
   margin-top: 2rem;
   padding: 1rem 3rem;
   box-sizing: border-box;
-  background: ${({theme}) => theme.color.darkGray};
+  background: ${({ theme }) => theme.color.darkGray};
   display: flex;
   position: relative;
 
@@ -49,16 +49,16 @@ const ProductData = styled.div`
 
 const ProductDataTitle = styled.h3`
   text-transform: uppercase;
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
+  color: ${({ theme }) => theme.color.black};
+  font-family: ${({ theme }) => theme.fonts.main};
   font-weight: 700;
   padding-bottom: 0.5em;
   font-size: 1.5em;
 `;
 
 const ProductDataRow = styled.div`
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
+  color: ${({ theme }) => theme.color.black};
+  font-family: ${({ theme }) => theme.fonts.main};
   padding-bottom: 1em;
 `;
 
@@ -71,8 +71,8 @@ const ProductBigCell = styled.div`
 
 const ProductDataCell = styled.div`
   flex: 2;
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
+  color: ${({ theme }) => theme.color.black};
+  font-family: ${({ theme }) => theme.fonts.main};
   font-size: 1.2em;
   text-align: center;
 `;
@@ -98,7 +98,7 @@ const ProductDataCounter = styled.div`
 `;
 
 const ProductCounterChangeButton = styled.button`
-  border: 1px solid ${({theme}) => theme.color.black};
+  border: 1px solid ${({ theme }) => theme.color.black};
   background: #505362;
   color: white;
   padding: 0.5em 1.5em;
@@ -117,80 +117,61 @@ const RemoveProductIcon = styled.div`
   cursor: pointer;
 `;
 
-function ProductList ({cartStore}) {
+function ProductList({ cartStore }) {
   return (
     <React.Fragment>
-      {cartStore.products.map(({
-        name,
-        color,
-        size,
-        fragance,
-        thumbnail,
-        price,
-        amount
-      }) => {
-        const productKey = `${name}-${color}-${size}-${fragance}`;
-        console.log(thumbnail);
+      {cartStore.products.map(
+        ({ name, color, size, fragance, thumbnail, price, amount }) => {
+          const productKey = `${name}-${color}-${size}-${fragance}`;
 
-        return (
-          <ProductCard key={productKey}>
-            <ProductThumbnailArea> 
-              <GatsbyImg width="160" height="160" sizes={thumbnail} />
-            </ProductThumbnailArea>
-            <ProductData>
-              <ProductDataTitle>
-                {name}
-              </ProductDataTitle>
-              <ProductDataRow>
-                Color {color}
-              </ProductDataRow>
-              <ProductDataRow>
-                Tamaño {size}
-              </ProductDataRow>
-              <ProductDataRow>
-                Fragancia {fragance}
-              </ProductDataRow>
-              {/* 
-              <Button
-                style={{fontSize: '0.8rem', borderRadius: '0'}}
+          return (
+            <ProductCard key={productKey}>
+              <ProductThumbnailArea>
+                <GatsbyImg width="160" height="160" fluid={thumbnail} />
+              </ProductThumbnailArea>
+              <ProductData>
+                <ProductDataTitle>{name}</ProductDataTitle>
+                <ProductDataRow>Color {color}</ProductDataRow>
+                <ProductDataRow>Tamaño {size}</ProductDataRow>
+                <ProductDataRow>Fragancia {fragance}</ProductDataRow>
+              </ProductData>
+              <ProductBigCell>
+                <ProductDataCell>
+                  <ProducDataCellTitle>Precio</ProducDataCellTitle>
+                  <div>${price}</div>
+                </ProductDataCell>
+                <ProductDataCell>
+                  <ProducDataCellTitle>Cantidad</ProducDataCellTitle>
+                  <ProductDataCounter>
+                    <ProductCounterChangeButton
+                      onClick={() =>
+                        cartStore.decreaseAmountOfProduct(productKey)
+                      }
+                    >
+                      -
+                    </ProductCounterChangeButton>
+                    <div>{amount}</div>
+                    <ProductCounterChangeButton
+                      onClick={() =>
+                        cartStore.increaseAmountOfProduct(productKey)
+                      }
+                    >
+                      +
+                    </ProductCounterChangeButton>
+                  </ProductDataCounter>
+                </ProductDataCell>
+              </ProductBigCell>
+              <RemoveProductIcon
+                onClick={() => cartStore.removeProduct(productKey)}
               >
-                Eliminar producto
-              </Button>
-              */}
-            </ProductData>
-            <ProductBigCell>
-              <ProductDataCell>
-                <ProducDataCellTitle>Precio</ProducDataCellTitle>
-                <div>${price}</div>
-              </ProductDataCell>
-              <ProductDataCell>
-                <ProducDataCellTitle>Cantidad</ProducDataCellTitle>
-                <ProductDataCounter>
-                  <ProductCounterChangeButton 
-                    onClick={() => cartStore.decreaseAmountOfProduct(productKey)}
-                  >
-                    -
-                  </ProductCounterChangeButton>
-                  <div>{amount}</div>
-                  <ProductCounterChangeButton
-                    onClick={() => cartStore.increaseAmountOfProduct(productKey)}
-                  >
-                    +
-                  </ProductCounterChangeButton>
-                </ProductDataCounter>
-              </ProductDataCell>
-            </ProductBigCell>
-            <RemoveProductIcon
-              onClick={() => cartStore.removeProduct(productKey)}
-            >
-              &times;
-            </RemoveProductIcon>
-          </ProductCard>
-        )
-      })}
+                &times;
+              </RemoveProductIcon>
+            </ProductCard>
+          );
+        }
+      )}
     </React.Fragment>
-  )
+  );
 }
 
-export default inject("cartStore")(observer(ProductList));
-
+export default inject('cartStore')(observer(ProductList));

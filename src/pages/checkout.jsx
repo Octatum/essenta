@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CreditCardInput from 'react-credit-card-input';
 
 import PageLayout from '../components/PageLayout';
-import PageHeader from '../components/PageHeader';
+import { PageHeaderStyledComponent } from '../components/PageHeader';
 import { withHorizontalPadding } from './../components/PageLayout';
 import { device } from '../utilities/device';
 import { TextInput } from '../components/Input';
@@ -15,9 +15,8 @@ import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
 import Button from './../components/Button/index';
 import AppLayout from '../components/AppLayout';
 
-
 const GraySection = styled.section`
-  background: ${({theme}) => theme.color.darkGray};
+  background: ${({ theme }) => theme.color.darkGray};
   flex: 1;
 `;
 
@@ -38,7 +37,9 @@ const FormContentSection = styled.section`
   }
 `;
 
-const PageHeaderWithPadding = withHorizontalPadding(PageHeader.extend`
+const PageHeaderWithPadding = withHorizontalPadding(styled(
+  PageHeaderStyledComponent
+)`
   padding-bottom: 3rem;
 
   ${device.tablet} {
@@ -46,25 +47,25 @@ const PageHeaderWithPadding = withHorizontalPadding(PageHeader.extend`
   }
 `);
 
-const Spacer = styled.div`  
-  background: ${({theme}) => theme.color.black};
-  height: 1px;  
+const Spacer = styled.div`
+  background: ${({ theme }) => theme.color.black};
+  height: 1px;
   flex: 1;
 `;
 
 const Paragraph = styled.p`
-  font-family: ${({theme}) => theme.fonts.main};
+  font-family: ${({ theme }) => theme.fonts.main};
   font-size: 1em;
   line-height: 1.3em;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   text-align: justify;
 `;
 
 const SubsectionHeader = styled.h2`
-  font-family: ${({theme}) => theme.fonts.secondary};
+  font-family: ${({ theme }) => theme.fonts.secondary};
   font-weight: 700;
   font-size: 1.5em;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   line-height: 1.5em;
 `;
 
@@ -73,9 +74,9 @@ const UserDataForm = styled.form`
 `;
 
 const Label = styled.label`
-  font-family: ${({theme}) => theme.fonts.main};
+  font-family: ${({ theme }) => theme.fonts.main};
   display: flex;
-  flex-direction: ${({vertical}) => vertical && 'column'};
+  flex-direction: ${({ vertical }) => vertical && 'column'};
 
   ${device.tablet} {
     flex-direction: column;
@@ -91,7 +92,7 @@ const InputLabel = styled(Label)`
   ${device.laptop} {
     width: 100%;
   }
-  
+
   ${device.tablet} {
     align-items: flex-start;
   }
@@ -118,7 +119,7 @@ const PaymentInputLabel = styled(InputLabel)`
 
 const LabelText = styled.div`
   font-size: 1.2em;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
 
   ${device.tablet} {
     margin: 0.5em 0;
@@ -126,10 +127,10 @@ const LabelText = styled.div`
 `;
 
 const Input = TextInput.extend`
-  width: ${({full}) => full ? '100%': '65%'};
+  width: ${({ full }) => (full ? '100%' : '65%')};
   border-radius: 0.2em;
-  background: ${({white, theme}) => white ? 'white' : theme.color.darkGray};
-  border-color: ${({white}) => white && 'transparent'};
+  background: ${({ white, theme }) => (white ? 'white' : theme.color.darkGray)};
+  border-color: ${({ white }) => white && 'transparent'};
   padding: 0.5em;
   line-height: 1.5em;
   box-sizing: border-box;
@@ -189,8 +190,8 @@ const PaymentButton = styled(Button)`
 const DeliveryInputLabel = styled.label`
   display: flex;
   flex: 1;
-  font-family: ${({theme}) => theme.fonts.main};
-  color: ${({theme}) => theme.color.black};
+  font-family: ${({ theme }) => theme.fonts.main};
+  color: ${({ theme }) => theme.color.black};
   align-items: center;
 
   ${device.tablet} {
@@ -215,7 +216,7 @@ class Checkout extends React.Component {
 
     delivery: '',
 
-    paymentMethod: "SPEI",
+    paymentMethod: 'SPEI',
     cardNumber: '',
     cardName: '',
     cardExpiry: '',
@@ -223,129 +224,138 @@ class Checkout extends React.Component {
     cleanCardNumber: '',
     cleanCardExpiry: '',
     inputFocus: '',
-  }
+  };
 
-  handleChange = ({target}) => {
-    const {name, value} = target;
+  handleChange = ({ target }) => {
+    const { name, value } = target;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
-  }
+  };
 
-  handleCardNumberChange = ({target}) => {
+  handleCardNumberChange = ({ target }) => {
     const { value } = target;
     this.setState({
       cardNumber: value,
-      cleanCardNumber: value.replace(/\s/g, "")
-    });   
-  }
+      cleanCardNumber: value.replace(/\s/g, ''),
+    });
+  };
 
-  handleCardExpiryChange = ({target}) => {
+  handleCardExpiryChange = ({ target }) => {
     const { value } = target;
     this.setState({
       cardExpiry: value,
-      cleanCardExpiry: value.replace(/[\s\/]/g, "")
+      cleanCardExpiry: value.replace(/[\s\/]/g, ''),
     });
-  }
+  };
 
-  handleCardCVCChange = ({target}) => {
+  handleCardCVCChange = ({ target }) => {
     const { value } = target;
     this.setState({
-      cardCvc: value
+      cardCvc: value,
     });
-  }
+  };
 
   focusCvc = () => {
     this.setState({
-      inputFocus: 'cvc'
+      inputFocus: 'cvc',
     });
-  }
+  };
 
   blurCvc = () => {
     this.setState({
-      inputFocus: ''
+      inputFocus: '',
     });
-  }
+  };
 
   handleSubmit = () => {
-    alert("Esta opción está deshabilitada de momento");
-  }
+    alert('Esta opción está deshabilitada de momento');
+  };
 
   render() {
     return (
       <AppLayout>
         <PageLayout fluid>
-          <PageHeaderWithPadding>Checkout</PageHeaderWithPadding>
+          <PageHeaderWithPadding underline>Checkout</PageHeaderWithPadding>
           <GraySectionWithPadding>
             <FormContentSection>
-              <SubsectionHeader>
-                Dirección de envío
-              </SubsectionHeader>
+              <SubsectionHeader>Dirección de envío</SubsectionHeader>
               <Paragraph>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde placeat, est cumque repudiandae aperiam optio quis reprehenderit possimus perferendis accusantium deserunt dicta, mollitia sint recusandae libero nobis aliquam ut porro? Maiores ducimus aperiam natus provident, animi hic facilis dolorem iusto, nesciunt quia, tempora itaque voluptas velit vitae porro a eius delectus! Et delectus, modi molestias beatae vel aspernatur laboriosam dolores ipsum quas ipsa hic, maxime ea aperiam labore ad dolor id iste. Totam, accusamus alias suscipit odio vel qui, blanditiis exercitationem ut facilis eveniet, error sunt nostrum ea voluptatem est. Quia totam architecto ut rem alias nihil ex beatae quasi?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde
+                placeat, est cumque repudiandae aperiam optio quis reprehenderit
+                possimus perferendis accusantium deserunt dicta, mollitia sint
+                recusandae libero nobis aliquam ut porro? Maiores ducimus
+                aperiam natus provident, animi hic facilis dolorem iusto,
+                nesciunt quia, tempora itaque voluptas velit vitae porro a eius
+                delectus! Et delectus, modi molestias beatae vel aspernatur
+                laboriosam dolores ipsum quas ipsa hic, maxime ea aperiam labore
+                ad dolor id iste. Totam, accusamus alias suscipit odio vel qui,
+                blanditiis exercitationem ut facilis eveniet, error sunt nostrum
+                ea voluptatem est. Quia totam architecto ut rem alias nihil ex
+                beatae quasi?
               </Paragraph>
               <UserDataForm>
                 <InputLabel>
                   <LabelText>Nombre</LabelText>
-                  <Input 
-                    value={this.state.customerName} 
+                  <Input
+                    value={this.state.customerName}
                     onChange={this.handleChange}
                     name="customerName"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>Correo</LabelText>
-                  <Input 
-                    value={this.state.customerEmail} 
+                  <Input
+                    value={this.state.customerEmail}
                     onChange={this.handleChange}
                     name="customerEmail"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>Teléfono</LabelText>
-                  <Input 
-                    value={this.state.customerPhone} 
+                  <Input
+                    value={this.state.customerPhone}
                     onChange={this.handleChange}
                     name="customerPhone"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>Calle y número</LabelText>
-                  <Input 
-                    value={this.state.customerAddressLine1} 
+                  <Input
+                    value={this.state.customerAddressLine1}
                     onChange={this.handleChange}
                     name="customerAddressLine1"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>Colonia y CP</LabelText>
-                  <Input 
-                    value={this.state.customerAddressLin2} 
+                  <Input
+                    value={this.state.customerAddressLin2}
                     onChange={this.handleChange}
                     name="customerAddressLin2"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>Ciudad</LabelText>
-                  <Input 
-                    value={this.state.customerCity} 
+                  <Input
+                    value={this.state.customerCity}
                     onChange={this.handleChange}
                     name="customerCity"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>Estado o provincia</LabelText>
-                  <Input 
-                    value={this.state.customerState} 
+                  <Input
+                    value={this.state.customerState}
                     onChange={this.handleChange}
                     name="customerState"
                   />
                 </InputLabel>
                 <InputLabel>
                   <LabelText>País</LabelText>
-                  <Input 
-                    value={this.state.customerCountry} 
+                  <Input
+                    value={this.state.customerCountry}
                     onChange={this.handleChange}
                     name="customerCountry"
                   />
@@ -357,91 +367,90 @@ class Checkout extends React.Component {
           <GraySectionWithPadding>
             <HorizontalFlex>
               <VerticalFlex>
-                <SubsectionHeader>
-                  Método de envío
-                </SubsectionHeader>
-                <Paragraph>
-                  Selecciona tu método de envío.
-                </Paragraph>
+                <SubsectionHeader>Método de envío</SubsectionHeader>
+                <Paragraph>Selecciona tu método de envío.</Paragraph>
               </VerticalFlex>
               <VerticalFieldset>
                 <DeliveryInputLabel>
-                  <input 
+                  <input
                     type="radio"
                     name="delivery"
                     value="2-5 dias"
-                    checked={this.state.delivery === '2-5 dias'} 
+                    checked={this.state.delivery === '2-5 dias'}
                     onChange={this.handleChange}
                   />
-                  <DeliveryInputText>2 a 5 días hábiles (gratis)</DeliveryInputText>
+                  <DeliveryInputText>
+                    2 a 5 días hábiles (gratis)
+                  </DeliveryInputText>
                 </DeliveryInputLabel>
                 <DeliveryInputLabel>
-                  <input 
+                  <input
                     type="radio"
                     name="delivery"
                     value="dia siguiente"
-                    checked={this.state.delivery === 'dia siguiente'} 
+                    checked={this.state.delivery === 'dia siguiente'}
                     onChange={this.handleChange}
                   />
                   <DeliveryInputText>Día siguiente ($50.00)</DeliveryInputText>
                 </DeliveryInputLabel>
               </VerticalFieldset>
             </HorizontalFlex>
-            
           </GraySectionWithPadding>
           <Spacer />
           <GraySectionWithPadding>
             <FormContentSection>
-              <SubsectionHeader>
-                Opciones de pago
-              </SubsectionHeader> 
-              <Paragraph>
-                Selecciona tu método de pago preferido.
-              </Paragraph>
+              <SubsectionHeader>Opciones de pago</SubsectionHeader>
+              <Paragraph>Selecciona tu método de pago preferido.</Paragraph>
               <PaymentOptions>
                 <PaymentInputLabel>
-                  <input 
+                  <input
                     type="radio"
                     name="paymentMethod"
                     value="SPEI"
-                    checked={this.state.paymentMethod === 'SPEI'} 
+                    checked={this.state.paymentMethod === 'SPEI'}
                     onChange={this.handleChange}
                   />
                   <PaymentMethodLogo src={speiLogo} alt="Pago por spei" />
                 </PaymentInputLabel>
                 <PaymentInputLabel>
-                  <input 
+                  <input
                     type="radio"
                     name="paymentMethod"
                     value="OXXO"
-                    checked={this.state.paymentMethod === 'OXXO'} 
+                    checked={this.state.paymentMethod === 'OXXO'}
                     onChange={this.handleChange}
                   />
                   <PaymentMethodLogo src={oxxoLogo} alt="Pago por Oxxo" />
                 </PaymentInputLabel>
                 <PaymentInputLabel>
-                  <input 
+                  <input
                     type="radio"
                     name="paymentMethod"
                     value="CARD"
-                    checked={this.state.paymentMethod === 'CARD'} 
+                    checked={this.state.paymentMethod === 'CARD'}
                     onChange={this.handleChange}
                   />
                   <PaymentMethodLogo src={cardLogo} alt="Pago por tarjeta" />
                 </PaymentInputLabel>
               </PaymentOptions>
             </FormContentSection>
-            <PaymentMethods 
+            <PaymentMethods
               {...this.state}
-              visibleOption={this.state.paymentMethod} 
+              visibleOption={this.state.paymentMethod}
               handleChange={this.handleChange}
-              cardChildren={(
-                <React.Fragment>  
+              cardChildren={
+                <React.Fragment>
                   <CardPaymentLabel vertical>
                     <LabelText>Datos de tarjeta</LabelText>
                     <CreditCardInput
-                      cardNumberInputProps={{ value: this.state.cardNumber, onChange: this.handleCardNumberChange }}
-                      cardExpiryInputProps={{ value: this.state.cardExpiry, onChange: this.handleCardExpiryChange }}
+                      cardNumberInputProps={{
+                        value: this.state.cardNumber,
+                        onChange: this.handleCardNumberChange,
+                      }}
+                      cardExpiryInputProps={{
+                        value: this.state.cardExpiry,
+                        onChange: this.handleCardExpiryChange,
+                      }}
                       cardCVCInputRenderer={({ props }) => (
                         <input
                           {...props}
@@ -465,9 +474,11 @@ class Checkout extends React.Component {
                     />
                   </CardPaymentLabel>
                 </React.Fragment>
-              )}
+              }
             />
-            <PaymentButton onClick={this.handleSubmit} small>Proceder a pago</PaymentButton>
+            <PaymentButton onClick={this.handleSubmit} small>
+              Proceder a pago
+            </PaymentButton>
           </GraySectionWithPadding>
         </PageLayout>
       </AppLayout>

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Breadcrumbs = styled.div`
   width: 100%;
   box-sizing: border-box;
-  background: ${({theme}) => theme.color.black};
+  background: ${({ theme }) => theme.color.black};
 `;
 
 export default Breadcrumbs;

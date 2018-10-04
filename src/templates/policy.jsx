@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
+import { graphql } from 'gatsby';
 
 import Breadcrumbs from './../components/Breadcrumbs';
 import { device } from '../utilities/device';
 import AppLayout from '../components/AppLayout';
 
-const Layout = styled.div`  
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -49,7 +50,7 @@ const Content = styled(ReactMarkdown)`
   color: ${props => props.theme.color.black};
 
   ${device.tablet} {
-    width: 80%; 
+    width: 80%;
   }
 
   ${device.mobile} {
@@ -80,7 +81,7 @@ const Content = styled(ReactMarkdown)`
       margin-left: 1em;
 
       &::before {
-        content: counter(inner-counter) ". ";
+        content: counter(inner-counter) '. ';
         color: ${props => props.theme.color.orange};
         font-weight: 700;
       }
@@ -94,7 +95,7 @@ const Content = styled(ReactMarkdown)`
         margin: 0.5em 1em;
         margin-right: 0;
       }
-    }  
+    }
   }
 
   > ol {
@@ -102,7 +103,7 @@ const Content = styled(ReactMarkdown)`
 
     > li {
       &::before {
-        content: counter(inner-counter, upper-roman) ". ";
+        content: counter(inner-counter, upper-roman) '. ';
       }
 
       > p:first-of-type {
@@ -112,8 +113,11 @@ const Content = styled(ReactMarkdown)`
   }
 `;
 
-function Privacidad ({data}) {
-  const { title, content: {content} } = data.contentfulPolitica;
+function Privacidad({ data }) {
+  const {
+    title,
+    content: { content },
+  } = data.contentfulPolitica;
 
   return (
     <AppLayout>
@@ -133,8 +137,8 @@ function Privacidad ({data}) {
 export default Privacidad;
 
 export const pageQuery = graphql`
-  query PolicyByPath ($route: String!) {
-    contentfulPolitica (path: {eq: $route}) {
+  query PolicyByPath($route: String!) {
+    contentfulPolitica(path: { eq: $route }) {
       title
       content {
         content

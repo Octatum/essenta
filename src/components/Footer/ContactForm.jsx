@@ -1,153 +1,107 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { TextInput } from '../Input/index';
-import Button from '../Button/index';
-import { device } from '../../utilities/device';
-
-const Layout = styled.div`
-  display: flex;
-
-  ${device.laptop} {
-    flex-direction: column;
-  }
-`;
+import { TextInput } from './../Input/index';
+import Button from './../Button/index';
 
 const Form = styled.form`
   display: flex;
-  flex: 3;
-  justify-content: space-between;
-
-  ${device.mobile} {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `;
 
-const ContactInfo = styled.div`
+const Label = styled.label`
   display: flex;
-  flex: 2;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.2rem;
-  box-sizing: border-box;
-  padding: 0 2rem;
-
-  ${device.laptop} {
-    margin-top: 1em;
-  }
-
-  ${device.mobile} {
-    padding: 0;
-    flex-direction: column;
-    justify-content: center;
-  }
+  flex-direction: column;
+  margin-bottom: 1rem;
 `;
 
-const CallUs = styled.div`
-  font-family: ${props => props.theme.fonts.secondary};
+const TextArea = TextInput.withComponent('textarea');
 
-  ${device.mobile} {
-    min-width: 100%;
-  }
+const TextLabel = styled.div`
+  font-size: 1.4em;
+  margin-bottom: 0.5rem;
+  color: ${({ theme }) => theme.color.black};
 `;
 
-const SocialButton = styled.a`
-  text-decoration: none;
+const ButtonSpacer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${props => props.theme.color.gray};
-  background: ${props => props.theme.color.orange};
-  border-radius: 40%;
-  padding: 0.5rem;
-  box-sizing: border-box;
-  width: 2.3rem;
-  transition: 300ms ease background-color;
-
-  &:visited {
-    text-decoration: none;
-  }
-
-  &:focus {
-    background: ${props => props.theme.color.darkOrange};
-  }
+  justify-content: flex-end;
+  margin-top: 1em;
 `;
 
-const Bold = styled.span`
-  font-weight: 700;
-`;
-
-const CustomButton = Button.extend`
-  flex: 4;
-  margin-left: 1em;
-  font-size: 1.3rem;
-  text-align: center;
-
-  ${device.mobile} {
-    margin: 0;
-  }
-`;
-
-const CustomTextInput = TextInput.extend`
-  flex: 6;
+const CustomButton = styled(Button)`
   font-size: 1rem;
-  text-align: center;
-
-  ${device.mobile} {
-    padding: 0.5em 0;
-    margin-bottom: 1em;
-  }
-`;
-
-const SocialButtons = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-
-  ${device.tablet} {
-    padding-top: 0.5em;
-    width: 100%;
-  }
+  border-radius: none;
 `;
 
 class ContactForm extends React.Component {
-
-  state = {
+  initialValues = {
+    name: '',
+    message: '',
     email: '',
   };
 
-  handleChange = ({target: {name, value}}) => {
-    this.setState({[name]: value})
-  }
+  state = {
+    ...this.initialValues,
+    formSubmitted: false,
+  };
 
-  submitForm = (e) => {
-    e.preventDefault();
-  }
+  handleChange = ({ target }) => {
+    const { value, name } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    this.setState(
+      {
+        ...this.initialValues,
+        formSubmitted: true,
+      },
+      () => {
+        alert('Tu mensaje ha sido enviado.');
+      }
+    );
+  };
 
   render() {
     return (
-      <Layout>
-        <Form action="" name="contacto" netlify>
-          <CustomTextInput
-            type="email" 
-            placeholder="Recibe las últimas noticias de ESSENTA" 
-            name="email" 
-            value={this.state.email} 
-            onChange={this.handleChange} 
+      <Form onSubmit={this.handleSubmit}>
+        <Label>
+          <TextLabel>Nombre</TextLabel>
+          <TextInput
+            disabled={this.state.formSubmitted}
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
           />
-          <CustomButton onClick={this.submitForm}>
-            Suscríbete
+        </Label>
+        <Label>
+          <TextLabel>Correo</TextLabel>
+          <TextInput
+            disabled={this.state.formSubmitted}
+            name="message"
+            value={this.state.message}
+            onChange={this.handleChange}
+          />
+        </Label>
+        <Label>
+          <TextLabel>Mensaje</TextLabel>
+          <TextArea
+            disabled={this.state.formSubmitted}
+            name="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+        </Label>
+        <ButtonSpacer>
+          <CustomButton disabled={this.state.formSubmitted}>
+            Enviar
           </CustomButton>
-        </Form>
-        <ContactInfo>
-          <CallUs><Bold>LLÁMANOS:</Bold>&nbsp;&nbsp;55-1000-2866</CallUs>
-          <SocialButtons>
-            <SocialButton target="_blank" href="https://facebook.com/essentamx"><i className="fab fa-facebook-f"/></SocialButton>
-            {/* <SocialButton target="_blank" href="/"><i className="fab fa-twitter"/></SocialButton>
-            <SocialButton target="_blank" href="/"><i className="fab fa-youtube"/></SocialButton> */}
-          </SocialButtons>
-        </ContactInfo>
-      </Layout>
+        </ButtonSpacer>
+      </Form>
     );
   }
 }

@@ -6,7 +6,7 @@ import Link from 'gatsby-link';
 import Button from './../components/Button/index';
 import { device } from '../utilities/device';
 import ProductList from '../components/Cart/ProductList';
-import PageHeader from './../components/PageHeader';
+import { PageHeaderStyledComponent } from './../components/PageHeader';
 import AppLayout from '../components/AppLayout';
 
 const Layout = styled.div`
@@ -40,13 +40,13 @@ const CheckoutLayout = styled.div`
   position: relative;
   flex: 1;
   margin: 0 3rem;
-  
+
   ${device.laptop} {
     margin: 0 1rem;
   }
 `;
 
-const CustomPageHeader = PageHeader.extend`
+const CustomPageHeader = styled(PageHeaderStyledComponent)`
   padding: 0 5rem;
 
   ${device.tablet} {
@@ -62,7 +62,6 @@ const Subtotal = styled.div`
   font-size: 1.2em;
 `;
 
-
 const ProductSubtotal = styled.div`
   display: flex;
   width: 33%;
@@ -76,16 +75,16 @@ const ProductSubtotal = styled.div`
   }
 `;
 
-const ProductSubtotalHeader = styled.div`  
-  color: ${({theme}) => theme.color.black};
-  font-family: ${({theme}) => theme.fonts.main};
+const ProductSubtotalHeader = styled.div`
+  color: ${({ theme }) => theme.color.black};
+  font-family: ${({ theme }) => theme.fonts.main};
   text-align: center;
   font-size: 1.2em;
   font-weight: 700;
   padding: 0.5em 0;
 `;
 
-const ProductSubtotalPrice = ProductSubtotalHeader.extend`
+const ProductSubtotalPrice = styled(ProductSubtotalHeader)`
   font-weight: unset;
   font-size: 1.3em;
 `;
@@ -94,7 +93,7 @@ const LinkButton = Button.withComponent(Link).extend`
   text-decoration: none;
 `;
 
-function Carrito ({cartStore}) {
+function Carrito({ cartStore }) {
   return (
     <AppLayout>
       <Layout>
@@ -102,25 +101,23 @@ function Carrito ({cartStore}) {
           <CustomPageHeader>Carrito</CustomPageHeader>
           <ProductList products={cartStore.products} />
           <ProductSubtotal>
-            <ProductSubtotalHeader>
-              Subtotal
-            </ProductSubtotalHeader>
+            <ProductSubtotalHeader>Subtotal</ProductSubtotalHeader>
             <ProductSubtotalPrice>
-              ${cartStore.total}.00
+              ${cartStore.total}
+              .00
             </ProductSubtotalPrice>
           </ProductSubtotal>
         </ProductsLayout>
         <CheckoutLayout>
           <Subtotal>
-            <ProductSubtotalHeader>
-              Subtotal
-            </ProductSubtotalHeader>
+            <ProductSubtotalHeader>Subtotal</ProductSubtotalHeader>
             <ProductSubtotalPrice>
-              ${cartStore.total}.00
+              ${cartStore.total}
+              .00
             </ProductSubtotalPrice>
             <LinkButton
-              style={{fontSize: '1.1rem', borderRadius: '0'}}
-              to='/checkout'
+              style={{ fontSize: '1.1rem', borderRadius: '0' }}
+              to="/checkout"
             >
               Proceder a pago
             </LinkButton>
@@ -128,7 +125,7 @@ function Carrito ({cartStore}) {
         </CheckoutLayout>
       </Layout>
     </AppLayout>
-  )
+  );
 }
 
-export default inject("cartStore")(observer(Carrito));
+export default inject('cartStore')(observer(Carrito));

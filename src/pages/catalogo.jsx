@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'gatsby-link';
+import { graphql } from 'gatsby';
 
 import { device } from '../utilities/device';
 import GatsbyImg from 'gatsby-image';
@@ -24,15 +25,15 @@ const PageTitle = styled.h1`
   font-size: 2.5em;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   position: relative;
 
   ::after {
-    content: "";
+    content: '';
     display: block;
     margin: 0.1em 0;
     height: 2px;
-    background-color: ${({theme}) => theme.color.orange};
+    background-color: ${({ theme }) => theme.color.orange};
   }
 
   ${device.tablet} {
@@ -42,7 +43,7 @@ const PageTitle = styled.h1`
 
 const ProductLink = styled(Link)`
   font-family: ${props => props.theme.fonts.secondary};
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   font-weight: 700;
   text-align: center;
   margin: 0.5em 0;
@@ -100,10 +101,8 @@ const ProductCardBanner = styled(GatsbyImg)`
   height: var(--size);
 `;
 
-function Catalogo ({
-  data: { productResults }
-}) {
-  const allProducts = productResults.edges.map(({node}) => ({...node}));
+function Catalogo({ data: { productResults } }) {
+  const allProducts = productResults.edges.map(({ node }) => ({ ...node }));
 
   return (
     <AppLayout>
@@ -111,35 +110,31 @@ function Catalogo ({
         <PageTitle>Nuestros Productos</PageTitle>
         <PrductListDisplay>
           {allProducts.map(product => (
-            <React.Fragment>
-              <ProductLink
-                key={product.id}
-                to={`/producto${product.path}`}
-                width={400}
-                height={400}
-              >
-                <ProductCard>
-                  <ProductCardBannerDiv>
-                    <ProductCardBanner sizes={product.image.sizes} />
-                  </ProductCardBannerDiv>
-                  <ProductCardName>
-                    Diseña tu {product.title}
-                  </ProductCardName>
-                </ProductCard>
-              </ProductLink>
-            </React.Fragment>
+            <ProductLink
+              key={product.id}
+              to={`/producto${product.path}/general`}
+              width={400}
+              height={400}
+            >
+              <ProductCard>
+                <ProductCardBannerDiv>
+                  <ProductCardBanner sizes={product.image.sizes} />
+                </ProductCardBannerDiv>
+                <ProductCardName>Diseña tu {product.title}</ProductCardName>
+              </ProductCard>
+            </ProductLink>
           ))}
         </PrductListDisplay>
       </Layout>
     </AppLayout>
-  )
+  );
 }
 
 export default Catalogo;
 
 export const query = graphql`
   query AllProducts {
-    productResults: allContentfulProducto {
+    productResults: allContentfulCategoria {
       edges {
         node {
           id
@@ -152,6 +147,6 @@ export const query = graphql`
           }
         }
       }
-    } 
+    }
   }
 `;

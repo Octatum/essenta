@@ -31,7 +31,7 @@ const TitleBlock = styled.div`
   text-transform: uppercase;
   padding: 0.5rem 1rem;
   color: ${props => props.theme.color.black};
-  font-family: ${props => props.theme.fonts.main};  
+  font-family: ${props => props.theme.fonts.main};
 
   ${device.laptop} {
     max-width: 80%;
@@ -65,7 +65,7 @@ const Spacer = styled.div`
   background: ${props => props.theme.color.orange};
 `;
 
-function Unete () {
+function Unete() {
   return (
     <AppLayout>
       <Layout>
@@ -75,7 +75,9 @@ function Unete () {
         </TitleBanner>
         <FormContent>
           <FormDescription>
-            Llena este formulario con los datos tal y como aparecen en tu documentación probatoria (acta de nacimiento, CURP, IFE y comprobante de domicilio reciente).
+            Llena este formulario con los datos tal y como aparecen en tu
+            documentación probatoria (acta de nacimiento, CURP, IFE y
+            comprobante de domicilio reciente).
           </FormDescription>
           <Spacer />
           <JoinForm />

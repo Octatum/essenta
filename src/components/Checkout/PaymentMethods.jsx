@@ -7,10 +7,10 @@ import 'react-credit-cards/es/styles-compiled.css';
 import { device } from '../../utilities/device';
 
 const SubsectionHeader = styled.h3`
-  font-family: ${({theme}) => theme.fonts.secondary};
+  font-family: ${({ theme }) => theme.fonts.secondary};
   font-weight: 700;
   font-size: 1.2em;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   margin: 1rem 0;
 `;
 
@@ -36,7 +36,7 @@ const CardOption = styled.div`
 `;
 
 const CardInputForm = styled.div`
-  font-family: ${({theme}) => theme.fonts.main};
+  font-family: ${({ theme }) => theme.fonts.main};
   font-weight: 700;
   min-width: 19em;
 `;
@@ -58,40 +58,46 @@ const CardDisplay = styled.div`
 `;
 
 const Paragraph = styled.p`
-  font-family: ${({theme}) => theme.fonts.main};
+  font-family: ${({ theme }) => theme.fonts.main};
   font-size: 1em;
   line-height: 1.3em;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
   text-align: justify;
 `;
 
-function PaymentMethods ({
+function PaymentMethods({
   visibleOption,
   cardName,
   cleanCardNumber,
   cardCvc,
   inputFocus,
   cardChildren,
-  cleanCardExpiry
+  cleanCardExpiry,
 }) {
   return (
     <div>
       <PaymentSection hidden={visibleOption !== 'SPEI'}>
         <SubsectionHeader>Pago por transferencia Bancaria</SubsectionHeader>
         <Paragraph>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem error, numquam at odio nulla accusamus esse eius praesentium! Veritatis sit ducimus omnis numquam. Dolore, repellendus quae.
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem
+          error, numquam at odio nulla accusamus esse eius praesentium!
+          Veritatis sit ducimus omnis numquam. Dolore, repellendus quae.
         </Paragraph>
       </PaymentSection>
       <PaymentSection hidden={visibleOption !== 'OXXO'}>
         <SubsectionHeader>Pago en OXXO</SubsectionHeader>
         <Paragraph>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, voluptatum excepturi maiores asperiores eligendi saepe ipsum aut facere vero adipisci.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis,
+          voluptatum excepturi maiores asperiores eligendi saepe ipsum aut
+          facere vero adipisci.
         </Paragraph>
       </PaymentSection>
       <PaymentSection hidden={visibleOption !== 'CARD'}>
         <SubsectionHeader>Pago por tarjeta</SubsectionHeader>
         <Paragraph>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore explicabo, sint laborum vero dicta, quisquam quasi autem provident molestiae atque repellendus? Enim, harum.
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore
+          explicabo, sint laborum vero dicta, quisquam quasi autem provident
+          molestiae atque repellendus? Enim, harum.
         </Paragraph>
         <CardOption>
           <CardDisplay>
@@ -103,18 +109,16 @@ function PaymentMethods ({
               expiry={cleanCardExpiry}
             />
           </CardDisplay>
-          <CardInputForm>
-            {cardChildren}
-          </CardInputForm>
+          <CardInputForm>{cardChildren}</CardInputForm>
         </CardOption>
       </PaymentSection>
     </div>
-  )
+  );
 }
 
 PaymentMethods.propTypes = {
   visibleOption: PropTypes.string.isRequired,
-  cardChildren: PropTypes.element.isRequired
+  cardChildren: PropTypes.element.isRequired,
 };
 
 export default PaymentMethods;

@@ -4,10 +4,12 @@ import _DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { TextInput as _TextInput, Select as _Select } from './../../components/Input/index';
+import {
+  TextInput as _TextInput,
+  Select as _Select,
+} from './../../components/Input/index';
 import Button from './../../components/Button/index';
 import { device } from '../../utilities/device';
-
 
 const Layout = styled.div`
   display: flex;
@@ -56,7 +58,7 @@ const Label = styled.label`
   }
 
   &[required] > span::after {
-    content: "*";
+    content: '*';
     color: ${props => props.theme.color.orange};
   }
 
@@ -64,8 +66,8 @@ const Label = styled.label`
     padding-left: 0.2em;
   }
 
-  & > input, 
-  & > select, 
+  & > input,
+  & > select,
   & > div {
     box-sizing: border-box;
     width: 40%;
@@ -80,8 +82,8 @@ const Label = styled.label`
     width: 100%;
 
     & input {
-      box-sizing: border-box;      
-      padding-left: 0.2em;      
+      box-sizing: border-box;
+      padding-left: 0.2em;
       width: 100%;
     }
   }
@@ -138,23 +140,21 @@ class JoinForm extends React.Component {
     lineaUno: '',
     lineaDos: '',
     estado: '',
-  }
+  };
 
-  handleChange = ({target}) => {
-    this.setState({[target.name]: target.value});
-  }
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value });
+  };
 
-  handleEmailChange = ({target}) => {
-    
-  }
+  handleEmailChange = ({ target }) => {};
 
-  handleBirthdateChange = (date) => {
-    this.setState({nacimiento: date});
-  }
+  handleBirthdateChange = date => {
+    this.setState({ nacimiento: date });
+  };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
-  }
+  };
 
   render() {
     return (
@@ -164,11 +164,23 @@ class JoinForm extends React.Component {
             <Legend>Información General</Legend>
             <Label required>
               <span>Nombre(s)</span>
-              <TextInput type="text" onChange={this.handleChange} name="nombre" value={this.state.nombre} required/>
+              <TextInput
+                type="text"
+                onChange={this.handleChange}
+                name="nombre"
+                value={this.state.nombre}
+                required
+              />
             </Label>
             <Label required>
               <span>Apellidos</span>
-              <TextInput type="text" onChange={this.handleChange} name="apellido" value={this.state.apellido} required/>
+              <TextInput
+                type="text"
+                onChange={this.handleChange}
+                name="apellido"
+                value={this.state.apellido}
+                required
+              />
             </Label>
             <Label required>
               <span>Fecha de nacimiento</span>
@@ -181,15 +193,33 @@ class JoinForm extends React.Component {
             </Label>
             <Label required>
               <span>Correo</span>
-              <TextInput type="email" onChange={this.handleChange} name="correo" value={this.state.correo} required/>
+              <TextInput
+                type="email"
+                onChange={this.handleChange}
+                name="correo"
+                value={this.state.correo}
+                required
+              />
             </Label>
             <Label required>
               <span>Verificacion de correo</span>
-              <TextInput type="email" onChange={this.handleChange} name="verificacion" value={this.state.verificacion} required/>
+              <TextInput
+                type="email"
+                onChange={this.handleChange}
+                name="verificacion"
+                value={this.state.verificacion}
+                required
+              />
             </Label>
             <Label required>
               <span>Teléfono</span>
-              <TextInput type="text" onChange={this.handleChange} name="telefono" value={this.state.telefono} required/>
+              <TextInput
+                type="text"
+                onChange={this.handleChange}
+                name="telefono"
+                value={this.state.telefono}
+                required
+              />
             </Label>
             <Label required>
               <span>Sexo</span>
@@ -200,12 +230,16 @@ class JoinForm extends React.Component {
             </Label>
             <Label required>
               <span>Dirección</span>
-              <TextInput type="text" onChange={this.handleChange} name="lineaUno" value={this.state.lineaUno} required/>
+              <TextInput
+                type="text"
+                onChange={this.handleChange}
+                name="lineaUno"
+                value={this.state.lineaUno}
+                required
+              />
             </Label>
           </fieldset>
-          <CustomButton type="submit">
-            Enviar
-          </CustomButton>
+          <CustomButton type="submit">Enviar</CustomButton>
         </FormBlock>
       </Layout>
     );

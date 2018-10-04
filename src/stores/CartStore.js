@@ -3,35 +3,40 @@ import { decorate, observable, action, computed } from 'mobx';
 const ProductsLocalStorageKey = 'essenta_products';
 
 class _CartStore {
-  products = []
+  products = [];
 
   constructor() {
     this.getItemsFromLocalStorage();
   }
 
   getItemsFromLocalStorage() {
-    if (typeof(Storage) === 'undefined') return;
+    if (typeof Storage === 'undefined') return;
 
     const products = localStorage.getItem(ProductsLocalStorageKey);
- 
+
     this.products = products ? JSON.parse(products) : [];
   }
 
   commitItemsToLocalStorage() {
-    if (typeof(Storage) === 'undefined') return;
-    
-    localStorage.setItem(ProductsLocalStorageKey, JSON.stringify(this.products));
+    if (typeof Storage === 'undefined') return;
+
+    localStorage.setItem(
+      ProductsLocalStorageKey,
+      JSON.stringify(this.products)
+    );
   }
 
   addProduct(product) {
-    const productKey = `${product.name}-${product.color}-${product.size}-${product.fragance}`;
+    const productKey = `${product.name}-${product.color}-${product.size}-${
+      product.fragance
+    }`;
     const productsWithKey = this.products.filter(p => p.key === productKey);
 
-    if(productsWithKey.length === 0) {
+    if (productsWithKey.length === 0) {
       this.products.push({
-        key: productKey, 
+        key: productKey,
         amount: 1,
-        ...product
+        ...product,
       });
     } else {
       this.increaseAmountOfProduct(productKey);
@@ -41,7 +46,7 @@ class _CartStore {
   }
 
   removeProduct(productKey) {
-    this.products = this.products.filter((p) => p.key !== productKey);
+    this.products = this.products.filter(p => p.key !== productKey);
 
     this.commitItemsToLocalStorage();
   }
@@ -50,13 +55,13 @@ class _CartStore {
     const productsCopy = this.products.slice();
 
     const modifiedProducts = productsCopy.map(p => {
-      if(p.key !== productKey) return p;
+      if (p.key !== productKey) return p;
 
       return {
         ...p,
         amount: p.amount + 1,
       };
-    })
+    });
 
     this.products = modifiedProducts;
 
@@ -67,13 +72,13 @@ class _CartStore {
     const productsCopy = this.products.slice();
 
     const modifiedProducts = productsCopy.map(p => {
-      if(p.key !== productKey) return p;
+      if (p.key !== productKey) return p;
 
       return {
         ...p,
         amount: p.amount > 1 ? p.amount - 1 : p.amount,
       };
-    })
+    });
 
     this.products = modifiedProducts;
 
@@ -81,18 +86,21 @@ class _CartStore {
   }
 
   get total() {
-    return this.products.reduce((a, p) => a + parseInt(p.amount) * parseInt(p.price), 0);
+    return this.products.reduce(
+      (a, p) => a + parseInt(p.amount) * parseInt(p.price),
+      0
+    );
   }
 }
 
 const CartStore = decorate(_CartStore, {
   products: observable,
   total: computed,
-  addProduct: action("Add product"),
-  getItemsFromLocalStorage: action("Retrieve items from local storage"),
-  removeProduct: action("Remove product"),
-  increaseAmountOfProduct: action("Increase amount of product"),
-  decreaseAmountOfProduct: action("Decrease amount of product"),
+  addProduct: action('Add product'),
+  getItemsFromLocalStorage: action('Retrieve items from local storage'),
+  removeProduct: action('Remove product'),
+  increaseAmountOfProduct: action('Increase amount of product'),
+  decreaseAmountOfProduct: action('Decrease amount of product'),
 });
 
 export default CartStore;

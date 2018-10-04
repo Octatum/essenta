@@ -16,23 +16,25 @@ const SlideshowItemRender = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto 100%;
-  background-image: url('${props => props.src}');
+  background-image: url('${props => props.image.fluid.src}');
 
   ${device.tablet} {
     background-size: contain;
   }
 `;
 
-function SlideshowLayout ({items}) {
+function SlideshowLayout({ items }) {
   return (
     <Layout>
       <Slideshow
         items={items}
-        defaultElementRender={(data) => <SlideshowItemRender {...data}/>}
+        defaultElementRender={data => {
+          return <SlideshowItemRender {...data} />;
+        }}
         timeBetweenSlides={5000}
       />
     </Layout>
-  )
+  );
 }
 
 export default SlideshowLayout;

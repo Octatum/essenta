@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import ContactForm from './ContactForm';
+import NewsForm from './NewsForm';
 import AppLink from '../AppLink';
 import { device } from '../../utilities/device';
+import ContactForm from './ContactForm';
 
 const Layout = styled.div`
   display: flex;
@@ -21,16 +22,18 @@ const ContactInfo = styled.div`
 `;
 
 const JoinUsButton = styled.div`
+  position: fixed;
+  bottom: 0;
   align-self: center;
   text-transform: uppercase;
   background: ${props => props.theme.background.secondary};
   padding: 1rem 0;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  width: 30rem;
   color: white;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  width: 15em;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
 
@@ -38,9 +41,12 @@ const JoinUsButton = styled.div`
     color: ${props => props.theme.color.white};
   }
 
-  ${device.mobile} {
-    width: 20rem;
+  ${device.tablet} {
     font-size: 1.5rem;
+  }
+
+  ${device.mobile} {
+    font-size: 1.2rem;
   }
 `;
 
@@ -49,28 +55,29 @@ const RelevantInformation = styled.div`
   display: grid;
   padding: 4rem 7rem;
   grid-template: auto auto / repeat(3, 1fr);
-  grid-template-areas: 
-    "about policy ."
-    "copyright terms privacy";
+  grid-template-areas:
+    'about policy contact'
+    'copyright terms privacy';
 
   ${device.tablet} {
     padding: 4rem 2rem;
     grid-template: auto auto auto / repeat(2, 1fr);
-    grid-template-areas: 
-      "about policy"
-      "copyright terms"
-      "privacy .";
+    grid-template-areas:
+      'about policy'
+      'copyright contact'
+      'privacy .';
   }
 
   ${device.mobile} {
     padding: 4rem 2rem;
     grid-template: repeat(5, auto) / 1fr;
-    grid-template-areas: 
-      "about"
-      "policy"
-      "copyright"
-      "terms"
-      "privacy";
+    grid-template-areas:
+      'about'
+      'policy'
+      'contact'
+      'copyright'
+      'terms'
+      'privacy';
   }
 `;
 
@@ -78,6 +85,7 @@ const SectionHeader = styled.div`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.5rem;
+  color: ${({ theme }) => theme.color.black};
 `;
 
 const Link = AppLink.extend`
@@ -94,7 +102,6 @@ const InformationSection = styled.div`
   & > * {
     margin: 1rem 0;
   }
-
 
   & :first-child {
     margin-top: 0;
@@ -116,7 +123,6 @@ const HowToBuy = InformationSection.extend`
 
 const Policy = InformationSection.extend`
   grid-area: policy;
-  justify-self: center;
 
   ${device.tablet} {
     justify-self: flex-start;
@@ -141,7 +147,7 @@ const Copyright = AditionalInformationSection.extend`
 const TermsNConditions = AditionalInformationSection.extend`
   grid-area: terms;
   justify-self: center;
-  
+
   ${device.tablet} {
     justify-self: flex-start;
   }
@@ -156,11 +162,15 @@ const Privacy = AditionalInformationSection.extend`
   }
 `;
 
+const ContactDisplay = styled(InformationSection)`
+  grid-area: contact;
+`;
+
 function Footer() {
   return (
     <Layout>
       <ContactInfo>
-        <ContactForm />
+        <NewsForm />
       </ContactInfo>
       <RelevantInformation>
         <About>
@@ -174,12 +184,22 @@ function Footer() {
           <Link to="/politica/envios">Políticas de envío</Link>
           <Link to="/politica/aceptacion">Aviso y aceptación</Link>
           <Link to="/politica/devolucion">Políticas de devolución</Link>
-        </Policy> 
+        </Policy>
+        <ContactDisplay>
+          <SectionHeader>Contacto</SectionHeader>
+          <ContactForm />
+        </ContactDisplay>
         <Copyright>© 2018 ESSENTA Fragancias</Copyright>
-        <TermsNConditions><Link to="/politica/terminos"></Link></TermsNConditions>
-        <Privacy><Link to="/politica/privacidad">Aviso de privacidad</Link></Privacy>
+        <TermsNConditions>
+          <Link to="/politica/terminos" />
+        </TermsNConditions>
+        <Privacy>
+          <Link to="/politica/privacidad">Aviso de privacidad</Link>
+        </Privacy>
       </RelevantInformation>
-      <JoinUsButton><AppLink to="/unete">Únete a nosotros</AppLink></JoinUsButton>
+      <JoinUsButton>
+        <AppLink to="/unete">Únete a nosotros</AppLink>
+      </JoinUsButton>
     </Layout>
   );
 }

@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import styled, { ThemeProvider } from 'styled-components';
-import { Provider } from 'mobx-react';
-import { StaticQuery, graphql } from "gatsby";
+import styled from 'styled-components';
+import { StaticQuery, graphql } from 'gatsby';
 
-import CartStore from '../stores/CartStore'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { globalTheme } from '../utilities/themes';
 import './assets/index.css';
 
 const Layout = styled.div`
@@ -19,7 +16,7 @@ const Layout = styled.div`
 `;
 
 function getProductsUrlsFromEdges(edges) {
-  const data = edges.map(({node}) => ({
+  const data = edges.map(({ node }) => ({
     name: node.title,
     path: node.path,
   }));
@@ -27,12 +24,9 @@ function getProductsUrlsFromEdges(edges) {
   return data;
 }
 
-const cartStore = new CartStore();
-
 const AppLayout = ({ children }) => {
-
   return (
-    <StaticQuery 
+    <StaticQuery
       query={graphql`
         query PageData {
           siteTitle: site {
@@ -40,8 +34,8 @@ const AppLayout = ({ children }) => {
               title
             }
           }
-          
-          productEdges: allContentfulProducto {
+
+          categoryEdges: allContentfulCategoria {
             edges {
               node {
                 title
@@ -52,51 +46,51 @@ const AppLayout = ({ children }) => {
         }
       `}
       render={data => {
-        const productsUrls = getProductsUrlsFromEdges(data.productEdges.edges);
+        const categoryUrls = getProductsUrlsFromEdges(data.categoryEdges.edges);
 
         return (
-          <ThemeProvider theme={globalTheme}>
-            <Layout>
-              <Helmet
-                title={data.siteTitle.siteMetadata.title}
-                meta={[
-                  { name: 'description', content: 'Sample' },
-                  { name: 'keywords', content: 'sample, something' },
-                ]}
-                link={[{
-                  rel:"stylesheet",
-                  href:"https://use.fontawesome.com/releases/v5.1.0/css/all.css", 
-                  integrity:"sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt", 
-                  crossorigin:"anonymous"
-                }, {
-                  rel: "shortcut icon",
-                  href: "/favicon.ico",
-                  type: "image/x-icon"
-                }, {
-                  rel: "icon",
-                  href: "/favicon.ico",
-                  type: "image/x-icon"
-                }]}
-              />
-              <html lang="es" />
-              <Provider cartStore={cartStore}>
+              <Layout>
+                <Helmet
+                  title={data.siteTitle.siteMetadata.title}
+                  meta={[
+                    { name: 'description', content: 'Essenta' },
+                    { name: 'keywords', content: 'Essenta, perfumes' },
+                  ]}
+                  link={[
+                    {
+                      rel: 'stylesheet',
+                      href:
+                        'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+                      integrity:
+                        'sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt',
+                      crossorigin: 'anonymous',
+                    },
+                    {
+                      rel: 'shortcut icon',
+                      href: '/favicon.ico',
+                      type: 'image/x-icon',
+                    },
+                    {
+                      rel: 'icon',
+                      href: '/favicon.ico',
+                      type: 'image/x-icon',
+                    },
+                  ]}
+                />
                 <div>
-                  <Navbar urls={productsUrls}/>
+                  <Navbar urls={categoryUrls} />
                   {children}
                 </div>
-              </Provider>
-              <Footer />
-            </Layout>
-          </ThemeProvider>
-        )
+                <Footer />
+              </Layout>
+        );
       }}
     />
-    
   );
-}
+};
 
 AppLayout.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.object,
 };
 
 export default AppLayout;
