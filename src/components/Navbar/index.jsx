@@ -61,7 +61,6 @@ const BackgroundNavbarLink = NavbarLink.extend`
 
 const HoverableItem = styled(BackgroundNavbarLink)`
   &::after {
-    
   }
 
   ${device.tablet} {
@@ -115,7 +114,7 @@ const DropdownMenu = styled.div`
   pointer-events: none;
   bottom: -3em;
   transition: opacity 0.5s ease 100ms;
-  border-top: 1px solid ${({theme}) => theme.color.black};
+  border-top: 1px solid ${({ theme }) => theme.color.black};
   opacity: 0;
   height: 3em;
   width: 100vw;
@@ -127,16 +126,16 @@ const DropdownMenu = styled.div`
   -webkit-box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.25);
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
 
   > * {
     padding: 1em 1.5em;
     transition: ease 0.3s background-color;
-    background: ${({theme}) => theme.color.orange};
+    background: ${({ theme }) => theme.color.orange};
 
     :hover,
     :focus {
-      background: ${({theme}) => theme.color.darkOrange};
+      background: ${({ theme }) => theme.color.darkOrange};
     }
 
     :focus & {
@@ -177,15 +176,31 @@ function Navbar({ urls }) {
               Diseña tu perfume
             </HoverableItem>
             <DropdownMenu>
-              <CustomNavbarLink onClick={loseFocus} to="/producto/perfume/hombre">Perfume de hombre</CustomNavbarLink>
-              <CustomNavbarLink onClick={loseFocus} to="/producto/perfume/mujer">Perfume de mujer</CustomNavbarLink>              
+              <CustomNavbarLink
+                onClick={loseFocus}
+                to="/producto/perfume/hombre"
+              >
+                Perfume de hombre
+              </CustomNavbarLink>
+              <CustomNavbarLink
+                onClick={loseFocus}
+                to="/producto/perfume/mujer"
+              >
+                Perfume de mujer
+              </CustomNavbarLink>
             </DropdownMenu>
           </div>
           <div>
             <HoverableItem to="/catalogo">Catálogo</HoverableItem>
             <DropdownMenu>
-              {urls.map(({name, path}) => (
-                <CustomNavbarLink key={path} onClick={loseFocus} to={`/producto${path}/general`}>{name}</CustomNavbarLink>
+              {urls.map(({ name, path }) => (
+                <CustomNavbarLink
+                  key={path}
+                  onClick={loseFocus}
+                  to={`/producto${path}/general`}
+                >
+                  {name}
+                </CustomNavbarLink>
               ))}
             </DropdownMenu>
           </div>

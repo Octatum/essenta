@@ -80,7 +80,7 @@ const SectionHeader = styled.div`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.5rem;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 const Link = AppLink.extend`

@@ -45,7 +45,7 @@ const ContactInfo = styled.div`
 
 const CallUs = styled.div`
   font-family: ${props => props.theme.fonts.secondary};
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
 
   ${device.mobile} {
     min-width: 100%;

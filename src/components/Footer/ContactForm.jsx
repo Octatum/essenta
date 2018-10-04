@@ -19,7 +19,7 @@ const TextArea = TextInput.withComponent('textarea');
 const TextLabel = styled.div`
   font-size: 1.4em;
   margin-bottom: 0.5rem;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 const ButtonSpacer = styled.div`
@@ -31,7 +31,6 @@ const ButtonSpacer = styled.div`
 const CustomButton = styled(Button)`
   font-size: 1rem;
   border-radius: none;
-
 `;
 
 class ContactForm extends React.Component {
@@ -39,51 +38,71 @@ class ContactForm extends React.Component {
     name: '',
     message: '',
     email: '',
-  }
+  };
 
   state = {
     ...this.initialValues,
-    formSubmitted: false
-  }
+    formSubmitted: false,
+  };
 
-  handleChange = ({target}) => {
+  handleChange = ({ target }) => {
     const { value, name } = target;
 
     this.setState({
       [name]: value,
     });
-  }
+  };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
-    this.setState({
-      ...this.initialValues,
-      formSubmitted: true
-    }, () => {
-      alert("Tu mensaje ha sido enviado.");
-    })
-  }
+    this.setState(
+      {
+        ...this.initialValues,
+        formSubmitted: true,
+      },
+      () => {
+        alert('Tu mensaje ha sido enviado.');
+      }
+    );
+  };
 
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Label>
           <TextLabel>Nombre</TextLabel>
-          <TextInput disabled={this.state.formSubmitted} name="name" value={this.state.name} onChange={this.handleChange} />
+          <TextInput
+            disabled={this.state.formSubmitted}
+            name="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
         </Label>
         <Label>
           <TextLabel>Correo</TextLabel>
-          <TextInput disabled={this.state.formSubmitted} name="message" value={this.state.message} onChange={this.handleChange} />
+          <TextInput
+            disabled={this.state.formSubmitted}
+            name="message"
+            value={this.state.message}
+            onChange={this.handleChange}
+          />
         </Label>
         <Label>
           <TextLabel>Mensaje</TextLabel>
-          <TextArea disabled={this.state.formSubmitted} name="email" value={this.state.email} onChange={this.handleChange} />
+          <TextArea
+            disabled={this.state.formSubmitted}
+            name="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
         </Label>
         <ButtonSpacer>
-          <CustomButton disabled={this.state.formSubmitted}>Enviar</CustomButton>
+          <CustomButton disabled={this.state.formSubmitted}>
+            Enviar
+          </CustomButton>
         </ButtonSpacer>
       </Form>
-    )
+    );
   }
 }
 

@@ -8,20 +8,6 @@ import ProductDetailPickerView from './ProductDetailPickerView';
 import Breadcrumbs from './../Breadcrumbs';
 import { device } from '../../utilities/device';
 
-const Layout = styled(Router)`
-  display: flex;
-  flex-direction: column;
-  padding: 3em 5em;
-
-  ${device.tablet} {
-    padding: 2em;
-  }
-
-  ${device.mobile} {
-    padding: 2em 1em;
-  }
-`;
-
 class ProductPickerContainer extends Component {
   render() {
     const { data } = this.props;
@@ -29,7 +15,7 @@ class ProductPickerContainer extends Component {
     return (
       <React.Fragment>
         <Breadcrumbs />
-        <Layout>
+        <Router>
           <FragancePickerView
             path="/producto/:categoryPath/:genderFilter"
             fragances={data.fragances}
@@ -39,7 +25,7 @@ class ProductPickerContainer extends Component {
             containers={data.containers}
             fragances={data.fragances}
           />
-        </Layout>
+        </Router>
       </React.Fragment>
     );
   }

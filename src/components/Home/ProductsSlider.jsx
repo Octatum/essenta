@@ -10,7 +10,7 @@ const SliderArrow = styled.i`
   font-size: 3em;
   z-index: 10;
   cursor: pointer;
-  color: ${({theme}) => theme.color.black};
+  color: ${({ theme }) => theme.color.black};
 `;
 
 const LeftArrow = SliderArrow.extend`
@@ -83,7 +83,10 @@ const ProductSlider = ({ products }) => {
     <Slider style={{ position: 'relative', height: '100%' }} {...settings}>
       {products &&
         products.map(item => (
-          <ProductWrapper to={`/producto${item.path}/${item.gender.toLowerCase()}`} key={item.key}>
+          <ProductWrapper
+            to={`/producto${item.path}/${item.gender.toLowerCase()}`}
+            key={item.key}
+          >
             <ImageWrapper>
               <Img
                 fluid={item.fluid}

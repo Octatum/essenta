@@ -29,8 +29,8 @@ function SlideshowLayout({ items }) {
       <Slideshow
         items={items}
         defaultElementRender={data => {
-          return <SlideshowItemRender {...data} />
-        } }
+          return <SlideshowItemRender {...data} />;
+        }}
         timeBetweenSlides={5000}
       />
     </Layout>

@@ -49,41 +49,40 @@ const AppLayout = ({ children }) => {
         const categoryUrls = getProductsUrlsFromEdges(data.categoryEdges.edges);
 
         return (
-          <Layout>
-            <Helmet
-              title={data.siteTitle.siteMetadata.title}
-              meta={[
-                { name: 'description', content: 'Essenta' },
-                { name: 'keywords', content: 'Essenta, perfumes' },
-              ]}
-              link={[
-                {
-                  rel: 'stylesheet',
-                  href:
-                    'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-                  integrity:
-                    'sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt',
-                  crossorigin: 'anonymous',
-                },
-                {
-                  rel: 'shortcut icon',
-                  href: '/favicon.ico',
-                  type: 'image/x-icon',
-                },
-                {
-                  rel: 'icon',
-                  href: '/favicon.ico',
-                  type: 'image/x-icon',
-                },
-              ]}
-            />
-            <html lang="es" />
-            <div>
-              <Navbar urls={categoryUrls} />
-              {children}
-            </div>
-            <Footer />
-          </Layout>
+              <Layout>
+                <Helmet
+                  title={data.siteTitle.siteMetadata.title}
+                  meta={[
+                    { name: 'description', content: 'Essenta' },
+                    { name: 'keywords', content: 'Essenta, perfumes' },
+                  ]}
+                  link={[
+                    {
+                      rel: 'stylesheet',
+                      href:
+                        'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+                      integrity:
+                        'sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt',
+                      crossorigin: 'anonymous',
+                    },
+                    {
+                      rel: 'shortcut icon',
+                      href: '/favicon.ico',
+                      type: 'image/x-icon',
+                    },
+                    {
+                      rel: 'icon',
+                      href: '/favicon.ico',
+                      type: 'image/x-icon',
+                    },
+                  ]}
+                />
+                <div>
+                  <Navbar urls={categoryUrls} />
+                  {children}
+                </div>
+                <Footer />
+              </Layout>
         );
       }}
     />

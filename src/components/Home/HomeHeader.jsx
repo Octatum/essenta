@@ -16,4 +16,4 @@ const HomeHeader = styled.div`
   }
 `;
 
-export default (HomeHeader);
+export default HomeHeader;

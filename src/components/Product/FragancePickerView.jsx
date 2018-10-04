@@ -5,9 +5,24 @@ import { navigate, Link } from '@reach/router';
 
 import { device } from '../../utilities/device';
 import { Select } from '../Input';
+import { StaticQuery, graphql } from 'gatsby';
 
 const TitleSection = styled.section`
   display: flex;
+`;
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 3em 5em;
+
+  ${device.tablet} {
+    padding: 2em;
+  }
+
+  ${device.mobile} {
+    padding: 2em 1em;
+  }
 `;
 
 const PageTitle = styled.h1`
@@ -151,46 +166,101 @@ class FragancePickerView extends Component {
     const { fragances } = this.props;
 
     return (
-      <React.Fragment>
-        <TitleSection>
-          <PageTitle>Elige tu fragancia</PageTitle>
-          <CustomSelect
-            value={this.state.selectedGender}
-            onChange={this.handleSelectChange}
-          >
-            <CustomOption value="general">General</CustomOption>
-            <CustomOption value="mujer">Mujer</CustomOption>
-            <CustomOption value="hombre">Hombre</CustomOption>
-          </CustomSelect>
-        </TitleSection>
-        <Spacer />
-        {Object.keys(fragances).map(key => {
-          const filteredFragances = fragances[key].filter(this.filterByGender);
+      <StaticQuery
+        query={graphql`
+          query AllCategories {
+            manlyBanner: contentfulImagen(
+              usage: { eq: "Banner fragancia hombre" }
+            ) {
+              image {
+                fluid {
+                  ...GatsbyContentfulFluid
+                }
+              }
+            }
 
-          return filteredFragances.length === 0 ? (
-            ''
-          ) : (
-            <FamilySection key={key}>
-              <FraganceFamily>{key}</FraganceFamily>
-              <FamilySpacer />
-              <FraganceListDisplay>
-                {filteredFragances.map(fragance => (
-                  <FraganceDisplay
-                    key={fragance.id}
-                    to={`/producto/${this.props.categoryPath}/${
-                      this.state.selectedGender
-                    }/${fragance.id}`}
+            girlBanner: contentfulImagen(
+              usage: { eq: "Banner fragancia mujer" }
+            ) {
+              image {
+                fluid {
+                  ...GatsbyContentfulFluid
+                }
+              }
+            }
+
+            generalBanner: contentfulImagen(
+              usage: { eq: "Banner fragancia general" }
+            ) {
+              image {
+                fluid {
+                  ...GatsbyContentfulFluid
+                }
+              }
+            }
+          }
+        `}
+        render={data => {
+          const { manlyBanner, girlBanner, generalBanner } = data;
+
+          let currentBanner = generalBanner;
+          if (this.state.selectedGender.toLowerCase() === 'mujer') {
+            currentBanner = girlBanner;
+          }
+
+          if (this.state.selectedGender.toLowerCase() === 'hombre') {
+            currentBanner = manlyBanner;
+          }
+
+          return (
+            <React.Fragment>
+              <GatsbyImg fluid={currentBanner.image.fluid} />
+              <Layout>
+                <TitleSection>
+                  <PageTitle>Elige tu fragancia</PageTitle>
+                  <CustomSelect
+                    value={this.state.selectedGender}
+                    onChange={this.handleSelectChange}
                   >
-                    <GatsbyImg fluid={fragance.image.fluid} />
-                    <HorizontalBar />
-                    <FraganceName>{fragance.displayName}</FraganceName>
-                  </FraganceDisplay>
-                ))}
-              </FraganceListDisplay>
-            </FamilySection>
+                    <CustomOption value="general">General</CustomOption>
+                    <CustomOption value="mujer">Mujer</CustomOption>
+                    <CustomOption value="hombre">Hombre</CustomOption>
+                  </CustomSelect>
+                </TitleSection>
+                <Spacer />
+                {Object.keys(fragances).map(key => {
+                  const filteredFragances = fragances[key].filter(
+                    this.filterByGender
+                  );
+
+                  return filteredFragances.length === 0 ? (
+                    ''
+                  ) : (
+                    <FamilySection key={key}>
+                      <FraganceFamily>{key}</FraganceFamily>
+                      <FamilySpacer />
+                      <FraganceListDisplay>
+                        {filteredFragances.map(fragance => (
+                          <FraganceDisplay
+                            key={fragance.id}
+                            to={`/producto/${this.props.categoryPath}/${
+                              this.state.selectedGender
+                            }/${fragance.id}`}
+                          >
+                            <GatsbyImg fluid={fragance.image.fluid} />
+                            <HorizontalBar />
+                            <FraganceName>{fragance.displayName}</FraganceName>
+                          </FraganceDisplay>
+                        ))}
+                      </FraganceListDisplay>
+                    </FamilySection>
+                  );
+                })}
+              </Layout>
+            </React.Fragment>
           );
-        })}
-      </React.Fragment>
+        }}
+      />
     );
   }
 }

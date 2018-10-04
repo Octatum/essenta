@@ -38,7 +38,9 @@ function HomeContainer({ data }) {
     slideshowImagesResult,
     allContainers: containerProductResults,
   } = data;
-  const slideshowImages = slideshowImagesResult.edges.map(({node}) => ({...node}));
+  const slideshowImages = slideshowImagesResult.edges.map(({ node }) => ({
+    ...node,
+  }));
   const highlightedProducts = getHighlightedContainers(containerProductResults);
 
   return (
@@ -56,9 +58,7 @@ export default HomeContainer;
 
 export const dataQuery = graphql`
   query HomeImages {
-    recommendedImage: contentfulImagen(
-      usage: { eq: "Recomendaciones" }
-    ) {
+    recommendedImage: contentfulImagen(usage: { eq: "Recomendaciones" }) {
       id
       alt
       path

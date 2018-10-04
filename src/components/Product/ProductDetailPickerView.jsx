@@ -22,6 +22,20 @@ const ProductLayout = styled.div`
   }
 `;
 
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 3em 5em;
+
+  ${device.tablet} {
+    padding: 2em;
+  }
+
+  ${device.mobile} {
+    padding: 2em 1em;
+  }
+`;
+
 const BackButton = styled(Link)`
   font-family: ${props => props.theme.fonts.secondary};
   color: ${({ theme }) => theme.color.black};
@@ -182,7 +196,7 @@ class ProductDetailPickerView extends Component {
 
   addProduct = product => {
     this.props.cartStore.addProduct(product);
-    alert("Se agregó el producto a su carrito");
+    alert('Se agregó el producto a su carrito');
   };
 
   render() {
@@ -193,7 +207,7 @@ class ProductDetailPickerView extends Component {
     const currentContainer = filteredContainers[currentSize];
 
     return (
-      <React.Fragment>
+      <Layout>
         <BackButton to={`/producto/${categoryPath}/${genderFilter}`}>
           Regresar
         </BackButton>
@@ -228,7 +242,9 @@ class ProductDetailPickerView extends Component {
               style={{ fontSize: '0.9rem', borderRadius: '0' }}
               onClick={() =>
                 this.addProduct({
-                  name: `${currentContainer.category.title} ${fragance.displayName}`,
+                  name: `${currentContainer.category.title} ${
+                    fragance.displayName
+                  }`,
                   color: currentContainer.colores[currentColor],
                   size: currentContainer.label,
                   fragance: fragance.displayName,
@@ -251,7 +267,7 @@ class ProductDetailPickerView extends Component {
             {fragance.suggestions.suggestions}
           </FraganceDataContent>
         </FraganceData>
-      </React.Fragment>
+      </Layout>
     );
   }
 }
