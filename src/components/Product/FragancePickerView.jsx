@@ -142,16 +142,27 @@ class FragancePickerView extends Component {
   constructor(props) {
     super(props);
 
+    const acceptedValues = ['hombre', 'mujer'];
+    let selectedGender = acceptedValues.includes(props.genderFilter.toLowerCase()) ? props.genderFilter.toLowerCase() : 'general';
+
     this.state = {
-      selectedGender: props.genderFilter,
+      selectedFraganceFamily: "todos",
+      selectedGender,
     };
   }
 
-  handleSelectChange = ({ target }) => {
+  handleFraganceSelectChange = ({target}) => {
+    this.setState({
+      selectedFraganceFamily: target.value
+    });
+  }
+
+  handleGenderSelectChange = ({ target }) => {
     const { value } = target;
 
     this.setState({
       selectedGender: value,
+      selectedFraganceFamily: "todos"
     });
   };
 
@@ -161,6 +172,18 @@ class FragancePickerView extends Component {
       fragance.objectiveGender === this.state.selectedGender
     );
   };
+
+  getFilteredFamilyGroupsByGender = () => {
+    const familyGroups = this.props.fragances;
+    const filteredGroups = {};
+    Object.keys(familyGroups).forEach(key => {
+      const familyGroup = familyGroups[key];
+      if(familyGroup.filter(this.filterByGender).length > 0) {
+        filteredGroups[key] = familyGroup;
+      }
+    });
+    return filteredGroups;
+  }
 
   render() {
     const { fragances } = this.props;
@@ -203,6 +226,9 @@ class FragancePickerView extends Component {
         render={data => {
           const { manlyBanner, girlBanner, generalBanner } = data;
 
+          const filteredFamilyGroupsByGender = this.getFilteredFamilyGroupsByGender();
+          const finalFilteredFamilyGroups = this.state.selectedFraganceFamily === "todos" ? filteredFamilyGroupsByGender : {[this.state.selectedFraganceFamily]: fragances[this.state.selectedFraganceFamily]};
+
           let currentBanner = generalBanner;
           if (this.state.selectedGender.toLowerCase() === 'mujer') {
             currentBanner = girlBanner;
@@ -220,15 +246,24 @@ class FragancePickerView extends Component {
                   <PageTitle>Elige tu fragancia</PageTitle>
                   <CustomSelect
                     value={this.state.selectedGender}
-                    onChange={this.handleSelectChange}
+                    onChange={this.handleGenderSelectChange}
                   >
                     <CustomOption value="general">General</CustomOption>
                     <CustomOption value="mujer">Mujer</CustomOption>
                     <CustomOption value="hombre">Hombre</CustomOption>
                   </CustomSelect>
+                  <CustomSelect
+                    value={this.state.selectedFraganceFamily}
+                    onChange={this.handleFraganceSelectChange}
+                  >
+                    <CustomOption value="todos">Todos</CustomOption>
+                    {Object.keys(filteredFamilyGroupsByGender).map(key => (
+                      <CustomOption key={key} value={key}>{key}</CustomOption>
+                    ))}
+                  </CustomSelect>
                 </TitleSection>
                 <Spacer />
-                {Object.keys(fragances).map(key => {
+                {Object.keys(finalFilteredFamilyGroups).map(key => {
                   const filteredFragances = fragances[key].filter(
                     this.filterByGender
                   );

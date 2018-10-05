@@ -282,18 +282,7 @@ class Checkout extends React.Component {
             <FormContentSection>
               <SubsectionHeader>Dirección de envío</SubsectionHeader>
               <Paragraph>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde
-                placeat, est cumque repudiandae aperiam optio quis reprehenderit
-                possimus perferendis accusantium deserunt dicta, mollitia sint
-                recusandae libero nobis aliquam ut porro? Maiores ducimus
-                aperiam natus provident, animi hic facilis dolorem iusto,
-                nesciunt quia, tempora itaque voluptas velit vitae porro a eius
-                delectus! Et delectus, modi molestias beatae vel aspernatur
-                laboriosam dolores ipsum quas ipsa hic, maxime ea aperiam labore
-                ad dolor id iste. Totam, accusamus alias suscipit odio vel qui,
-                blanditiis exercitationem ut facilis eveniet, error sunt nostrum
-                ea voluptatem est. Quia totam architecto ut rem alias nihil ex
-                beatae quasi?
+                Llena aquí tu información de envío
               </Paragraph>
               <UserDataForm>
                 <InputLabel>
