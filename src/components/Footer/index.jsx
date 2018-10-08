@@ -5,6 +5,7 @@ import NewsForm from './NewsForm';
 import AppLink from '../AppLink';
 import { device } from '../../utilities/device';
 import ContactForm from './ContactForm';
+import throttle from './../../utilities/throttle';
 
 const Layout = styled.div`
   display: flex;
@@ -21,7 +22,11 @@ const ContactInfo = styled.div`
   border-right: 0px;
 `;
 
-const JoinUsButton = styled.div`
+const JoinUsButton = styled.div.attrs({
+  style: ({ show }) => ({
+    transform: `translateY(${show ? 100 : 0}%)`,
+  }),
+})`
   position: fixed;
   bottom: 0;
   align-self: center;
@@ -36,6 +41,7 @@ const JoinUsButton = styled.div`
   width: 15em;
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
+  transition: transform 100ms ease;
 
   ${AppLink} {
     color: ${props => props.theme.color.white};
@@ -166,42 +172,127 @@ const ContactDisplay = styled(InformationSection)`
   grid-area: contact;
 `;
 
-function Footer() {
-  return (
-    <Layout>
-      <ContactInfo>
-        <NewsForm />
-      </ContactInfo>
-      <RelevantInformation>
-        <About>
-          <SectionHeader>Acerca de Essenta</SectionHeader>
-          <Link to="/unete">Empleos</Link>
-          <Link to="/">Nosotros</Link>
-        </About>
-        <Policy>
-          <SectionHeader>Políticas</SectionHeader>
-          <Link to="/politica/pedidos">Pedidos</Link>
-          <Link to="/politica/envios">Políticas de envío</Link>
-          <Link to="/politica/aceptacion">Aviso y aceptación</Link>
-          <Link to="/politica/devolucion">Políticas de devolución</Link>
-        </Policy>
-        <ContactDisplay>
-          <SectionHeader>Contacto</SectionHeader>
-          <ContactForm />
-        </ContactDisplay>
-        <Copyright>© 2018 ESSENTA Fragancias</Copyright>
-        <TermsNConditions>
-          <Link to="/politica/terminos" />
-        </TermsNConditions>
-        <Privacy>
-          <Link to="/politica/privacidad">Aviso de privacidad</Link>
-        </Privacy>
-      </RelevantInformation>
-      <JoinUsButton>
-        <AppLink to="/unete">Únete a nosotros</AppLink>
-      </JoinUsButton>
-    </Layout>
-  );
+const delta = 5;
+
+class Footer extends React.Component {
+  state = {
+    showNav: true,
+    lastScrollTop: 0,
+    didScroll: true,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.hideHeader = this.hideHeader.bind(this);
+    this.showHeader = this.showHeader.bind(this);
+    this.hasScrolled = this.hasScrolled.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+
+    this.handleScroll = throttle(this.handleScroll, 1000 / 10);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  hideHeader() {
+    this.setState({
+      showNav: false,
+    });
+  }
+
+  showHeader() {
+    this.setState({
+      showNav: true,
+    });
+  }
+
+  getDocHeight() {
+    return Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+      document.body.clientHeight,
+      document.documentElement.clientHeight
+    );
+  }
+
+  hasScrolled() {
+    const st = window.scrollY;
+
+    // Make sure they scroll more than delta
+    if (Math.abs(this.state.lastScrollTop - st) <= delta) return;
+
+    // If they scrolled down and are past the navbar add class .nav-up.
+    // This is necessary so you never see what is "behind" the navbar.
+    if (st > this.state.lastScrollTop) {
+      // Scroll Down
+      this.hideHeader();
+    } else {
+      // Scroll Up
+      if (st < this.getDocHeight()) {
+        this.showHeader();
+      }
+    }
+
+    this.setState({
+      lastScrollTop: st,
+    });
+  }
+
+  handleScroll() {
+    this.setState(() => {
+      return {
+        didScroll: true,
+      };
+    });
+
+    this.hasScrolled();
+  }
+
+  render() {
+    return (
+      <Layout>
+        <ContactInfo>
+          <NewsForm />
+        </ContactInfo>
+        <RelevantInformation>
+          <About>
+            <SectionHeader>Acerca de Essenta</SectionHeader>
+            <Link to="/unete">Empleos</Link>
+            <Link to="/">Nosotros</Link>
+          </About>
+          <Policy>
+            <SectionHeader>Políticas</SectionHeader>
+            <Link to="/politica/pedidos">Pedidos</Link>
+            <Link to="/politica/envios">Políticas de envío</Link>
+            <Link to="/politica/aceptacion">Aviso y aceptación</Link>
+            <Link to="/politica/devolucion">Políticas de devolución</Link>
+          </Policy>
+          <ContactDisplay>
+            <SectionHeader>Contacto</SectionHeader>
+            <ContactForm />
+          </ContactDisplay>
+          <Copyright>© 2018 ESSENTA Fragancias</Copyright>
+          <TermsNConditions>
+            <Link to="/politica/terminos" />
+          </TermsNConditions>
+          <Privacy>
+            <Link to="/politica/privacidad">Aviso de privacidad</Link>
+          </Privacy>
+        </RelevantInformation>
+        <JoinUsButton show={this.state.showNav}>
+          <AppLink to="/unete">Únete a nosotros</AppLink>
+        </JoinUsButton>
+      </Layout>
+    );
+  }
 }
 
 export default Footer;

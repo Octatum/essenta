@@ -6,6 +6,7 @@ import NavbarLink from './NavbarLink';
 
 import logo from './assets/logo_horizontal.png';
 import { device } from '../../utilities/device';
+import throttle from './../../utilities/throttle';
 
 const NavLayout = styled.nav`
   display: flex;
@@ -161,60 +162,64 @@ function loseFocus({ target }) {
   target.blur();
 }
 
-function Navbar({ urls }) {
-  return (
-    <NavLayout>
-      <LogoSection>
-        <LogoLink to="/">
-          <Img src={logo} alt="logo" />
-        </LogoLink>
-      </LogoSection>
-      <NavlinksSection>
-        <LinksSection>
-          <div>
-            <HoverableItem to="/producto/perfume/general">
-              Diseña tu perfume
-            </HoverableItem>
-            <DropdownMenu>
-              <CustomNavbarLink
-                onClick={loseFocus}
-                to="/producto/perfume/hombre"
-              >
-                Perfume de hombre
-              </CustomNavbarLink>
-              <CustomNavbarLink
-                onClick={loseFocus}
-                to="/producto/perfume/mujer"
-              >
-                Perfume de mujer
-              </CustomNavbarLink>
-            </DropdownMenu>
-          </div>
-          <div>
-            <HoverableItem to="/catalogo">Catálogo</HoverableItem>
-            <DropdownMenu>
-              {urls.map(({ name, path }) => (
+class Navbar extends React.Component {
+  render() {
+    const { urls } = this.props;
+
+    return (
+      <NavLayout>
+        <LogoSection>
+          <LogoLink to="/">
+            <Img src={logo} alt="logo" />
+          </LogoLink>
+        </LogoSection>
+        <NavlinksSection>
+          <LinksSection>
+            <div>
+              <HoverableItem to="/producto/perfume/general">
+                Diseña tu perfume
+              </HoverableItem>
+              <DropdownMenu>
                 <CustomNavbarLink
-                  key={path}
                   onClick={loseFocus}
-                  to={`/producto${path}/general`}
+                  to="/producto/perfume/hombre"
                 >
-                  {name}
+                  Perfume de hombre
                 </CustomNavbarLink>
-              ))}
-            </DropdownMenu>
-          </div>
-          <BackgroundNavbarLink to="/unete">
-            Únete a nosotros{' '}
-          </BackgroundNavbarLink>
-        </LinksSection>
-        <ShopLinksSection>
-          <ShopLinks />
-        </ShopLinksSection>
-      </NavlinksSection>
-      <Spacer />
-    </NavLayout>
-  );
+                <CustomNavbarLink
+                  onClick={loseFocus}
+                  to="/producto/perfume/mujer"
+                >
+                  Perfume de mujer
+                </CustomNavbarLink>
+              </DropdownMenu>
+            </div>
+            <div>
+              <HoverableItem to="/catalogo">Catálogo</HoverableItem>
+              <DropdownMenu>
+                {urls.map(({ name, path }) => (
+                  <CustomNavbarLink
+                    key={path}
+                    onClick={loseFocus}
+                    to={`/producto${path}/general`}
+                  >
+                    {name}
+                  </CustomNavbarLink>
+                ))}
+              </DropdownMenu>
+            </div>
+            <BackgroundNavbarLink to="/unete">
+              Únete a nosotros{' '}
+            </BackgroundNavbarLink>
+          </LinksSection>
+          <ShopLinksSection>
+            <ShopLinks />
+          </ShopLinksSection>
+        </NavlinksSection>
+        <Spacer />
+      </NavLayout>
+    );
+  }
 }
 
 export default Navbar;

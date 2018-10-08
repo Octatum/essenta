@@ -216,7 +216,7 @@ class Checkout extends React.Component {
 
     delivery: '',
 
-    paymentMethod: 'SPEI',
+    paymentMethod: 'CARD',
     cardNumber: '',
     cardName: '',
     cardExpiry: '',
@@ -393,6 +393,16 @@ class Checkout extends React.Component {
                   <input
                     type="radio"
                     name="paymentMethod"
+                    value="CARD"
+                    checked={this.state.paymentMethod === 'CARD'}
+                    onChange={this.handleChange}
+                  />
+                  <PaymentMethodLogo src={cardLogo} alt="Pago por tarjeta" />
+                </PaymentInputLabel>
+                <PaymentInputLabel>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
                     value="SPEI"
                     checked={this.state.paymentMethod === 'SPEI'}
                     onChange={this.handleChange}
@@ -408,16 +418,6 @@ class Checkout extends React.Component {
                     onChange={this.handleChange}
                   />
                   <PaymentMethodLogo src={oxxoLogo} alt="Pago por Oxxo" />
-                </PaymentInputLabel>
-                <PaymentInputLabel>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="CARD"
-                    checked={this.state.paymentMethod === 'CARD'}
-                    onChange={this.handleChange}
-                  />
-                  <PaymentMethodLogo src={cardLogo} alt="Pago por tarjeta" />
                 </PaymentInputLabel>
               </PaymentOptions>
             </FormContentSection>

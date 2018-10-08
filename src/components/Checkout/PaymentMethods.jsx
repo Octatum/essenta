@@ -79,25 +79,21 @@ function PaymentMethods({
       <PaymentSection hidden={visibleOption !== 'SPEI'}>
         <SubsectionHeader>Pago por transferencia Bancaria</SubsectionHeader>
         <Paragraph>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem
-          error, numquam at odio nulla accusamus esse eius praesentium!
-          Veritatis sit ducimus omnis numquam. Dolore, repellendus quae.
+          Recibe de manera electrónica toda la información necesaria para
+          realizar tu pago a través de una transferencia.
         </Paragraph>
       </PaymentSection>
       <PaymentSection hidden={visibleOption !== 'OXXO'}>
         <SubsectionHeader>Pago en OXXO</SubsectionHeader>
         <Paragraph>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-          voluptatum excepturi maiores asperiores eligendi saepe ipsum aut
-          facere vero adipisci.
+          Recibe de manera electrónica el formato para que acudas a la tienda de
+          conveniencia de tu elección y puedas realizar ahí tu pago.
         </Paragraph>
       </PaymentSection>
       <PaymentSection hidden={visibleOption !== 'CARD'}>
         <SubsectionHeader>Pago por tarjeta</SubsectionHeader>
         <Paragraph>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore
-          explicabo, sint laborum vero dicta, quisquam quasi autem provident
-          molestiae atque repellendus? Enim, harum.
+          Ingresa todos tus datos bancarios tal y como aparecen en tu tarjeta
         </Paragraph>
         <CardOption>
           <CardDisplay>
