@@ -143,26 +143,30 @@ class FragancePickerView extends Component {
     super(props);
 
     const acceptedValues = ['hombre', 'mujer'];
-    let selectedGender = acceptedValues.includes(props.genderFilter.toLowerCase()) ? props.genderFilter.toLowerCase() : 'general';
+    let selectedGender = acceptedValues.includes(
+      props.genderFilter.toLowerCase()
+    )
+      ? props.genderFilter.toLowerCase()
+      : 'general';
 
     this.state = {
-      selectedFraganceFamily: "todos",
+      selectedFraganceFamily: 'todos',
       selectedGender,
     };
   }
 
-  handleFraganceSelectChange = ({target}) => {
+  handleFraganceSelectChange = ({ target }) => {
     this.setState({
-      selectedFraganceFamily: target.value
+      selectedFraganceFamily: target.value,
     });
-  }
+  };
 
   handleGenderSelectChange = ({ target }) => {
     const { value } = target;
 
     this.setState({
       selectedGender: value,
-      selectedFraganceFamily: "todos"
+      selectedFraganceFamily: 'todos',
     });
   };
 
@@ -178,12 +182,12 @@ class FragancePickerView extends Component {
     const filteredGroups = {};
     Object.keys(familyGroups).forEach(key => {
       const familyGroup = familyGroups[key];
-      if(familyGroup.filter(this.filterByGender).length > 0) {
+      if (familyGroup.filter(this.filterByGender).length > 0) {
         filteredGroups[key] = familyGroup;
       }
     });
     return filteredGroups;
-  }
+  };
 
   render() {
     const { fragances } = this.props;
@@ -227,7 +231,13 @@ class FragancePickerView extends Component {
           const { manlyBanner, girlBanner, generalBanner } = data;
 
           const filteredFamilyGroupsByGender = this.getFilteredFamilyGroupsByGender();
-          const finalFilteredFamilyGroups = this.state.selectedFraganceFamily === "todos" ? filteredFamilyGroupsByGender : {[this.state.selectedFraganceFamily]: fragances[this.state.selectedFraganceFamily]};
+          const finalFilteredFamilyGroups =
+            this.state.selectedFraganceFamily === 'todos'
+              ? filteredFamilyGroupsByGender
+              : {
+                  [this.state.selectedFraganceFamily]:
+                    fragances[this.state.selectedFraganceFamily],
+                };
 
           let currentBanner = generalBanner;
           if (this.state.selectedGender.toLowerCase() === 'mujer') {
@@ -258,7 +268,9 @@ class FragancePickerView extends Component {
                   >
                     <CustomOption value="todos">Todos</CustomOption>
                     {Object.keys(filteredFamilyGroupsByGender).map(key => (
-                      <CustomOption key={key} value={key}>{key}</CustomOption>
+                      <CustomOption key={key} value={key}>
+                        {key}
+                      </CustomOption>
                     ))}
                   </CustomSelect>
                 </TitleSection>

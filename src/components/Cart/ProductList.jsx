@@ -117,9 +117,7 @@ const RemoveProductIcon = styled.div`
   cursor: pointer;
 `;
 
-const ProductCardsLayout = styled.div`
-
-`;
+const ProductCardsLayout = styled.div``;
 
 function ProductList({ cartStore }) {
   return (

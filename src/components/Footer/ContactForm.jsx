@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { TextInput } from './../Input/index';
 import Button from './../Button/index';
+import Popup from '../Popup';
+import iconAsset from './assets/send.svg';
 
 const Form = styled.form`
   display: flex;
@@ -38,6 +41,7 @@ class ContactForm extends React.Component {
     name: '',
     message: '',
     email: '',
+    modalOpen: false,
   };
 
   state = {
@@ -53,6 +57,14 @@ class ContactForm extends React.Component {
     });
   };
 
+  openModal = () => {
+    this.setState({ modalOpen: true });
+  };
+
+  closeModal = () => {
+    this.setState({ modalOpen: false });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     this.setState(
@@ -61,7 +73,7 @@ class ContactForm extends React.Component {
         formSubmitted: true,
       },
       () => {
-        alert('Tu mensaje ha sido enviado.');
+        this.openModal();
       }
     );
   };
@@ -97,9 +109,17 @@ class ContactForm extends React.Component {
           />
         </Label>
         <ButtonSpacer>
-          <CustomButton disabled={this.state.formSubmitted}>
-            Enviar
-          </CustomButton>
+          <Popup
+            trigger={
+              <CustomButton disabled={this.state.formSubmitted}>
+                Enviar
+              </CustomButton>
+            }
+            open={this.state.modalOpen}
+            onClose={this.closeModal}
+            popupText="Tu mensaje ha sido enviado."
+            icon={iconAsset}
+          />
         </ButtonSpacer>
       </Form>
     );

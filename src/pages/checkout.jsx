@@ -281,9 +281,7 @@ class Checkout extends React.Component {
           <GraySectionWithPadding>
             <FormContentSection>
               <SubsectionHeader>Dirección de envío</SubsectionHeader>
-              <Paragraph>
-                Llena aquí tu información de envío
-              </Paragraph>
+              <Paragraph>Llena aquí tu información de envío</Paragraph>
               <UserDataForm>
                 <InputLabel>
                   <LabelText>Nombre</LabelText>

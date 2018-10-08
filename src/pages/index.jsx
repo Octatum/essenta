@@ -40,7 +40,7 @@ function HomeContainer({ data }) {
   } = data;
   const slideshowImages = slideshowImagesResult.edges.map(({ node }) => ({
     ...node,
-    key: node.id
+    key: node.id,
   }));
   const highlightedProducts = getHighlightedContainers(containerProductResults);
 

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import GatsbyImg from 'gatsby-image';
+import ReactPopup from 'reactjs-popup';
 
 import { Select } from '../Input';
 import Button from '../Button/index';
 import { device } from '../../utilities/device';
 import { inject } from 'mobx-react';
 import { Link } from '@reach/router';
+import Popup from './../Popup';
+import checkedImage from './assets/checked.svg';
 
 const ProductLayout = styled.div`
   display: flex;
@@ -196,7 +199,6 @@ class ProductDetailPickerView extends Component {
 
   addProduct = product => {
     this.props.cartStore.addProduct(product);
-    alert('Se agregó el producto a su carrito');
   };
 
   render() {
@@ -238,9 +240,13 @@ class ProductDetailPickerView extends Component {
               </Select>
               <span>Color</span>
             </ProductPickerLabel>
-            <Button
-              style={{ fontSize: '0.9rem', borderRadius: '0' }}
-              onClick={() =>
+            <Popup
+              trigger={
+                <Button style={{ fontSize: '0.9rem', borderRadius: '0' }}>
+                  Añadir al carrito
+                </Button>
+              }
+              onOpen={() =>
                 this.addProduct({
                   name: `${currentContainer.category.title} ${
                     fragance.displayName
@@ -252,9 +258,9 @@ class ProductDetailPickerView extends Component {
                   price: currentContainer.price,
                 })
               }
-            >
-              Añadir al carrito
-            </Button>
+              icon={checkedImage}
+              popupText={'El producto se ha añadido al carrito.'}
+            />
           </ProductInfo>
         </ProductLayout>
         <FraganceData>
