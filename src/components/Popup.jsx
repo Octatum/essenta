@@ -54,7 +54,7 @@ const PopupContent = styled.div`
 
 function Popup({ icon, popupText, ...rest }) {
   return (
-    <ReactPopup position="center" contentStyle={contentStyle} modal {...rest}>
+    <ReactPopup contentStyle={contentStyle} modal {...rest}>
       {close => (
         <Container>
           <CloseButton onClick={close}>&times;</CloseButton>

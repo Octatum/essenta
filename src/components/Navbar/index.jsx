@@ -6,7 +6,6 @@ import NavbarLink from './NavbarLink';
 
 import logo from './assets/logo_horizontal.png';
 import { device } from '../../utilities/device';
-import throttle from './../../utilities/throttle';
 
 const NavLayout = styled.nav`
   display: flex;
