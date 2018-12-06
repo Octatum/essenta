@@ -246,7 +246,7 @@ class Checkout extends React.Component {
     const { value } = target;
     this.setState({
       cardExpiry: value,
-      cleanCardExpiry: value.replace(/[\s\/]/g, ''),
+      cleanCardExpiry: value.replace(/[\s/]/g, ''),
     });
   };
 

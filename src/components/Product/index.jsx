@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
-import styled from 'styled-components';
 import { Router } from '@reach/router';
 
 import FragancePickerView from './FragancePickerView';
 import ProductDetailPickerView from './ProductDetailPickerView';
 import Breadcrumbs from './../Breadcrumbs';
-import { device } from '../../utilities/device';
 
 class ProductPickerContainer extends Component {
   render() {

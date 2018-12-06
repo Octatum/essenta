@@ -12,11 +12,6 @@ const Layout = styled.main`
   background: ${props => props.theme.color.gray};
 `;
 
-const ImageBanner = styled.div`
-  background: ${props => props.theme.color.black};
-  height: 35rem;
-`;
-
 const TitleBanner = styled.div`
   background: ${props => props.theme.color.orange};
   padding: 2rem 0;
