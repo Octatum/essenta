@@ -166,7 +166,7 @@ class ProductDetailPickerView extends Component {
       categoryPath,
       genderFilter,
     } = props;
-    
+
     Object.keys(fragances).forEach(key => {
       const fraganceGroup = fragances[key];
 

@@ -14,6 +14,7 @@ import speiLogo from '../components/Checkout/assets/logo-spei.png';
 import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
 import Button from './../components/Button/index';
 import AppLayout from '../components/AppLayout';
+import customerValidationSchema from '../components/Checkout/customerValidation';
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
@@ -187,6 +188,11 @@ const PaymentButton = styled(Button)`
   margin: 2em 0;
 `;
 
+const ErrorSection = styled('div')`
+  background-color: ${({ theme }) => theme.background.main};
+  padding: 1em;
+`;
+
 const DeliveryInputLabel = styled.label`
   display: flex;
   flex: 1;
@@ -224,6 +230,10 @@ class Checkout extends React.Component {
     cleanCardNumber: '',
     cleanCardExpiry: '',
     inputFocus: '',
+
+    errors: [],
+
+    submitting: false,
   };
 
   handleChange = ({ target }) => {
@@ -269,8 +279,35 @@ class Checkout extends React.Component {
     });
   };
 
-  handleSubmit = () => {
-    alert('Esta opción está deshabilitada de momento');
+  handleSubmit = async () => {
+    if (!this.state.submitting) {
+      this.setState(
+        () => ({
+          submitting: true,
+          errors: []
+        }),
+        async () => {
+          try {
+            // Validar datos de entrada de cliente
+            await customerValidationSchema.validate(this.state, {
+              abortEarly: false,
+            });
+
+            const response = await fetch('http://localhost:3000/orders/test', {
+              method: "POST"
+            });
+            const jsonResponse = await response.json();
+
+            window.location.replace(jsonResponse.redirectionUrl);
+          } catch (error) {
+            // Los datos del cliente no son válidos. Mostrar errores al usuario.
+            this.setState(() => ({
+              errors: error.errors,
+            }));
+          }
+        }
+      );
+    }
   };
 
   render() {
@@ -318,9 +355,9 @@ class Checkout extends React.Component {
                 <InputLabel>
                   <LabelText>Colonia y CP</LabelText>
                   <Input
-                    value={this.state.customerAddressLin2}
+                    value={this.state.customerAddressLine2}
                     onChange={this.handleChange}
-                    name="customerAddressLin2"
+                    name="customerAddressLine2"
                   />
                 </InputLabel>
                 <InputLabel>
@@ -382,8 +419,10 @@ class Checkout extends React.Component {
                 </DeliveryInputLabel>
               </VerticalFieldset>
             </HorizontalFlex>
+            {/*
           </GraySectionWithPadding>
           <Spacer />
+          
           <GraySectionWithPadding>
             <FormContentSection>
               <SubsectionHeader>Opciones de pago</SubsectionHeader>
@@ -463,9 +502,18 @@ class Checkout extends React.Component {
                 </React.Fragment>
               }
             />
+            */}
+
             <PaymentButton onClick={this.handleSubmit} small>
               Proceder a pago
             </PaymentButton>
+            {this.state.errors.length > 0 && (
+              <ErrorSection>
+                {this.state.errors.map(error => (
+                  <Paragraph>{error}</Paragraph>
+                ))}
+              </ErrorSection>
+            )}
           </GraySectionWithPadding>
         </PageLayout>
       </AppLayout>
