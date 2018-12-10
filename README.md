@@ -1,1 +1,1 @@
-# EssentaGatsby
+# Essenta
