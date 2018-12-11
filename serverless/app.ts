@@ -86,7 +86,7 @@ router.get("/orders", orderController.allOrders);
 router.post("/orders", orderCheckSchema, orderController.createOrder);
 router.post("/orders/test", orderCheckSchema, orderController.testCreateOrder);
 router.get("/orders/update", orderController.updateOrder);
-app.use("/.netlify/functions/server", router);
+app.use("/.netlify/functions/app", router);
 
 export default app;
 
