@@ -6,8 +6,6 @@ import {
   createUniqueId,
 } from '../util/faunaClient';
 
-const COLLECTION_NAME = 'order';
-
 export type APIItem = {
   id: string;
   amount: number;

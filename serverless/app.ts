@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import expressValidator from 'express-validator';
 import { checkSchema } from 'express-validator/check';
 import serverless from 'serverless-http';
+import morgan from 'morgan';
 
 // Load environment variables from .env file, where API keys and passwords are configured
 dotenv.config();
@@ -19,12 +20,23 @@ const router = express.Router();
 
 // Express configuration
 app.set('port', process.env.PORT || 3000);
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
+app.use(morgan('short'));
+
 
 /**
  * Primary app routes.
@@ -74,16 +86,10 @@ const orderCheckSchema = checkSchema({
   },
 });
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
+router.get('/', function(req, res) {
+  console.log('/');
+  res.sendStatus(200);
 });
-
-router.get('/', (req, res) => res.sendStatus(200));
 router.get('/orders', orderController.allOrders);
 router.post('/orders', orderCheckSchema, orderController.createOrder);
 router.post('/orders/test', orderCheckSchema, orderController.testCreateOrder);
