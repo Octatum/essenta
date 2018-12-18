@@ -16,6 +16,6 @@
     }
   },
   "include": [
-    "serverless/**/*",
+    "serverless/**/*", "webpack-config/dev.webpack.functions.js", "webpack-config/webpack.functions.js",
   ]
 }

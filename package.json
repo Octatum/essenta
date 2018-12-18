@@ -74,10 +74,10 @@
     "compile": "tsc",
     "deploy": "npm run build && npm run build:lambda",
     "debug:lambda": "npx --node-arg=--inspect netlify-lambda serve functions",
-    "build:functions": "netlify-lambda build functions",
+    "build:functions": "netlify-lambda -c webpack-config/webpack.functions.js build functions",
     "build:lambda": "tsc && npm run build:functions",
-    "start:lambda": "netlify-lambda serve functions",
-    "debug:serve": "netlify-lambda -c ./webpack.functions.js serve functions",
+    "start:lambda": "netlify-lambda -c webpack-config/webpack.functions.js serve functions",
+    "debug:serve": "netlify-lambda -c webpack-config/dev.webpack.functions.js serve functions",
     "watch-ts": "tsc -w",
     "serve-debug": "nodemon --watch functions/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
