@@ -284,7 +284,7 @@ class Checkout extends React.Component {
       this.setState(
         () => ({
           submitting: true,
-          errors: []
+          errors: [],
         }),
         async () => {
           try {
@@ -294,7 +294,7 @@ class Checkout extends React.Component {
             });
 
             const response = await fetch('http://localhost:3000/orders/test', {
-              method: "POST"
+              method: 'POST',
             });
             const jsonResponse = await response.json();
 

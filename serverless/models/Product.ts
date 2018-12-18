@@ -1,5 +1,5 @@
-import { APIItem } from "./Order";
-import * as contentfulApi from "../util/contentfulApi";
+import { APIItem } from './Order';
+import * as contentfulApi from '../util/contentfulApi';
 
 export type OrderProduct = {
   containerName: string;

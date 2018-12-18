@@ -1,6 +1,12 @@
-import firebaseDb from "../util/firebaseDb";
+import {
+  getResultOfIndeces,
+  Indices,
+  Classes,
+  createInstanceForClass,
+  createUniqueId,
+} from '../util/faunaClient';
 
-const COLLECTION_NAME = "order";
+const COLLECTION_NAME = 'order';
 
 export type APIItem = {
   id: string;
@@ -25,16 +31,19 @@ type getAllOrdersFunction = () => Promise<Order[]>;
 type getOrderByIdFunction = (orderId: string) => Order;
 type createOrderFunction = (items: APIItem[], customer: any) => String;
 
-const orderCollectionRef = firebaseDb.collection(COLLECTION_NAME);
-
 export async function createOrder(items: any[], customer: any) {
   // TODO: usar customer
-  const orderRef = await orderCollectionRef.add({
-    items,
-    status: OrderStatus.waiting,
-  });
+  const orderId = await createUniqueId();
 
-  return orderRef.id;
+  const data = {
+    id: orderId,
+    products: items,
+  };
+
+  const object = await createInstanceForClass(Classes.ORDERS, data);
+  console.log(object);
+
+  return orderId;
 }
 
 export enum OrderStatus {
@@ -44,17 +53,7 @@ export enum OrderStatus {
 }
 
 export async function getAllOrders() {
-  const snapshot = await orderCollectionRef.get();
+  const result = await getResultOfIndeces(Indices.ALL_ORDERS);
 
-  const allOrders: Order[] = [];
-
-  snapshot.forEach((order: FirebaseFirestore.QueryDocumentSnapshot) => {
-    allOrders.push({
-      id: order.id,
-      items: order.data().items,
-      customer: order.data().customer,
-    });
-  });
-
-  return allOrders;
+  return result;
 }
