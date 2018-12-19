@@ -29,13 +29,14 @@ type getAllOrdersFunction = () => Promise<Order[]>;
 type getOrderByIdFunction = (orderId: string) => Order;
 type createOrderFunction = (items: APIItem[], customer: any) => String;
 
-export async function createOrder(items: any[], customer: any) {
+export async function createOrder(items: any[], customerData: any) {
   // TODO: usar customer
   const orderId = await createUniqueId();
 
   const data = {
     id: orderId,
     products: items,
+    customerData
   };
 
   const object = await createInstanceForClass(Classes.ORDERS, data);

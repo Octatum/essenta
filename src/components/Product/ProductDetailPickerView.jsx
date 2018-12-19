@@ -252,8 +252,11 @@ class ProductDetailPickerView extends Component {
                     fragance.displayName
                   }`,
                   color: currentContainer.colores[currentColor].colorName,
+                  colorId: currentContainer.colores[currentColor].contentful_id,
                   size: currentContainer.label,
+                  containerId: currentContainer.contentful_id,
                   fragance: fragance.displayName,
+                  fraganceId: fragance.contentful_id,
                   thumbnail: currentContainer.colores[currentColor].image.fluid,
                   price: currentContainer.price,
                 })

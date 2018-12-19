@@ -13,6 +13,7 @@ dotenv.config();
 
 // Controllers (route handlers)
 import * as orderController from './controllers/order';
+import logger from './util/logger';
 
 // Create Express server
 const app = express();
@@ -41,7 +42,10 @@ app.use(morgan('short'));
  * Primary app routes.
  */
 
-router.get('/', (req, res) => res.sendStatus(200));
+router.get('/', (req, res) => {
+  logger.log('info', JSON.stringify(req));
+  res.sendStatus(200);
+});
 router.get('/orders', orderController.allOrders);
 router.post(
   '/orders',

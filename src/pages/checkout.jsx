@@ -18,7 +18,7 @@ import customerValidationSchema from '../components/Checkout/customerValidation'
 import { StaticQuery, navigate } from 'gatsby';
 import { inject, observer } from 'mobx-react';
 
-const fetchUrl = 'http://localhost:3000/.netlify/functions/app/orders/test';
+const fetchUrl = 'http://localhost:3000/.netlify/functions/app/orders';
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
@@ -300,6 +300,17 @@ class Checkout extends React.Component {
   }
 
   handleSubmit = async () => {
+    const customerData = {
+      name: this.state.customerName,
+      email: this.state.customerEmail,
+      phone: this.state.customerPhone,
+      addressLine1: this.state.customerAddressLine1,
+      addressLine2: this.state.customerAddressLine2,
+      city: this.state.customerCity,
+      state: this.state.customerState,
+      country: this.state.customerCountry,
+    };
+
     if (!this.state.submitting) {
       this.setState(
         () => ({
@@ -312,17 +323,47 @@ class Checkout extends React.Component {
             await customerValidationSchema.validate(this.state, {
               abortEarly: false,
             });
+          } catch (error) {
+            // Los datos del cliente no son válidos. Mostrar errores al usuario.
+            console.log("Validation error!", error);
+            this.setState(() => ({
+              errors: error.errors,
+              submitting: false,
+            }));
+            return;
+          }
+
+          try {
+            const products = this.props.cartStore.products.map(product => ({
+              id: product.containerId,
+              fraganceId: product.fraganceId,
+              colorId: product.colorId,
+              amount: product.amount
+            }))
+            
+            const requestBody = {
+              deliveryId: this.state.delivery,
+              products,
+              customerData
+            };
+            const JSONBody = JSON.stringify(requestBody);
+            console.log("Fetching response", JSONBody);
 
             const response = await fetch(fetchUrl, {
               method: 'POST',
+              body: JSONBody,
+              headers: {
+                'Content-Type': 'application/json'
+              }
             });
             const jsonResponse = await response.json();
-
-            window.location.replace(jsonResponse.redirectionUrl);
-          } catch (error) {
-            // Los datos del cliente no son válidos. Mostrar errores al usuario.
+            console.log(jsonResponse);
+            // window.location.replace(jsonResponse.redirectionUrl);
+          } catch(error) {
+            console.error(error);
+          } finally {
             this.setState(() => ({
-              errors: error.errors,
+              submitting: false,
             }));
           }
         }

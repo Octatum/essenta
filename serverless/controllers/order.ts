@@ -7,6 +7,7 @@ import { Buffer } from 'buffer';
 
 import * as OrderModel from '../models/Order';
 import * as ProductModel from '../models/Product';
+import * as DeliveryModel from '../models/Delivery';
 import logger from '../util/logger';
 import { createUniqueId } from '../util/faunaClient';
 
@@ -23,7 +24,17 @@ export async function allOrders(req: Request, res: Response): Promise<any> {
 }
 
 export const orderValidationSchema = checkSchema({
-  items: {
+  deliveryId: {
+    in: ['body'],
+    errorMessage: 'Es necesario elegir el tipo de envío.',
+    optional: false,
+  },
+  customerData: {
+    in: ['body'],
+    errorMessage: 'Los datos del cliente son requeridos.',
+    optional: false,
+  },
+  products: {
     in: ['body'],
     isLength: {
       errorMessage: 'El carrito debe contener al menos un objeto',
@@ -31,7 +42,7 @@ export const orderValidationSchema = checkSchema({
     },
     optional: false,
   },
-  'items.*.id': {
+  'products.*.id': {
     in: ['body'],
     errorMessage: 'Cada producto debe contener un identificador.',
     isString: {
@@ -39,7 +50,7 @@ export const orderValidationSchema = checkSchema({
     },
     optional: false,
   },
-  'items.*.colorId': {
+  'products.*.colorId': {
     in: ['body'],
     errorMessage: 'Cada producto debe contener un identificador de color.',
     isString: {
@@ -47,7 +58,7 @@ export const orderValidationSchema = checkSchema({
     },
     optional: false,
   },
-  'items.*.fraganceId': {
+  'products.*.fraganceId': {
     in: ['body'],
     errorMessage: 'Cada producto debe contener un identificador de fragancia.',
     isString: {
@@ -55,7 +66,7 @@ export const orderValidationSchema = checkSchema({
     },
     optional: false,
   },
-  'items.*.amount': {
+  'products.*.amount': {
     in: ['body'],
     errorMessage: 'Cada producto debe contener una cantidad.',
     isInt: {
@@ -70,23 +81,25 @@ export async function createOrder(req: Request, res: Response): Promise<any> {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    logger.log('info', 'Wrong order data structure');
+    logger.log('info', 'Wrong data structure for a new Order');
     return res.status(422).json({ errors: errors.array() });
   }
 
   logger.log('info', 'Creating order');
 
-  const { items, customer } = req.body;
+  const { products, customerData, deliveryId } = req.body;
 
   try {
-    const orderId: any = await OrderModel.createOrder(items, customer);
+    const orderId: any = await OrderModel.createOrder(products, customerData);
     const orderItems: any[] = await Promise.all(
-      items.map((item: OrderModel.APIItem) => ProductModel.getProduct(item))
+      products.map((product: OrderModel.APIItem) => ProductModel.getProduct(product))
     );
-    const totalCost: Number = orderItems.reduce(
+    const deliveryData: any = await DeliveryModel.getDeliveryData(deliveryId);
+    const itemsTotalCost: Number = orderItems.reduce(
       (accum, current) => current.price * current.amount + accum,
       0
     );
+    const totalCost = deliveryData.price + itemsTotalCost;
     const redirectionUrl: String = await getRedirectionUrl(orderId, totalCost);
     res.json({ orderId, redirectionUrl });
   } catch (exception) {
@@ -107,10 +120,10 @@ async function getRedirectionUrl(orderId: String, totalCost: Number) {
   formData.append('AMOUNT', totalCost.toString());
   formData.append('ADDRESS', ip.address());
 
+  // Preparar datos de autenticacion
   const base64AuthData: string = Buffer.from(
     `${username}:${password}`
   ).toString('base64');
-
   headers.append('AUTHORIZATION', `Basic ${base64AuthData}`);
 
   const response = await fetch(hostUrl, {
@@ -129,6 +142,8 @@ async function getRedirectionUrl(orderId: String, totalCost: Number) {
 }
 
 export async function test(req: Request, res: Response): Promise<any> {
+  logger.log('info', JSON.stringify(req));
+
   try {
     const totalCost: Number = 1;
     const objectId = await createUniqueId();
