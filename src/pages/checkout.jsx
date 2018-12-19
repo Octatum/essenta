@@ -18,7 +18,7 @@ import customerValidationSchema from '../components/Checkout/customerValidation'
 import { StaticQuery, navigate, graphql } from 'gatsby';
 import { inject, observer } from 'mobx-react';
 
-const fetchUrl = process.env.BACK_ORDER_URL;
+const fetchUrl = process.env.GATSBY_BACK_ORDER_URL;
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
