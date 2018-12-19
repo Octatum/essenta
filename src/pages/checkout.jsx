@@ -15,6 +15,10 @@ import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
 import Button from './../components/Button/index';
 import AppLayout from '../components/AppLayout';
 import customerValidationSchema from '../components/Checkout/customerValidation';
+import { StaticQuery, navigate } from 'gatsby';
+import { inject, observer } from 'mobx-react';
+
+const fetchUrl = 'http://localhost:3000/.netlify/functions/app/orders/test';
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
@@ -210,31 +214,41 @@ const DeliveryInputText = styled.div`
 `;
 
 class Checkout extends React.Component {
-  state = {
-    customerName: '',
-    customerEmail: '',
-    customerPhone: '',
-    customerAddressLine1: '',
-    customerAddressLine2: '',
-    customerCity: '',
-    customerState: '',
-    customerCountry: '',
+  constructor(props) {
+    super(props);
 
-    delivery: '',
+    const deliveryOptions = this.props.data.allContentfulOpcionDeEnvio.edges.map(
+      ({ node }) => ({ ...node })
+    );
+    const defaultOption =
+      deliveryOptions.find(o => o.default) || deliveryOptions[0];
 
-    paymentMethod: 'CARD',
-    cardNumber: '',
-    cardName: '',
-    cardExpiry: '',
-    cardCvc: '',
-    cleanCardNumber: '',
-    cleanCardExpiry: '',
-    inputFocus: '',
+    this.state = {
+      customerName: '',
+      customerEmail: '',
+      customerPhone: '',
+      customerAddressLine1: '',
+      customerAddressLine2: '',
+      customerCity: '',
+      customerState: '',
+      customerCountry: '',
 
-    errors: [],
+      delivery: defaultOption.contentful_id,
 
-    submitting: false,
-  };
+      paymentMethod: 'CARD',
+      cardNumber: '',
+      cardName: '',
+      cardExpiry: '',
+      cardCvc: '',
+      cleanCardNumber: '',
+      cleanCardExpiry: '',
+      inputFocus: '',
+
+      errors: [],
+
+      submitting: false,
+    };
+  }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
@@ -279,6 +293,12 @@ class Checkout extends React.Component {
     });
   };
 
+  componentDidMount() {
+    if (this.props.cartStore.products.length === 0) {
+      navigate('/carrito');
+    }
+  }
+
   handleSubmit = async () => {
     if (!this.state.submitting) {
       this.setState(
@@ -293,7 +313,7 @@ class Checkout extends React.Component {
               abortEarly: false,
             });
 
-            const response = await fetch('http://localhost:3000/orders/test', {
+            const response = await fetch(fetchUrl, {
               method: 'POST',
             });
             const jsonResponse = await response.json();
@@ -311,6 +331,10 @@ class Checkout extends React.Component {
   };
 
   render() {
+    const deliveryOptions = this.props.data.allContentfulOpcionDeEnvio.edges.map(
+      ({ node }) => ({ ...node })
+    );
+
     return (
       <AppLayout>
         <PageLayout fluid>
@@ -395,28 +419,24 @@ class Checkout extends React.Component {
                 <Paragraph>Selecciona tu método de envío.</Paragraph>
               </VerticalFlex>
               <VerticalFieldset>
-                <DeliveryInputLabel>
-                  <input
-                    type="radio"
-                    name="delivery"
-                    value="2-5 dias"
-                    checked={this.state.delivery === '2-5 dias'}
-                    onChange={this.handleChange}
-                  />
-                  <DeliveryInputText>
-                    2 a 5 días hábiles (gratis)
-                  </DeliveryInputText>
-                </DeliveryInputLabel>
-                <DeliveryInputLabel>
-                  <input
-                    type="radio"
-                    name="delivery"
-                    value="dia siguiente"
-                    checked={this.state.delivery === 'dia siguiente'}
-                    onChange={this.handleChange}
-                  />
-                  <DeliveryInputText>Día siguiente ($50.00)</DeliveryInputText>
-                </DeliveryInputLabel>
+                {deliveryOptions.map(option => (
+                  <DeliveryInputLabel key={option.contentful_id}>
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value={option.contentful_id}
+                      checked={this.state.delivery === option.contentful_id}
+                      onChange={this.handleChange}
+                    />
+                    <DeliveryInputText>
+                      {option.name} (
+                      {option.price === 0
+                        ? 'gratis'
+                        : `$${parseFloat(option.price).toFixed(2)}`}
+                      )
+                    </DeliveryInputText>
+                  </DeliveryInputLabel>
+                ))}
               </VerticalFieldset>
             </HorizontalFlex>
             {/*
@@ -521,4 +541,24 @@ class Checkout extends React.Component {
   }
 }
 
-export default Checkout;
+const ComponentWithData = props => (
+  <StaticQuery
+    query={graphql`
+      {
+        allContentfulOpcionDeEnvio {
+          edges {
+            node {
+              contentful_id
+              name
+              price
+              default
+            }
+          }
+        }
+      }
+    `}
+    render={data => <Checkout {...props} data={data} />}
+  />
+);
+
+export default inject('cartStore')(observer(ComponentWithData));

@@ -166,7 +166,7 @@ class Navbar extends React.Component {
     const { urls } = this.props;
 
     return (
-      <NavLayout>
+      <React.Fragment>
         <LogoSection>
           <LogoLink to="/">
             <Img src={logo} alt="logo" />
@@ -216,7 +216,7 @@ class Navbar extends React.Component {
           </ShopLinksSection>
         </NavlinksSection>
         <Spacer />
-      </NavLayout>
+      </React.Fragment>
     );
   }
 }
