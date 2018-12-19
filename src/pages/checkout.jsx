@@ -15,10 +15,10 @@ import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
 import Button from './../components/Button/index';
 import AppLayout from '../components/AppLayout';
 import customerValidationSchema from '../components/Checkout/customerValidation';
-import { StaticQuery, navigate } from 'gatsby';
+import { StaticQuery, navigate, graphql } from 'gatsby';
 import { inject, observer } from 'mobx-react';
 
-const fetchUrl = 'http://localhost:3000/.netlify/functions/app/orders';
+const fetchUrl = process.env.BACK_ORDER_URL;
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
