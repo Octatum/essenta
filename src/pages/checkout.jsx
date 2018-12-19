@@ -310,6 +310,7 @@ class Checkout extends React.Component {
       state: this.state.customerState,
       country: this.state.customerCountry,
     };
+    console.log(fetchUrl);
 
     if (!this.state.submitting) {
       this.setState(
@@ -325,7 +326,7 @@ class Checkout extends React.Component {
             });
           } catch (error) {
             // Los datos del cliente no son válidos. Mostrar errores al usuario.
-            console.log("Validation error!", error);
+            console.log('Validation error!', error);
             this.setState(() => ({
               errors: error.errors,
               submitting: false,
@@ -338,28 +339,28 @@ class Checkout extends React.Component {
               id: product.containerId,
               fraganceId: product.fraganceId,
               colorId: product.colorId,
-              amount: product.amount
-            }))
-            
+              amount: product.amount,
+            }));
+
             const requestBody = {
               deliveryId: this.state.delivery,
               products,
-              customerData
+              customerData,
             };
             const JSONBody = JSON.stringify(requestBody);
-            console.log("Fetching response", JSONBody);
+            console.log('Fetching response', JSONBody);
 
             const response = await fetch(fetchUrl, {
               method: 'POST',
               body: JSONBody,
               headers: {
-                'Content-Type': 'application/json'
-              }
+                'Content-Type': 'application/json',
+              },
             });
             const jsonResponse = await response.json();
             console.log(jsonResponse);
             // window.location.replace(jsonResponse.redirectionUrl);
-          } catch(error) {
+          } catch (error) {
             console.error(error);
           } finally {
             this.setState(() => ({

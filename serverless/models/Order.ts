@@ -4,6 +4,8 @@ import {
   Classes,
   createInstanceForClass,
   createUniqueId,
+  runIndex,
+  updateFromRef,
 } from '../util/faunaClient';
 
 export type APIItem = {
@@ -30,19 +32,25 @@ type getOrderByIdFunction = (orderId: string) => Order;
 type createOrderFunction = (items: APIItem[], customer: any) => String;
 
 export async function createOrder(items: any[], customerData: any) {
-  // TODO: usar customer
   const orderId = await createUniqueId();
 
   const data = {
     id: orderId,
     products: items,
-    customerData
+    customerData,
+    status: OrderStatus.waiting,
   };
 
-  const object = await createInstanceForClass(Classes.ORDERS, data);
-  console.log(object);
+  await createInstanceForClass(Classes.ORDERS, { data });
 
   return orderId;
+}
+
+export async function updateOrderStatus(orderId: string, status: OrderStatus) {
+  const orderRef = await runIndex(Indices.ORDER_BY_ID, orderId);
+  await updateFromRef(orderRef, {
+    status,
+  });
 }
 
 export enum OrderStatus {

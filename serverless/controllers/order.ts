@@ -92,7 +92,9 @@ export async function createOrder(req: Request, res: Response): Promise<any> {
   try {
     const orderId: any = await OrderModel.createOrder(products, customerData);
     const orderItems: any[] = await Promise.all(
-      products.map((product: OrderModel.APIItem) => ProductModel.getProduct(product))
+      products.map((product: OrderModel.APIItem) =>
+        ProductModel.getProduct(product)
+      )
     );
     const deliveryData: any = await DeliveryModel.getDeliveryData(deliveryId);
     const itemsTotalCost: Number = orderItems.reduce(
@@ -163,7 +165,42 @@ export async function test(req: Request, res: Response): Promise<any> {
   }
 }
 
+async function validateTransaction(idTran: string, lnk: string) {
+  const formData = new FormData();
+  const headers = new Headers();
+  const username = process.env.TP_USER;
+  const password = process.env.TP_PASS;
+  const hostUrl = process.env.TP_URL;
+
+  // Preparar datos y hacer encode como Form (necesario para TP)
+  formData.append('CONTROL_NUMBER', idTran);
+  formData.append('REFERENCE', lnk);
+
+  // Preparar datos de autenticacion
+  const base64AuthData: string = Buffer.from(
+    `${username}:${password}`
+  ).toString('base64');
+  headers.append('AUTHORIZATION', `Basic ${base64AuthData}`);
+
+  const response = await fetch(hostUrl, {
+    method: 'POST',
+    body: formData,
+    headers,
+  });
+
+  const jsonResponse = await response.json();
+
+  return jsonResponse;
+}
+
 export async function updateOrder(req: Request, res: Response) {
-  logger.log('info', 'Updating order:', req);
+  const { idTran, lnk } = req.query;
+  const validationResponse = await validateTransaction(idTran, lnk);
+  console.log(validationResponse);
+
+  if (validationResponse.status === 'Aprobada') {
+    OrderModel.updateOrderStatus(idTran, OrderModel.OrderStatus.approved);
+  }
+
   res.sendStatus(200);
 }
