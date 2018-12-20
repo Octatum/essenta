@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import GatsbyImg from 'gatsby-image';
-import { navigate, Link } from '@reach/router';
+import { Link } from '@reach/router';
 
 import { device } from '../../utilities/device';
 import { Select } from '../Input';

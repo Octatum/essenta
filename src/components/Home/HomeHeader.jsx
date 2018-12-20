@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { device } from '../../utilities/device';
-import { withHeaderUnderline } from '../PageHeader';
 
 const HomeHeader = styled.div`
   font-family: ${props => props.theme.fonts.secondary};

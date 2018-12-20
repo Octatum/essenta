@@ -14,6 +14,11 @@ import speiLogo from '../components/Checkout/assets/logo-spei.png';
 import oxxoLogo from '../components/Checkout/assets/logo-oxxo.png';
 import Button from './../components/Button/index';
 import AppLayout from '../components/AppLayout';
+import customerValidationSchema from '../components/Checkout/customerValidation';
+import { StaticQuery, navigate, graphql } from 'gatsby';
+import { inject, observer } from 'mobx-react';
+
+const fetchUrl = process.env.GATSBY_BACK_ORDER_URL;
 
 const GraySection = styled.section`
   background: ${({ theme }) => theme.color.darkGray};
@@ -187,6 +192,11 @@ const PaymentButton = styled(Button)`
   margin: 2em 0;
 `;
 
+const ErrorSection = styled('div')`
+  background-color: ${({ theme }) => theme.background.main};
+  padding: 1em;
+`;
+
 const DeliveryInputLabel = styled.label`
   display: flex;
   flex: 1;
@@ -204,27 +214,41 @@ const DeliveryInputText = styled.div`
 `;
 
 class Checkout extends React.Component {
-  state = {
-    customerName: '',
-    customerEmail: '',
-    customerPhone: '',
-    customerAddressLine1: '',
-    customerAddressLine2: '',
-    customerCity: '',
-    customerState: '',
-    customerCountry: '',
+  constructor(props) {
+    super(props);
 
-    delivery: '',
+    const deliveryOptions = this.props.data.allContentfulOpcionDeEnvio.edges.map(
+      ({ node }) => ({ ...node })
+    );
+    const defaultOption =
+      deliveryOptions.find(o => o.default) || deliveryOptions[0];
 
-    paymentMethod: 'CARD',
-    cardNumber: '',
-    cardName: '',
-    cardExpiry: '',
-    cardCvc: '',
-    cleanCardNumber: '',
-    cleanCardExpiry: '',
-    inputFocus: '',
-  };
+    this.state = {
+      customerName: '',
+      customerEmail: '',
+      customerPhone: '',
+      customerAddressLine1: '',
+      customerAddressLine2: '',
+      customerCity: '',
+      customerState: '',
+      customerCountry: '',
+
+      delivery: defaultOption.contentful_id,
+
+      paymentMethod: 'CARD',
+      cardNumber: '',
+      cardName: '',
+      cardExpiry: '',
+      cardCvc: '',
+      cleanCardNumber: '',
+      cleanCardExpiry: '',
+      inputFocus: '',
+
+      errors: [],
+
+      submitting: false,
+    };
+  }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
@@ -246,7 +270,7 @@ class Checkout extends React.Component {
     const { value } = target;
     this.setState({
       cardExpiry: value,
-      cleanCardExpiry: value.replace(/[\s\/]/g, ''),
+      cleanCardExpiry: value.replace(/[\s/]/g, ''),
     });
   };
 
@@ -269,11 +293,89 @@ class Checkout extends React.Component {
     });
   };
 
-  handleSubmit = () => {
-    alert('Esta opción está deshabilitada de momento');
+  componentDidMount() {
+    if (this.props.cartStore.products.length === 0) {
+      navigate('/carrito');
+    }
+  }
+
+  handleSubmit = async () => {
+    const customerData = {
+      name: this.state.customerName,
+      email: this.state.customerEmail,
+      phone: this.state.customerPhone,
+      addressLine1: this.state.customerAddressLine1,
+      addressLine2: this.state.customerAddressLine2,
+      city: this.state.customerCity,
+      state: this.state.customerState,
+      country: this.state.customerCountry,
+    };
+    console.log(fetchUrl);
+
+    if (!this.state.submitting) {
+      this.setState(
+        () => ({
+          submitting: true,
+          errors: [],
+        }),
+        async () => {
+          try {
+            // Validar datos de entrada de cliente
+            await customerValidationSchema.validate(this.state, {
+              abortEarly: false,
+            });
+          } catch (error) {
+            // Los datos del cliente no son válidos. Mostrar errores al usuario.
+            console.log('Validation error!', error);
+            this.setState(() => ({
+              errors: error.errors,
+              submitting: false,
+            }));
+            return;
+          }
+
+          try {
+            const products = this.props.cartStore.products.map(product => ({
+              id: product.containerId,
+              fraganceId: product.fraganceId,
+              colorId: product.colorId,
+              amount: product.amount,
+            }));
+
+            const requestBody = {
+              deliveryId: this.state.delivery,
+              products,
+              customerData,
+            };
+            const JSONBody = JSON.stringify(requestBody);
+            console.log('Fetching response', JSONBody);
+
+            const response = await fetch(fetchUrl, {
+              method: 'POST',
+              body: JSONBody,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            const jsonResponse = await response.json();
+            window.location.replace(jsonResponse.redirectionUrl);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            this.setState(() => ({
+              submitting: false,
+            }));
+          }
+        }
+      );
+    }
   };
 
   render() {
+    const deliveryOptions = this.props.data.allContentfulOpcionDeEnvio.edges.map(
+      ({ node }) => ({ ...node })
+    );
+
     return (
       <AppLayout>
         <PageLayout fluid>
@@ -318,9 +420,9 @@ class Checkout extends React.Component {
                 <InputLabel>
                   <LabelText>Colonia y CP</LabelText>
                   <Input
-                    value={this.state.customerAddressLin2}
+                    value={this.state.customerAddressLine2}
                     onChange={this.handleChange}
-                    name="customerAddressLin2"
+                    name="customerAddressLine2"
                   />
                 </InputLabel>
                 <InputLabel>
@@ -358,32 +460,30 @@ class Checkout extends React.Component {
                 <Paragraph>Selecciona tu método de envío.</Paragraph>
               </VerticalFlex>
               <VerticalFieldset>
-                <DeliveryInputLabel>
-                  <input
-                    type="radio"
-                    name="delivery"
-                    value="2-5 dias"
-                    checked={this.state.delivery === '2-5 dias'}
-                    onChange={this.handleChange}
-                  />
-                  <DeliveryInputText>
-                    2 a 5 días hábiles (gratis)
-                  </DeliveryInputText>
-                </DeliveryInputLabel>
-                <DeliveryInputLabel>
-                  <input
-                    type="radio"
-                    name="delivery"
-                    value="dia siguiente"
-                    checked={this.state.delivery === 'dia siguiente'}
-                    onChange={this.handleChange}
-                  />
-                  <DeliveryInputText>Día siguiente ($50.00)</DeliveryInputText>
-                </DeliveryInputLabel>
+                {deliveryOptions.map(option => (
+                  <DeliveryInputLabel key={option.contentful_id}>
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value={option.contentful_id}
+                      checked={this.state.delivery === option.contentful_id}
+                      onChange={this.handleChange}
+                    />
+                    <DeliveryInputText>
+                      {option.name} (
+                      {option.price === 0
+                        ? 'gratis'
+                        : `$${parseFloat(option.price).toFixed(2)}`}
+                      )
+                    </DeliveryInputText>
+                  </DeliveryInputLabel>
+                ))}
               </VerticalFieldset>
             </HorizontalFlex>
+            {/*
           </GraySectionWithPadding>
           <Spacer />
+          
           <GraySectionWithPadding>
             <FormContentSection>
               <SubsectionHeader>Opciones de pago</SubsectionHeader>
@@ -463,9 +563,18 @@ class Checkout extends React.Component {
                 </React.Fragment>
               }
             />
+            */}
+
             <PaymentButton onClick={this.handleSubmit} small>
               Proceder a pago
             </PaymentButton>
+            {this.state.errors.length > 0 && (
+              <ErrorSection>
+                {this.state.errors.map(error => (
+                  <Paragraph>{error}</Paragraph>
+                ))}
+              </ErrorSection>
+            )}
           </GraySectionWithPadding>
         </PageLayout>
       </AppLayout>
@@ -473,4 +582,24 @@ class Checkout extends React.Component {
   }
 }
 
-export default Checkout;
+const ComponentWithData = props => (
+  <StaticQuery
+    query={graphql`
+      {
+        allContentfulOpcionDeEnvio {
+          edges {
+            node {
+              contentful_id
+              name
+              price
+              default
+            }
+          }
+        }
+      }
+    `}
+    render={data => <Checkout {...props} data={data} />}
+  />
+);
+
+export default inject('cartStore')(observer(ComponentWithData));

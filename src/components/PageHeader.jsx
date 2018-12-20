@@ -25,8 +25,6 @@ const StyledPageHeader = styled.h1`
   }
 `;
 
-const UnderlinedPageHeader = withUnderline(StyledPageHeader);
-
 const UnderlinedSection = withUnderline(styled.div`
   width: ${({ full }) => full && '100%'};
 `);

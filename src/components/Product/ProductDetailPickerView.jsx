@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import GatsbyImg from 'gatsby-image';
-import ReactPopup from 'reactjs-popup';
 
 import { Select } from '../Input';
 import Button from '../Button/index';
@@ -167,7 +166,8 @@ class ProductDetailPickerView extends Component {
       categoryPath,
       genderFilter,
     } = props;
-    Object.keys(fragances).map(key => {
+
+    Object.keys(fragances).forEach(key => {
       const fraganceGroup = fragances[key];
 
       fraganceGroup.forEach(fragance => {
@@ -252,8 +252,11 @@ class ProductDetailPickerView extends Component {
                     fragance.displayName
                   }`,
                   color: currentContainer.colores[currentColor].colorName,
+                  colorId: currentContainer.colores[currentColor].contentful_id,
                   size: currentContainer.label,
+                  containerId: currentContainer.contentful_id,
                   fragance: fragance.displayName,
+                  fraganceId: fragance.contentful_id,
                   thumbnail: currentContainer.colores[currentColor].image.fluid,
                   price: currentContainer.price,
                 })

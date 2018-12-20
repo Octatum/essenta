@@ -50,6 +50,7 @@ export const pageQuery = graphql`
         node {
           id
           label
+          contentful_id
           gender
           price: sizePrice
           category {
@@ -58,6 +59,7 @@ export const pageQuery = graphql`
           }
           colores {
             id
+            contentful_id
             colorName
             image {
               fluid {
@@ -76,6 +78,7 @@ export const pageQuery = graphql`
           displayName
           objectiveGender
           family
+          contentful_id
           image {
             fluid {
               ...GatsbyContentfulFluid

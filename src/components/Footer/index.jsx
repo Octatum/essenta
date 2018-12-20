@@ -118,15 +118,6 @@ const About = InformationSection.extend`
   grid-area: about;
 `;
 
-const HowToBuy = InformationSection.extend`
-  grid-area: how-to-buy;
-  justify-self: center;
-
-  ${device.tablet} {
-    jusify-self: flex-start;
-  }
-`;
-
 const Policy = InformationSection.extend`
   grid-area: policy;
 

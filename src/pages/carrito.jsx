@@ -99,29 +99,35 @@ function Carrito({ cartStore }) {
       <Layout>
         <ProductsLayout>
           <CustomPageHeader>Carrito</CustomPageHeader>
-          <ProductList products={cartStore.products} />
-          <ProductSubtotal>
-            <ProductSubtotalHeader>Subtotal</ProductSubtotalHeader>
-            <ProductSubtotalPrice>
-              ${cartStore.total}
-              .00
-            </ProductSubtotalPrice>
-          </ProductSubtotal>
+          {cartStore.products.length !== 0 && (
+            <React.Fragment>
+              <ProductList products={cartStore.products} />
+              <ProductSubtotal>
+                <ProductSubtotalHeader>Subtotal</ProductSubtotalHeader>
+                <ProductSubtotalPrice>
+                  ${cartStore.total}
+                  .00
+                </ProductSubtotalPrice>
+              </ProductSubtotal>
+            </React.Fragment>
+          )}
         </ProductsLayout>
         <CheckoutLayout>
-          <Subtotal>
-            <ProductSubtotalHeader>Subtotal</ProductSubtotalHeader>
-            <ProductSubtotalPrice>
-              ${cartStore.total}
-              .00
-            </ProductSubtotalPrice>
-            <LinkButton
-              style={{ fontSize: '1.1rem', borderRadius: '0' }}
-              to="/checkout"
-            >
-              Proceder a pago
-            </LinkButton>
-          </Subtotal>
+          {cartStore.products.length !== 0 && (
+            <Subtotal>
+              <ProductSubtotalHeader>Subtotal</ProductSubtotalHeader>
+              <ProductSubtotalPrice>
+                ${cartStore.total}
+                .00
+              </ProductSubtotalPrice>
+              <LinkButton
+                style={{ fontSize: '1.1rem', borderRadius: '0' }}
+                to="/checkout"
+              >
+                Proceder a pago
+              </LinkButton>
+            </Subtotal>
+          )}
         </CheckoutLayout>
       </Layout>
     </AppLayout>
