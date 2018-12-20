@@ -358,8 +358,7 @@ class Checkout extends React.Component {
               },
             });
             const jsonResponse = await response.json();
-            console.log(jsonResponse);
-            // window.location.replace(jsonResponse.redirectionUrl);
+            window.location.replace(jsonResponse.redirectionUrl);
           } catch (error) {
             console.error(error);
           } finally {

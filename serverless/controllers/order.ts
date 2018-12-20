@@ -194,6 +194,8 @@ async function validateTransaction(idTran: string, lnk: string) {
 }
 
 export async function updateOrder(req: Request, res: Response) {
+  console.log('Updating order');
+  console.log(req);
   const { idTran, lnk } = req.query;
   const validationResponse = await validateTransaction(idTran, lnk);
   console.log(validationResponse);
