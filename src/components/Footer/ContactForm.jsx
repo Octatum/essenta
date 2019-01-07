@@ -94,6 +94,7 @@ class ContactForm extends React.Component {
   render() {
     return (
       <Form
+        name="contacto"
         onSubmit={this.handleSubmit}
         data-netlify="true"
         data-netlify-honeypot="bot-field"
