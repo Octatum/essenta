@@ -140,7 +140,7 @@ class NewsForm extends React.Component {
         <ContactInfo>
           <CallUs>
             <Bold>LLÁMANOS:</Bold>
-            &nbsp;&nbsp;55-1000-2866
+            &nbsp;&nbsp;(+52) 1 811-487-3404
           </CallUs>
           <SocialButtons>
             <SocialButton target="_blank" href="https://facebook.com/essentamx">

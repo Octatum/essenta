@@ -68,14 +68,13 @@ class ContactForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const { modalOpen: _, ...state } = this.state;
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({
         'form-name': 'contacto',
-        email: this.state.email,
-        name: this.state.name,
-        message: this.state.message,
+        ...state
       }),
     })
       .then(() => {
