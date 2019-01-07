@@ -74,8 +74,8 @@ class ContactForm extends React.Component {
       body: encode({
         'form-name': 'contacto',
         email: this.state.email,
-        nombre: this.state.name,
-        mensaje: this.state.message,
+        name: this.state.name,
+        message: this.state.message,
       }),
     })
       .then(() => {
