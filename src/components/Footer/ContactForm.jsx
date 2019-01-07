@@ -68,6 +68,7 @@ class ContactForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    console.log(this.state);
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -118,8 +119,8 @@ class ContactForm extends React.Component {
           <TextLabel>Correo</TextLabel>
           <TextInput
             disabled={this.state.formSubmitted}
-            name="message"
-            value={this.state.message}
+            name="email"
+            value={this.state.email}
             onChange={this.handleChange}
           />
         </Label>
@@ -127,8 +128,8 @@ class ContactForm extends React.Component {
           <TextLabel>Mensaje</TextLabel>
           <TextArea
             disabled={this.state.formSubmitted}
-            name="email"
-            value={this.state.email}
+            name="message"
+            value={this.state.message}
             onChange={this.handleChange}
           />
         </Label>
