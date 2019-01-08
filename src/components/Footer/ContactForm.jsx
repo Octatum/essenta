@@ -5,6 +5,7 @@ import { TextInput } from './../Input/index';
 import Button from './../Button/index';
 import Popup from '../Popup';
 import iconAsset from './assets/send.svg';
+import encode from '../../utilities/encode';
 
 const Form = styled.form`
   display: flex;
@@ -67,20 +68,42 @@ class ContactForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState(
-      {
-        ...this.initialValues,
-        formSubmitted: true,
-      },
-      () => {
+    const { modalOpen: _, ...state } = this.state;
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({
+        'form-name': 'contacto',
+        ...state,
+      }),
+    })
+      .then(() => {
+        this.setState({
+          ...this.initialValues,
+          formSubmitted: true,
+        });
+
         this.openModal();
-      }
-    );
+      })
+      .catch(error => {
+        this.formError = error;
+      });
   };
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form
+        name="contacto"
+        onSubmit={this.handleSubmit}
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+      >
+        <p hidden>
+          <label>
+            Don’t fill this out:{' '}
+            <input name="bot-field" onChange={this.handleChange} />
+          </label>
+        </p>
         <Label>
           <TextLabel>Nombre</TextLabel>
           <TextInput
@@ -94,8 +117,8 @@ class ContactForm extends React.Component {
           <TextLabel>Correo</TextLabel>
           <TextInput
             disabled={this.state.formSubmitted}
-            name="message"
-            value={this.state.message}
+            name="email"
+            value={this.state.email}
             onChange={this.handleChange}
           />
         </Label>
@@ -103,8 +126,8 @@ class ContactForm extends React.Component {
           <TextLabel>Mensaje</TextLabel>
           <TextArea
             disabled={this.state.formSubmitted}
-            name="email"
-            value={this.state.email}
+            name="message"
+            value={this.state.message}
             onChange={this.handleChange}
           />
         </Label>

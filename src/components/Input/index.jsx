@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const TextInput = styled.input.attrs({
-  style: ({ style }) => ({ ...style }),
-})`
+export const withInputStyle = component => styled(component)`
   background: rgba(255, 255, 255, 0);
   border: 1px solid ${props => props.theme.color.black};
   color: ${props => props.theme.color.black};
@@ -19,9 +17,9 @@ export const TextInput = styled.input.attrs({
   }
 `;
 
-export const Select = styled.select.attrs({
-  style: ({ style }) => ({ ...style }),
-})`
+export const TextInput = withInputStyle('input');
+
+export const withSelectStyle = component => styled(component)`
   background: ${props =>
     props.orange ? props.theme.color.orange : 'transparent'};
   border: 1px solid ${props => props.theme.color.black};
@@ -31,8 +29,15 @@ export const Select = styled.select.attrs({
   transition: 0.3s ease background-color;
   margin-right: 1em;
 
+  & > option {
+    font-size: 1.1em;
+    font-weight: inherit;
+  }
+
   :focus {
     background: ${props =>
       props.orange ? props.theme.color.darkOrange : 'white'};
   }
 `;
+
+export const Select = withSelectStyle('select');

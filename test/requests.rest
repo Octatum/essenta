@@ -1,5 +1,3 @@
-GET http://localhost:3000/orders
-
 GET http://localhost:3000/.netlify/functions/app/orders/update?idTran=abcde&lnk=1234
 
 POST http://localhost:3000/.netlify/functions/app/orders HTTP/1.1

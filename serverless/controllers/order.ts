@@ -144,8 +144,6 @@ async function getRedirectionUrl(orderId: String, totalCost: Number) {
 }
 
 export async function test(req: Request, res: Response): Promise<any> {
-  logger.log('info', JSON.stringify(req));
-
   try {
     const totalCost: Number = 1;
     const objectId = await createUniqueId();
@@ -158,6 +156,7 @@ export async function test(req: Request, res: Response): Promise<any> {
       })
     );
     const redirectionUrl: String = await getRedirectionUrl(orderId, totalCost);
+    console.log(redirectionUrl);
     res.json({ orderId, redirectionUrl });
   } catch (exception) {
     logger.log('error', exception);
