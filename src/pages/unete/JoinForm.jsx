@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import _DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -18,6 +18,9 @@ import {
   GenericLabelInput,
 } from '../../components/LabelInput';
 import validationSchema from '../../components/Unete/validationSchema';
+import Popup from '../../components/Popup';
+import sendingIcon from '../../components/assets/send.svg';
+import sentIcon from '../../components/assets/checked.svg';
 
 const Layout = styled.div`
   display: flex;
@@ -98,88 +101,99 @@ function getInitialVaules() {
   return { ...values };
 }
 
-class JoinForm extends React.Component {
-  handleBirthdateChange = date => {
-    this.setState({ nacimiento: date });
-  };
-  render() {
-    return (
-      <Layout>
-        <Formik
-          initialValues={getInitialVaules()}
-          validationSchema={validationSchema}
-          onSubmit={async (values, actions) => {
-            const { verificacion, ...formValues } = values;
-            try {
-              const response = await fetch('/', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: encode({
-                  'form-name': 'unete',
-                  ...formValues,
-                }),
-              });
-            } catch (exception) {
-            } finally {
-              actions.setSubmitting(false);
-            }
-          }}
-          render={props => (
-            <FormBlock
-              name="unete"
-              onSubmit={props.handleSubmit}
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-            >
-              <FormikLabelInput text="Nombre(s)" name="nombre" />
-              <FormikLabelInput text="Apellidos" name="apellido" />
-              <GenericLabelInput
-                text="Fecha de nacimiento"
-                name="nacimiento"
-                InputComponent={p => (
-                  <Field
-                    render={({ field }) => (
-                      <DatePicker
-                        selected={props.values[field.name]}
-                        onChange={date => props.setFieldValue(field.name, date)}
-                        dateFormat="DD/MM/YYYY"
-                        name={field.name}
-                        showMonthDropdown
-                        showYearDropdown
-                      />
-                    )}
-                    {...p}
-                  />
-                )}
-                formikField={true}
-              />
-              <FormikLabelInput text="Correo" name="correo" />
-              <FormikLabelInput
-                text="Verificación de correo"
-                name="verificacion"
-              />
-              <FormikLabelInput text="Teléfono" name="telefono" />
-              <GenericLabelInput
-                text="Sexo"
-                name="sexo"
-                InputComponent={p => (
-                  <ExtendedSelect component="select" {...p}>
-                    <option value="mujer">Mujer</option>
-                    <option value="hombre">Hombre</option>
-                  </ExtendedSelect>
-                )}
-                formikField={true}
-              />
-              <FormikLabelInput text="Dirección" name="direccion" />
-              <CustomButton type="submit">Enviar</CustomButton>
-            </FormBlock>
-          )}
-        />
-      </Layout>
-    );
-  }
-}
+const JoinForm = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  return (
+    <Layout>
+      <Formik
+        initialValues={getInitialVaules()}
+        validationSchema={validationSchema}
+        onSubmit={async (values, actions) => {
+          const { verificacion, ...formValues } = values;
+          setModalOpen(true);
 
+          try {
+            await fetch('/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: encode({
+                'form-name': 'unete',
+                ...formValues,
+              }),
+            });
+          } catch (exception) {
+          } finally {
+            actions.setSubmitting(false);
+          }
+        }}
+        render={props => (
+          <FormBlock
+            name="unete"
+            onSubmit={props.handleSubmit}
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+          >
+            <FormikLabelInput text="Nombre(s)" name="nombre" />
+            <FormikLabelInput text="Apellidos" name="apellido" />
+            <GenericLabelInput
+              text="Fecha de nacimiento"
+              name="nacimiento"
+              InputComponent={p => (
+                <Field
+                  render={({ field }) => (
+                    <DatePicker
+                      selected={props.values[field.name]}
+                      onChange={date => props.setFieldValue(field.name, date)}
+                      dateFormat="DD/MM/YYYY"
+                      name={field.name}
+                      showMonthDropdown
+                      showYearDropdown
+                    />
+                  )}
+                  {...p}
+                />
+              )}
+              formikField={true}
+            />
+            <FormikLabelInput text="Correo" name="correo" />
+            <FormikLabelInput
+              text="Verificación de correo"
+              name="verificacion"
+            />
+            <FormikLabelInput text="Teléfono" name="telefono" />
+            <GenericLabelInput
+              text="Sexo"
+              name="sexo"
+              InputComponent={p => (
+                <ExtendedSelect component="select" {...p}>
+                  <option value="mujer">Mujer</option>
+                  <option value="hombre">Hombre</option>
+                </ExtendedSelect>
+              )}
+              formikField={true}
+            />
+            <FormikLabelInput text="Dirección" name="direccion" />
+            <Popup
+              trigger={
+                <CustomButton type="submit" disabled={!props.isValid}>
+                  Enviar
+                </CustomButton>
+              }
+              open={modalOpen}
+              onClose={() => setModalOpen(false)}
+              popupText={
+                props.isSubmitting
+                  ? 'Tu mensaje se está enviando'
+                  : 'Tu mensaje ha sido enviado'
+              }
+              icon={props.isSubmitting ? sendingIcon : sentIcon}
+            />
+          </FormBlock>
+        )}
+      />
+    </Layout>
+  );
+};
 export default JoinForm;
