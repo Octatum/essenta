@@ -50,6 +50,7 @@ const contentStyle = {
 const PopupContent = styled.div`
   font-size: calc(1rem + 0.5vw);
   text-align: center;
+  font-family: ${props => props.theme.fonts.secondary};
 `;
 
 function Popup({ icon, popupText, ...rest }) {
