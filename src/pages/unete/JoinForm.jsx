@@ -121,7 +121,6 @@ class JoinForm extends React.Component {
                   ...formValues,
                 }),
               });
-              alert(JSON.stringify(formValues));
             } catch (exception) {
             } finally {
               actions.setSubmitting(false);
