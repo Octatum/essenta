@@ -2,20 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import _DatePicker from 'react-datepicker';
 import moment from 'moment';
+
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {
   TextInput as _TextInput,
-  Select as _Select,
+  withSelectStyle,
 } from './../../components/Input/index';
 import Button from './../../components/Button/index';
 import { device } from '../../utilities/device';
+import { Formik, Field } from 'formik';
+import encode from '../../utilities/encode';
+import {
+  FormikLabelInput,
+  GenericLabelInput,
+} from '../../components/LabelInput';
+import validationSchema from '../../components/Unete/validationSchema';
 
 const Layout = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
   padding: 5rem 0;
+
+  ${device.tablet} {
+    padding: 2rem 0;
+  }
 `;
 
 const FormBlock = styled.form`
@@ -24,85 +36,23 @@ const FormBlock = styled.form`
   counter-reset: fieldset;
   display: flex;
   flex-direction: column;
-`;
-
-const Legend = styled.legend`
-  padding: 1em 0;
-  font-size: 2.4rem;
-  text-transform: uppercase;
-  font-family: ${props => props.theme.fonts.main};
-  color: ${props => props.theme.color.black};
-  font-weight: 700;
-  position: relative;
-  /**
-  &::before {
-    counter-increment: fieldset;
-    position: absolute;
-    left: -1.3em;
-    content: counter(fieldset) ". ";
-  }
-  */
-`;
-
-const Label = styled.label`
-  font-size: 1.8rem;
-  width: 100%;
-  font-family: ${props => props.theme.fonts.main};
-  display: flex;
-  justify-content: space-between;
-  color: ${props => props.theme.color.black};
-  padding: 0.5em 0;
 
   ${device.tablet} {
-    flex-direction: column;
-  }
-
-  &[required] > span::after {
-    content: '*';
-    color: ${props => props.theme.color.orange};
-  }
-
-  & > input {
-    padding-left: 0.2em;
-  }
-
-  & > input,
-  & > select,
-  & > div {
-    box-sizing: border-box;
-    width: 40%;
-
-    ${device.tablet} {
-      width: auto;
-    }
-  }
-
-  & .react-datepicker-wrapper,
-  & .react-datepicker__input-container {
-    width: 100%;
-
-    & input {
-      box-sizing: border-box;
-      padding-left: 0.2em;
-      width: 100%;
+    > * {
+      margin: 0.5em 0;
     }
   }
 `;
 
-const TextInput = _TextInput.extend`
-  font-size: 1.1rem;
-  padding: 0.5em 0;
-  border-radius: 5px;
-`;
+const FormikSelect = withSelectStyle(Field);
 
-const Select = _Select.extend`
-  font-size: 1.1rem;
+const ExtendedSelect = styled(FormikSelect)`
   padding: 0.5em 0;
-  border-radius: 5px;
   margin-right: 0;
 
   ${device.tablet} {
     flex: 1;
+    margin-top: 1em;
   }
 `;
 
@@ -123,124 +73,111 @@ const DatePicker = styled(_DatePicker)`
   color: ${props => props.theme.color.black};
   font-weight: 700;
   font-family: ${props => props.theme.fonts.secondary};
-  font-size: 1.1rem;
   padding: 0.5em 0;
-  border-radius: 5px;
+  font-size: 1.1rem;
+
+  ${device.tablet} {
+    margin-top: 1.5em;
+  }
 `;
 
-class JoinForm extends React.Component {
-  state = {
+function getInitialVaules() {
+  const values = {
     nombre: '',
     apellido: '',
     nacimiento: moment(),
     correo: '',
     verificacion: '',
     telefono: '',
-    sexo: '',
+    sexo: 'mujer',
     lineaUno: '',
     lineaDos: '',
     estado: '',
   };
 
-  handleChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
-  };
+  return { ...values };
+}
 
-  handleEmailChange = ({ target }) => {};
-
+class JoinForm extends React.Component {
   handleBirthdateChange = date => {
     this.setState({ nacimiento: date });
   };
-
-  handleSubmit = event => {
-    event.preventDefault();
-  };
-
   render() {
     return (
       <Layout>
-        <FormBlock netlify name="unete">
-          <fieldset>
-            <Legend>Información General</Legend>
-            <Label required>
-              <span>Nombre(s)</span>
-              <TextInput
-                type="text"
-                onChange={this.handleChange}
-                name="nombre"
-                value={this.state.nombre}
-                required
+        <Formik
+          initialValues={getInitialVaules()}
+          validationSchema={validationSchema}
+          onSubmit={async (values, actions) => {
+            const { verificacion, ...formValues } = values;
+            try {
+              const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: encode({
+                  'form-name': 'contacto',
+                  ...formValues,
+                }),
+              });
+              alert(JSON.stringify(formValues));
+            } catch (exception) {
+            } finally {
+              actions.setSubmitting(false);
+            }
+          }}
+          render={props => (
+            <FormBlock
+              name="unete"
+              onSubmit={props.handleSubmit}
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+            >
+              <FormikLabelInput text="Nombre(s)" name="nombre" />
+              <FormikLabelInput text="Apellidos" name="apellido" />
+              <GenericLabelInput
+                text="Fecha de nacimiento"
+                name="nacimiento"
+                InputComponent={p => (
+                  <Field
+                    render={({ field }) => (
+                      <DatePicker
+                        selected={props.values[field.name]}
+                        onChange={date => props.setFieldValue(field.name, date)}
+                        dateFormat="DD/MM/YYYY"
+                        name={field.name}
+                        showMonthDropdown
+                        showYearDropdown
+                      />
+                    )}
+                    {...p}
+                  />
+                )}
+                formikField={true}
               />
-            </Label>
-            <Label required>
-              <span>Apellidos</span>
-              <TextInput
-                type="text"
-                onChange={this.handleChange}
-                name="apellido"
-                value={this.state.apellido}
-                required
-              />
-            </Label>
-            <Label required>
-              <span>Fecha de nacimiento</span>
-              <DatePicker
-                selected={this.state.nacimiento}
-                onChange={this.handleBirthdateChange}
-                showMonthDropdown
-                showYearDropdown
-              />
-            </Label>
-            <Label required>
-              <span>Correo</span>
-              <TextInput
-                type="email"
-                onChange={this.handleChange}
-                name="correo"
-                value={this.state.correo}
-                required
-              />
-            </Label>
-            <Label required>
-              <span>Verificacion de correo</span>
-              <TextInput
-                type="email"
-                onChange={this.handleChange}
+              <FormikLabelInput text="Correo" name="correo" />
+              <FormikLabelInput
+                text="Verificación de correo"
                 name="verificacion"
-                value={this.state.verificacion}
-                required
               />
-            </Label>
-            <Label required>
-              <span>Teléfono</span>
-              <TextInput
-                type="text"
-                onChange={this.handleChange}
-                name="telefono"
-                value={this.state.telefono}
-                required
+              <FormikLabelInput text="Teléfono" name="telefono" />
+              <GenericLabelInput
+                text="Sexo"
+                name="sexo"
+                InputComponent={p => (
+                  <ExtendedSelect component="select" {...p}>
+                    <option value="mujer">Mujer</option>
+                    <option value="hombre">Hombre</option>
+                  </ExtendedSelect>
+                )}
+                formikField={true}
               />
-            </Label>
-            <Label required>
-              <span>Sexo</span>
-              <Select value={this.state.value} onChange={this.handleChange}>
-                <option value="mujer">Mujer</option>
-                <option value="hombre">Hombre</option>
-              </Select>
-            </Label>
-            <Label required>
-              <span>Dirección</span>
-              <TextInput
-                type="text"
-                onChange={this.handleChange}
-                name="lineaUno"
-                value={this.state.lineaUno}
-                required
-              />
-            </Label>
-          </fieldset>
-          <CustomButton type="submit">Enviar</CustomButton>
-        </FormBlock>
+              <FormikLabelInput text="Dirección" name="direccion" />
+              <CustomButton type="submit">Enviar</CustomButton>
+            </FormBlock>
+          )}
+        />
       </Layout>
     );
   }

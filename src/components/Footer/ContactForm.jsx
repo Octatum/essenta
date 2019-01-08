@@ -74,7 +74,7 @@ class ContactForm extends React.Component {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encode({
         'form-name': 'contacto',
-        ...state
+        ...state,
       }),
     })
       .then(() => {
