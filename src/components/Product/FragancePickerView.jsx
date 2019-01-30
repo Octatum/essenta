@@ -201,7 +201,7 @@ class FragancePickerView extends Component {
             ) {
               image {
                 fluid {
-                  ...GatsbyContentfulFluid
+                  ...GatsbyContentfulFixed_withWebp_noBase64
                 }
               }
             }
@@ -211,7 +211,7 @@ class FragancePickerView extends Component {
             ) {
               image {
                 fluid {
-                  ...GatsbyContentfulFluid
+                  ...GatsbyContentfulFixed_withWebp_noBase64
                 }
               }
             }
@@ -221,7 +221,7 @@ class FragancePickerView extends Component {
             ) {
               image {
                 fluid {
-                  ...GatsbyContentfulFluid
+                  ...GatsbyContentfulFixed_withWebp_noBase64
                 }
               }
             }
